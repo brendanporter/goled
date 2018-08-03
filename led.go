@@ -161,6 +161,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	var buttons string
+	bounds := c.Bounds()
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		buttons += fmt.Sprintf("<tr>")
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
