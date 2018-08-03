@@ -257,7 +257,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<input type='text' class="form-control" id='red' onchange='setColor()' value=0 />
 	<input type='text' class="form-control" id='green' onchange='setColor()' value=0  />
 	<input type='text' class="form-control" id='blue' onchange='setColor()' value=0 />
-	<input type='text' class="form-control" id='alpha' onchange='setColor()' value=0 />
+	<input type='text' class="form-control" id='alpha' onchange='setColor()' value=255 />
 	</div>
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 	</body>
