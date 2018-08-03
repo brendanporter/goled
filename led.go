@@ -217,7 +217,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		tr = y -1;
 		td = x -1;
-		$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td')').css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
+		$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
 
 		pixels = []
 		px = {}
