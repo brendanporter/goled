@@ -9,6 +9,7 @@ import (
 	"image/color"
 	//"image/draw"
 	"log"
+	"net/http"
 	"syscall"
 	"time"
 )
@@ -46,23 +47,7 @@ func main() {
 		<-chanSig
 		c.Close()
 		os.Exit(1)
-		// sig is a ^C, handle it
 	}()
-
-	/*
-		err := rpio.Open()
-		if err != nil {
-			log.Panic(err)
-		}
-		defer rpio.Close()
-
-		pin := rpio.Pin()
-
-		pin.Output()
-		pin.High()
-		pin.Low()
-		pin.Toggle()
-	*/
 
 	config := &rgbmatrix.DefaultConfig
 	config.Rows = 16
@@ -86,22 +71,45 @@ func main() {
 	//time.Sleep(time.Second * 5)
 	//c.Clear()
 	/*
-		go cylonRed()
+		go cylon(color.RGBA{255, 0, 0, 255})
 		time.Sleep(time.Millisecond * (20 * 30))
-		go cylonGreen()
+		go cylon(color.RGBA{0, 255, 0, 255})
 		time.Sleep(time.Millisecond * (20 * 60))
-		go cylonBlue()
+		go cylon(color.RGBA{0, 0, 255, 125})
 	*/
 	go square()
 
-	for {
+	http.Handle("/", baseHandler)
+	http.Handle("/api", apiHandler)
 
-		time.Sleep(time.Second * 5)
-		//draw.Draw(c, c.Bounds(), &image.Uniform{color.White}, image.ZP, draw.Src)
-		//c.Render()
-		//time.Sleep(time.Millisecond * 400)
+	server := http.Server{
+		Handler:      nil,
+		Addr:         ":80",
+		ReadTimeout:  time.Second * 30,
+		WriteTimeout: time.Second * 30,
 	}
 
+	err = server.ListenAndServe()
+	if err != nil {
+		log.Print(err)
+	}
+}
+
+func apiHandler(w http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+
+	action := req.Form.Get("action")
+
+	switch action {
+	case "test":
+		cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
+		break
+	}
+}
+
+func baseHandler(w http.ResponseWriter, req *http.Request) {
+
+	w.Write([]byte("Stuff and things"))
 }
 
 func square() {
@@ -110,14 +118,13 @@ func square() {
 	c.Render()
 }
 
-func cylonRed() {
+func cylon(c color.RGBA, timeout time.Time) {
 	bounds := c.Bounds()
 	frame := time.Millisecond * 20
-	for {
+	for time.Now().Before(timeout) {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				c.Set(x, y, color.RGBA{255, 0, 0, 255})
-				//c.Render()
+				c.Set(x, y, c)
 			}
 			c.Render()
 			time.Sleep(frame)
@@ -125,56 +132,7 @@ func cylonRed() {
 
 		for x := bounds.Max.X - 1; x > bounds.Min.X; x-- {
 			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				c.Set(x, y, color.RGBA{255, 0, 0, 255})
-				//c.Render()
-			}
-			c.Render()
-			time.Sleep(frame)
-		}
-	}
-}
-
-func cylonGreen() {
-	bounds := c.Bounds()
-	frame := time.Millisecond * 20
-	for {
-		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				c.Set(x, y, color.RGBA{0, 255, 0, 255})
-				//c.Render()
-			}
-			c.Render()
-			time.Sleep(frame)
-		}
-
-		for x := bounds.Max.X - 1; x > bounds.Min.X; x-- {
-			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				c.Set(x, y, color.RGBA{0, 255, 0, 255})
-				//c.Render()
-			}
-			c.Render()
-			time.Sleep(frame)
-		}
-	}
-}
-
-func cylonBlue() {
-	bounds := c.Bounds()
-	frame := time.Millisecond * 20
-	for {
-		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				c.Set(x, y, color.RGBA{0, 0, 255, 125})
-				//c.Render()
-			}
-			c.Render()
-			time.Sleep(frame)
-		}
-
-		for x := bounds.Max.X - 1; x > bounds.Min.X; x-- {
-			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				c.Set(x, y, color.RGBA{0, 0, 255, 125})
-				//c.Render()
+				c.Set(x, y, c)
 			}
 			c.Render()
 			time.Sleep(frame)
