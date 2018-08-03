@@ -118,13 +118,13 @@ func square() {
 	c.Render()
 }
 
-func cylon(c color.RGBA, timeout time.Time) {
+func cylon(clr color.RGBA, timeout time.Time) {
 	bounds := c.Bounds()
 	frame := time.Millisecond * 20
 	for time.Now().Before(timeout) {
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				c.Set(x, y, c)
+				c.Set(x, y, clr)
 			}
 			c.Render()
 			time.Sleep(frame)
@@ -132,7 +132,7 @@ func cylon(c color.RGBA, timeout time.Time) {
 
 		for x := bounds.Max.X - 1; x > bounds.Min.X; x-- {
 			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				c.Set(x, y, c)
+				c.Set(x, y, clr)
 			}
 			c.Render()
 			time.Sleep(frame)
