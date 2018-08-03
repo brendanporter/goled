@@ -8,8 +8,11 @@ import (
 	//"image"
 	"image/color"
 	//"image/draw"
+	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
+	"sync"
 	"syscall"
 	"time"
 )
@@ -40,6 +43,12 @@ const me = 24 // This pin is part of the 1->32 multiplexing circuitry. Used for 
 var c *rgbmatrix.Canvas
 
 func main() {
+
+	for x := bounds.Min.X; x < bounds.Max.X; x++ {
+		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+			pixels[x][y] = color.RGBA{0, 0, 0, 255}
+		}
+	}
 
 	chanSig := make(chan os.Signal)
 	signal.Notify(chanSig, os.Interrupt, syscall.SIGTERM)
@@ -79,7 +88,7 @@ func main() {
 	*/
 	go square()
 
-	//http.HandleFunc("/", baseHandler)
+	http.HandleFunc("/", baseHandler)
 	http.HandleFunc("/api", apiHandler)
 
 	server := http.Server{
@@ -95,6 +104,39 @@ func main() {
 	}
 }
 
+type Pixel struct {
+	X, Y, R, G, B, A int
+}
+
+var pixels [][]color.RGBA // [X][Y]Pixel
+var pLock sync.Mutex
+
+func setPixel(w http.ResponseWriter, req *http.Request) {
+	pxJSON := req.Form.Get("px")
+
+	var px []Pixel
+	err := json.Unmarshal([]byte(pxJSON), px)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+
+	pLock.Lock()
+	for _, p := range px {
+		pixels[p.X][p.Y] = color.RGBA{p.R, p.G, p.B, p.A}
+	}
+	pLock.Unlock()
+
+}
+
+func drawCanvas() {
+	for x := bounds.Min.X; x < bounds.Max.X; x++ {
+		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+			c.Set(x, y, pixels[x][y].Color)
+		}
+	}
+}
+
 func apiHandler(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
@@ -105,6 +147,9 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		log.Printf("Running %s", action)
 		go cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
 		break
+	case "set_pixel":
+		setPixel(w, req)
+		break
 	default:
 		log.Printf("Unknown API requested: %s", action)
 		break
@@ -113,7 +158,34 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 
 func baseHandler(w http.ResponseWriter, req *http.Request) {
 
-	w.Write([]byte("Stuff and things"))
+	var buttons string
+	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+		buttons += fmt.Sprintf("<tr>")
+		for x := bounds.Min.X; x < bounds.Max.X; x++ {
+
+			buttons += fmt.Sprintf("<td><button onclick='setPixel(%d,%d)'>%d/%d</button></td>", x, y, x, y)
+		}
+		buttons += fmt.Sprintf("</tr>")
+	}
+
+	h := fmt.Sprintf(`<!DOCTYPE html>
+	<html>
+	<head>
+	<title>Sign</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	</head>
+	<body>
+	<div class='input-group'>
+	<input type='text' class="form-control" id='red' />
+	<input type='text' class="form-control" id='blue' />
+	<input type='text' class="form-control" id='green' />
+	</div>
+	<table class='table table-striped table-bordered'>%s</table>
+	</body>
+	</html>`, buttons)
+
+	w.Write([]byte(h))
 }
 
 func square() {
