@@ -1,6 +1,8 @@
 # goled
 Raspberry Pi LED Matrix Controller
 
+Controls one of these https://www.adafruit.com/product/420 with one of these https://www.raspberrypi.org/products/raspberry-pi-3-model-b-plus/ using a web application written in Go.
+
 This project has a dependency on the C library from https://github.com/hzeller/rpi-rgb-led-matrix
 
 As well as the Go binding to that C library here: https://github.com/mcuadros/go-rpi-rgb-led-matrix
