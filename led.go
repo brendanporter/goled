@@ -176,7 +176,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td onclick='setPixel(%d,%d,this)'> </td>", x, y)
+			buttons += fmt.Sprintf("<td onclick='setPixel(%d,%d)'> </td>", x, y)
 		}
 		buttons += fmt.Sprintf("</tr>")
 	}
@@ -213,9 +213,11 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		color.B = parseInt($('#blue').val());
 	}
 
-	function setPixel(x,y,this){
+	function setPixel(x,y){
 
-		$(this).css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
+		tr = y -1;
+		td = x -1;
+		$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td')').css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
 
 		pixels = []
 		px = {}
@@ -254,7 +256,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<input type='text' class="form-control" id='green' onchange='setColor()' />
 	<input type='text' class="form-control" id='blue' onchange='setColor()'/>
 	</div>
-	<table class='table table-striped table-bordered table-condensed'>%s</table>
+	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 	</body>
 	</html>`, buttons)
 
