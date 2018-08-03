@@ -79,6 +79,8 @@ func main() {
 	*/
 	go square()
 
+	go cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
+
 	http.HandleFunc("/", baseHandler)
 	http.HandleFunc("/api", apiHandler)
 
