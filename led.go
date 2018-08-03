@@ -11,7 +11,6 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -43,7 +42,7 @@ const me = 24 // This pin is part of the 1->32 multiplexing circuitry. Used for 
 var c *rgbmatrix.Canvas
 
 func main() {
-
+	bounds := c.Bounds()
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 			pixels[x][y] = color.RGBA{0, 0, 0, 255}
@@ -105,7 +104,8 @@ func main() {
 }
 
 type Pixel struct {
-	X, Y, R, G, B, A int
+	X, Y       int
+	R, G, B, A uint8
 }
 
 var pixels [][]color.RGBA // [X][Y]Pixel
@@ -130,6 +130,7 @@ func setPixel(w http.ResponseWriter, req *http.Request) {
 }
 
 func drawCanvas() {
+	bounds := c.Bounds()
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 			c.Set(x, y, pixels[x][y].Color)
