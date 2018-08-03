@@ -202,6 +202,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function setPixel(x,y){
 
+		pixels = []
 		px = {}
 		px.X = x;
 		px.Y = y;
@@ -209,8 +210,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		px.G = color.G;
 		px.B = color.B;
 		px.A = 255;
+		pixels.push(px);
 
-		pxJSON = JSON.stringify(px);
+		pxJSON = JSON.stringify(pixels);
 
 		console.log(pxJSON);
 
