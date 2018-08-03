@@ -215,8 +215,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function setPixel(x,y){
 
-		tr = y -1;
-		td = x -1;
+		tr = y +2;
+		td = x +2;
 		$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
 
 		pixels = []
@@ -247,7 +247,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 	</script>
 	<style>
-	td {padding: 0px; min-width: 25px;}
+	td {padding: 0px !important; min-width: 25px;}
 	</style>
 	</head>
 	<body>
