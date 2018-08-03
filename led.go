@@ -176,7 +176,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'> </td>", x, y, x, y)
+			buttons += fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'> </td>", x, y, x, y)
 		}
 		buttons += fmt.Sprintf("</tr>")
 	}
@@ -263,6 +263,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</script>
 	<style>
 	td {padding: 0px !important; min-width: 25px;}
+	.pixel {background-color: black;}
 	</style>
 	</head>
 	<body>
