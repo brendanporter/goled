@@ -152,7 +152,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		log.Printf("Running %s", action)
 		go cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
 		break
-	case "set_pixel":
+	case "setPixel":
 		setPixel(w, req)
 		break
 	default:
