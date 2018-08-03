@@ -205,7 +205,13 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 
 	function init() {
-
+		$(document).keyup(function(event) {
+  			alert( "Handler for .keyup() called." );
+  			  if ( event.which == 68 ) {
+			    event.preventDefault();
+			    alert("Pressed D");
+			  }
+		});
 	}
 
 	function setColor(){
