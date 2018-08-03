@@ -180,6 +180,51 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<title>Sign</title>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	
+	<script type='text/javascript'>
+
+	color = {}
+	color.R = 0;
+	color.G = 0;
+	color.B = 0;
+
+	$(document).ready(function(){
+		init();
+	});
+
+
+	function init() {
+
+	}
+
+	function setPixel(x,y){
+
+		px = {}
+		px.X = x;
+		px.Y = y;
+		px.R = color.R;
+		px.G = color.G;
+		px.B = color.B;
+		px.A = 255;
+
+		pxJSON = JSON.stringify(px);
+
+		console.log(pxJSON);
+
+		$.ajax({
+		url: "/api?action=setPixel",
+		type: 'post',
+		data: {px: pxJSON},
+		dataType: 'json',
+		beforeSend: function(){
+		},
+		success: function(json){
+
+		}
+		});
+	}
+	</script>
+
 	</head>
 	<body>
 	<div class='input-group'>
@@ -187,7 +232,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<input type='text' class="form-control" id='blue' />
 	<input type='text' class="form-control" id='green' />
 	</div>
-	<table class='table table-striped table-bordered'>%s</table>
+	<table class='table table-striped table-bordered table-condensed'>%s</table>
 	</body>
 	</html>`, buttons)
 
