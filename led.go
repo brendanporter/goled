@@ -142,4 +142,5 @@ func cylon(clr color.RGBA, timeout time.Time) {
 			time.Sleep(frame)
 		}
 	}
+	c.Clear()
 }
