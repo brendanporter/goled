@@ -119,7 +119,7 @@ func setPixel(w http.ResponseWriter, req *http.Request) {
 	pxJSON := req.Form.Get("px")
 
 	var px []Pixel
-	err := json.Unmarshal([]byte(pxJSON), px)
+	err := json.Unmarshal([]byte(pxJSON), &px)
 	if err != nil {
 		log.Print(err)
 		return
