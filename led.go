@@ -79,8 +79,6 @@ func main() {
 	*/
 	go square()
 
-	go cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
-
 	http.HandleFunc("/", baseHandler)
 	http.HandleFunc("/api", apiHandler)
 
@@ -104,6 +102,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 
 	switch action {
 	case "test":
+		log.Printf("Running %s", action)
 		go cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
 		break
 	}
