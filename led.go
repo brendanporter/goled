@@ -176,7 +176,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td onclick='setPixel(%d,%d)'> </td>", x, y)
+			buttons += fmt.Sprintf("<td onclick='setPixel(%d,%d,\"this\")'> </td>", x, y)
 		}
 		buttons += fmt.Sprintf("</tr>")
 	}
@@ -213,7 +213,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		color.B = parseInt($('#blue').val());
 	}
 
-	function setPixel(x,y){
+	function setPixel(x,y,this){
+
+		$(this).css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
 
 		pixels = []
 		px = {}
@@ -243,7 +245,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 	</script>
 	<style>
-	td {}
+	td {padding: 0px; min-width: 25px;}
 	</style>
 	</head>
 	<body>
