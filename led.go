@@ -69,9 +69,11 @@ func main() {
 
 	bounds := c.Bounds()
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
+		var ySlice []color.RGBA
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-			pixels[x][y] = color.RGBA{0, 0, 0, 255}
+			ySlice = append(ySlice, color.RGBA{0, 0, 0, 255})
 		}
+		pixels = append(pixels, ySlice)
 	}
 
 	//draw.Draw(c, c.Bounds(), &image.Uniform{color.White}, image.ZP, draw.Src)
