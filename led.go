@@ -166,11 +166,17 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	var buttons string
 	bounds := c.Bounds()
+	buttons += fmt.Sprintf("<tr><td></td>")
+	for x := bounds.Min.X; x < bounds.Max.X; x++ {
+		buttons += fmt.Sprintf("<td>%d</td>", x)
+	}
+	buttons += fmt.Sprintf("</tr>")
+
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-		buttons += fmt.Sprintf("<tr>")
+		buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td><button onclick='setPixel(%d,%d)'>%d/%d</button></td>", x, y, x, y)
+			buttons += fmt.Sprintf("<td onclick='setPixel(%d,%d)'> </td>", x, y, x, y)
 		}
 		buttons += fmt.Sprintf("</tr>")
 	}
@@ -236,7 +242,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 	</script>
-
+	<style>
+	td {}
+	</style>
 	</head>
 	<body>
 	<div class='input-group'>
