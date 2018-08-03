@@ -43,12 +43,6 @@ const me = 24 // This pin is part of the 1->32 multiplexing circuitry. Used for 
 var c *rgbmatrix.Canvas
 
 func main() {
-	bounds := c.Bounds()
-	for x := bounds.Min.X; x < bounds.Max.X; x++ {
-		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-			pixels[x][y] = color.RGBA{0, 0, 0, 255}
-		}
-	}
 
 	chanSig := make(chan os.Signal)
 	signal.Notify(chanSig, os.Interrupt, syscall.SIGTERM)
@@ -72,6 +66,13 @@ func main() {
 
 	c = rgbmatrix.NewCanvas(m)
 	defer c.Close()
+
+	bounds := c.Bounds()
+	for x := bounds.Min.X; x < bounds.Max.X; x++ {
+		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+			pixels[x][y] = color.RGBA{0, 0, 0, 255}
+		}
+	}
 
 	//draw.Draw(c, c.Bounds(), &image.Uniform{color.White}, image.ZP, draw.Src)
 
