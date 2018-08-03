@@ -197,6 +197,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	color.R = 0;
 	color.G = 0;
 	color.B = 0;
+	color.A = 0;
 
 	$(document).ready(function(){
 		init();
@@ -211,6 +212,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		color.R = parseInt($('#red').val());
 		color.G = parseInt($('#green').val());
 		color.B = parseInt($('#blue').val());
+		color.A = parseInt($('#alpha').val());
 	}
 
 	function setPixel(x,y){
@@ -255,6 +257,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<input type='text' class="form-control" id='red' onchange='setColor()' value=0 />
 	<input type='text' class="form-control" id='green' onchange='setColor()' value=0  />
 	<input type='text' class="form-control" id='blue' onchange='setColor()' value=0 />
+	<input type='text' class="form-control" id='alpha' onchange='setColor()' value=0 />
 	</div>
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 	</body>
