@@ -176,7 +176,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td onclick='setPixel(%d,%d)'> </td>", x, y)
+			buttons += fmt.Sprintf("<td onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'> </td>", x, y, x, y)
 		}
 		buttons += fmt.Sprintf("</tr>")
 	}
@@ -199,6 +199,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	color.B = 0;
 	color.A = 0;
 
+	drawmode = false;
+
 	$(document).ready(function(){
 		init();
 	});
@@ -206,10 +208,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function init() {
 		$(document).keyup(function(event) {
-  			alert( "Handler for .keyup() called." );
   			  if ( event.which == 68 ) {
 			    event.preventDefault();
-			    alert("Pressed D");
+			    drawmode = !drawmode;
 			  }
 		});
 	}
@@ -219,6 +220,12 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		color.G = parseInt($('#green').val());
 		color.B = parseInt($('#blue').val());
 		color.A = parseInt($('#alpha').val());
+	}
+
+	function hoverPixel(x,y){
+		if(drawmode) {
+			setPixel(x,y);
+		}
 	}
 
 	function setPixel(x,y){
