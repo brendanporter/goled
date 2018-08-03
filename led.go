@@ -54,7 +54,7 @@ func main() {
 	config.Cols = 64
 	config.HardwareMapping = "adafruit-hat-pwm"
 	config.DisableHardwarePulsing = false
-	config.ShowRefreshRate = true
+	//config.ShowRefreshRate = true
 
 	m, err := rgbmatrix.NewRGBLedMatrix(config)
 	if err != nil {
