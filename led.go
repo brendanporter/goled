@@ -79,7 +79,7 @@ func main() {
 	*/
 	go square()
 
-	http.HandleFunc("/", baseHandler)
+	//http.HandleFunc("/", baseHandler)
 	http.HandleFunc("/api", apiHandler)
 
 	server := http.Server{
