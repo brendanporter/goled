@@ -154,6 +154,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 	case "setPixel":
 		setPixel(w, req)
+		drawCanvas()
 		break
 	default:
 		log.Printf("Unknown API requested: %s", action)
