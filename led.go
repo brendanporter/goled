@@ -176,7 +176,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td onclick='setPixel(%d,%d,\"this\")'> </td>", x, y)
+			buttons += fmt.Sprintf("<td onclick='setPixel(%d,%d,this)'> </td>", x, y)
 		}
 		buttons += fmt.Sprintf("</tr>")
 	}
