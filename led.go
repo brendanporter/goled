@@ -130,7 +130,7 @@ func setPixel(w http.ResponseWriter, req *http.Request) {
 		pixels[p.X][p.Y] = color.RGBA{p.R, p.G, p.B, p.A}
 	}
 	pLock.Unlock()
-
+	drawCanvas()
 }
 
 func drawCanvas() {
@@ -140,6 +140,7 @@ func drawCanvas() {
 			c.Set(x, y, pixels[x][y])
 		}
 	}
+	c.Render()
 }
 
 func apiHandler(w http.ResponseWriter, req *http.Request) {
@@ -154,7 +155,6 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 	case "setPixel":
 		setPixel(w, req)
-		drawCanvas()
 		break
 	default:
 		log.Printf("Unknown API requested: %s", action)
