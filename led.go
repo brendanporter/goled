@@ -9,6 +9,7 @@ import (
 	"image/color"
 	//"image/draw"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"sync"
@@ -133,7 +134,7 @@ func drawCanvas() {
 	bounds := c.Bounds()
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-			c.Set(x, y, pixels[x][y].Color)
+			c.Set(x, y, pixels[x][y])
 		}
 	}
 }
