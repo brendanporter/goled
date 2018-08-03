@@ -102,7 +102,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 
 	switch action {
 	case "test":
-		cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
+		go cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
 		break
 	}
 }
