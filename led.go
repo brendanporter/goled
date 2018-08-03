@@ -201,6 +201,12 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	}
 
+	function setColor(){
+		color.R = parseInt($('#red').val());
+		color.G = parseInt($('#green').val());
+		color.B = parseInt($('#blue').val());
+	}
+
 	function setPixel(x,y){
 
 		pixels = []
@@ -234,9 +240,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</head>
 	<body>
 	<div class='input-group'>
-	<input type='text' class="form-control" id='red' />
-	<input type='text' class="form-control" id='blue' />
-	<input type='text' class="form-control" id='green' />
+	<input type='text' class="form-control" id='red' onchange='setColor()' />
+	<input type='text' class="form-control" id='green' onchange='setColor()' />
+	<input type='text' class="form-control" id='blue' onchange='setColor()'/>
 	</div>
 	<table class='table table-striped table-bordered table-condensed'>%s</table>
 	</body>
