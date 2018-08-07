@@ -10,6 +10,7 @@ import (
 	//"image/draw"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"sync"
@@ -134,12 +135,14 @@ func setPixel(w http.ResponseWriter, req *http.Request) {
 }
 
 func drawCanvas() {
+	pLock.Lock()
 	bounds := c.Bounds()
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 			c.Set(x, y, pixels[x][y])
 		}
 	}
+	pLock.Unlock()
 	c.Render()
 }
 
@@ -156,10 +159,75 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "setPixel":
 		setPixel(w, req)
 		break
+	case "clearDisplay":
+		clearDisplay()
+		getDisplay(w, req)
+		break
+	case "getDisplay":
+		getDisplay(w, req)
+		break
 	default:
 		log.Printf("Unknown API requested: %s", action)
 		break
 	}
+}
+
+func getDisplay(w http.ResponseWriter, req *http.Request) {
+	pLock.Lock()
+	p, err := json.Marshal(pixels)
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	pLock.Unlock()
+	w.Write(p)
+}
+
+func clearDisplay() {
+	pLock.Lock()
+	bounds := c.Bounds()
+	for x := bounds.Min.X; x < bounds.Max.X; x++ {
+		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+			pixels[x][y] = color.RGBA{0, 0, 0, 0}
+			c.Set(x, y, pixels[x][y])
+		}
+	}
+	pLock.Unlock()
+	c.Render()
+}
+
+func displayLTCPrice() {
+
+	hc := http.Client{}
+
+	resp, err := hc.Get("https://api.coinbase.com/v2/prices/LTC-USD/spot")
+	if err != nil {
+		log.Print(err)
+	}
+
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Print(err)
+	}
+
+	type coinbaseSpotPrice struct {
+		Data struct {
+			Base     string
+			Currency string
+			Amount   string
+		}
+	}
+
+	cbsp := coinbaseSpotPrice{}
+
+	err = json.Unmarshal(bodyBytes, &cbsp)
+	if err != nil {
+		log.Print(err)
+	}
+
+	log.Print("Litecoin Price: %s", cbsp.Data.Amount)
+
 }
 
 func baseHandler(w http.ResponseWriter, req *http.Request) {
@@ -226,6 +294,44 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		if(drawmode) {
 			setPixel(x,y);
 		}
+	}
+
+	function clearDisplay(){
+		$.ajax({
+		url: "/api?action=clearDisplay",
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function(){
+		},
+		success: function(json){
+			$.each(json, function(i,col){
+				$.each(col, function(j, px){
+					tr = i +2;
+					td = j +2;
+					$('#pixelTable tr:nth-child('+j+') td:nth-child('+i+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+','+px.A+')');
+				});
+			});
+		}
+		});
+	}
+
+	function refreshDisplayFromServer(){
+		$.ajax({
+		url: "/api?action=getDisplay",
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function(){
+		},
+		success: function(json){
+			$.each(json, function(i,col){
+				$.each(col, function(j, px){
+					tr = i +2;
+					td = j +2;
+					$('#pixelTable tr:nth-child('+j+') td:nth-child('+i+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+','+px.A+')');
+				});
+			});
+		}
+		});
 	}
 
 	function setPixel(x,y){
