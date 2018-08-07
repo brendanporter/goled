@@ -314,7 +314,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		$("#color").spectrum({
 		    flat: true,
-		    change: setColor(color)
+		    change: function(color){
+		    	setColor(color);
+		    },
 		});
 	}
 
