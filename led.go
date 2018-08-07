@@ -356,7 +356,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				$.each(col, function(j, px){
 					td = i +2;
 					tr = j +2;
-					$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+','+px.A+')');
+					$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
 				});
 			});
 		}
@@ -375,7 +375,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				$.each(col, function(j, px){
 					td = i +2;
 					tr = j +2;
-					$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+','+px.A+')');
+					$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
 				});
 			});
 		}
