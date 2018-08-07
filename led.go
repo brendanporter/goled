@@ -350,6 +350,13 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			  }
 		});
 
+		$(document).on('mousedown mouseup', function(event) {
+  			  //if ( e.type == 'mousedown' ) {
+			    event.preventDefault();
+			    drawmode = !drawmode;
+			  //}
+		});
+
 		$.fn.spectrum.load = false;
 
 		$("#color").spectrum({
