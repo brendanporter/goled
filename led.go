@@ -392,7 +392,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	function refreshDisplayFromServer(){
 
 
-
+		if !drawmode {
 
 		$.ajax({
 		url: "/api?action=getDisplay&canvasSerial=" + canvasSerial,
@@ -412,6 +412,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			});
 		}
 		});
+
+		}
 	}
 
 	function setPixel(x,y){
