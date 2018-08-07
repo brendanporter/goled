@@ -14,9 +14,9 @@ import (
 	"log"
 	"net/http"
 	//"path/filepath"
+	"flag"
 	"strconv"
 	"strings"
-	"flag"
 	"sync"
 	"syscall"
 	"time"
@@ -49,11 +49,9 @@ var c *rgbmatrix.Canvas
 
 func main() {
 
-
-	var cols := flag.Int("led-cols", 32, "LED Columns in matrix")
-	var rows := flag.Int("led-rows", 32, "LED Rows in matrix")
+	var cols = flag.Int("led-cols", 32, "LED Columns in matrix")
+	var rows = flag.Int("led-rows", 32, "LED Rows in matrix")
 	flag.Parse()
-
 
 	if cols < 16 || rows < 16 {
 		cols = 16
