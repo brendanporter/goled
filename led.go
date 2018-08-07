@@ -395,7 +395,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function clearDisplay(){
 		$.ajax({
-		url: "/api?action=clearDisplay",
+		url: "/api?action=clearDisplay&canvasSerial=" + canvasSerial",
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function(){
