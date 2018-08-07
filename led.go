@@ -392,7 +392,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	function refreshDisplayFromServer(){
 
 
-		if !drawmode {
+		if(!drawmode){
 
 		$.ajax({
 		url: "/api?action=getDisplay&canvasSerial=" + canvasSerial,
