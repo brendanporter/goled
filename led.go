@@ -311,15 +311,16 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 
 		$("#color").spectrum({
-		    flat: true
+		    flat: true,
+		    change: setColor(color)
 		});
 	}
 
-	function setColor(){
-		p = $("#color").spectrum('get').toRgb();
-		color.R = p.r;
-		color.G = p.g;
-		color.B = p.b;
+	function setColor(newColor){
+		//p = $("#color").spectrum('get').toRgb();
+		color.R = newColor.r;
+		color.G = newColor.g;
+		color.B = newColor.b;
 		color.A = 255;
 		/*
 		color.R = parseInt($('#red').val());
