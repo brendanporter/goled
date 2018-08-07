@@ -315,13 +315,13 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		$("#color").spectrum({
 		    change: function(color){
 		    	console.log(color);
-		    	setColor(color);
+		    	setColor();
 		    },
 		});
 	}
 
-	function setColor(newColor){
-		p = color.toRgb();
+	function setColor(){
+		p = $('#color').spectrum('get').toRgb();
 		color.R = p.r;
 		color.G = p.g;
 		color.B = p.b;
