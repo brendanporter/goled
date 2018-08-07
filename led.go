@@ -321,10 +321,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	function setColor(newColor){
-		//p = $("#color").spectrum('get').toRgb();
-		color.R = newColor.r;
-		color.G = newColor.g;
-		color.B = newColor.b;
+		p = color.toRgb();
+		color.R = p.r;
+		color.G = p.g;
+		color.B = p.b;
 		color.A = 255;
 		/*
 		color.R = parseInt($('#red').val());
