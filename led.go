@@ -236,6 +236,7 @@ func clearDisplay() {
 	}
 	pLock.Unlock()
 	c.Render()
+	canvasSerial++
 }
 
 func displayLTCPrice() {
