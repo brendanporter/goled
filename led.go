@@ -244,7 +244,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		//absPath, _ := filepath.Abs("contactDNA.html")
 		fileBytes, err := ioutil.ReadFile(filePath)
 		if err != nil {
-			elog.Print(err)
+			log.Print(err)
 			return
 		}
 
