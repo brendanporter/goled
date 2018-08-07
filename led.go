@@ -307,10 +307,17 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	function setColor(){
+		p = $("input[type=color]").get().toRgb();
+		color.R = p.r;
+		color.G = p.g;
+		color.B = p.b;
+		color.A = 255;
+		/*
 		color.R = parseInt($('#red').val());
 		color.G = parseInt($('#green').val());
 		color.B = parseInt($('#blue').val());
 		color.A = parseInt($('#alpha').val());
+		*/
 	}
 
 	function hoverPixel(x,y){
@@ -397,11 +404,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</head>
 	<body>
 	<div class='input-group'>
-	<input type='text' class="form-control" id='red' onchange='setColor()' value=0 />
-	<input type='text' class="form-control" id='green' onchange='setColor()' value=0  />
-	<input type='text' class="form-control" id='blue' onchange='setColor()' value=0 />
-	<input type='text' class="form-control" id='alpha' onchange='setColor()' value=255 />
+	<input type='text' class="form-control" onchange='setColor()' type='color' value=0 />
 	</div>
+
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 	</body>
 	</html>`, buttons)
