@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"path/"
 	"sync"
 	"syscall"
 	"time"
@@ -232,6 +233,25 @@ func displayLTCPrice() {
 
 func baseHandler(w http.ResponseWriter, req *http.Request) {
 
+	req.ParseForm()
+
+	filePath := req.URL.Path
+
+	if filePath != "/" && filePath != "" {
+
+		log.Printf("Someone requested file: %#v", filePath)
+
+		//absPath, _ := filepath.Abs("contactDNA.html")
+		fileBytes, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			elog.Print(err)
+			return
+		}
+
+		w.Write(fileBytes)
+		return
+	}
+
 	var buttons string
 	bounds := c.Bounds()
 	buttons += "<tr><td></td>"
@@ -259,6 +279,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	
+	<script src="spectrum.js"></script>
+	<link href="spectrum.css" rel-"stylesheet">
+
 	<script type='text/javascript'>
 
 	color = {}
