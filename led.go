@@ -352,10 +352,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		$(document).on('mousedown mouseup', function(event) {
   			  if ( e.type == 'mouseup' ) {
-			    event.preventDefault();
 			    drawmode = true;
 			  } else {
-			  	event.preventDefault();
 			    drawmode = false;
 			  }
 		});
