@@ -19,8 +19,11 @@ If using the Adafruit HAT or Bonnet, make sure to use HardwareConfiguration `ada
 - Create friendly web-based prototyping tool for testing designs
   - ~~Simple Web UI to assign colors to individual LEDs by clicking-to-paint on table cells~~
   - ~~"Drawing" mode to allow assignment of colors to LEDs by simply hovering over the table cells~~
-  - Color selector using http://bgrins.github.io/spectrum/ (no more manual RGBA value inputs)
-  - Clear canvas button
+  - ~~Synchronization between browsers of canvas state~~
+  - ~~Optimized fast polling of canvas state~~
+  - ~~Color selector using http://bgrins.github.io/spectrum/ (no more manual RGBA value inputs)~~
+  - ~~Clear canvas button~~
+  - Upgrade to websocket
   - Write text with font selection
   - Create scrolling images and text
 - Create frame capture and re-play logic to enable animation creation
