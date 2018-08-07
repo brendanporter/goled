@@ -14,6 +14,7 @@ import (
 	"log"
 	"net/http"
 	//"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
@@ -115,6 +116,8 @@ type Pixel struct {
 	R, G, B, A uint8
 }
 
+var canvasSerial int
+
 var pixels [][]color.RGBA // [X][Y]Pixel
 var pLock sync.Mutex
 
@@ -146,6 +149,7 @@ func drawCanvas() {
 	}
 	pLock.Unlock()
 	c.Render()
+	canvasSerial++
 }
 
 func apiHandler(w http.ResponseWriter, req *http.Request) {
@@ -174,16 +178,36 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	}
 }
 
+type PXResponse struct {
+	CanvasSerial int
+	Canvas       [][]color.RGBA
+}
+
 func getDisplay(w http.ResponseWriter, req *http.Request) {
-	pLock.Lock()
-	p, err := json.Marshal(pixels)
+	clientCanvasSerialStr := req.Form.Get("canvasSerial")
+	clientCanvasSerial, err := strconv.Atoi(clientCanvasSerialStr)
 	if err != nil {
 		log.Print(err)
-		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	pLock.Unlock()
-	w.Write(p)
+
+	if canvasSerial != clientCanvasSerial {
+
+		pxResponse := PXResponse{
+			Canvas:       pixels,
+			CanvasSerial: canvasSerial,
+		}
+
+		pLock.Lock()
+		p, err := json.Marshal(pxResponse)
+		if err != nil {
+			log.Print(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		pLock.Unlock()
+		w.Write(p)
+	}
 }
 
 func clearDisplay() {
@@ -296,6 +320,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	color.A = 0;
 
 	drawmode = false;
+	canvasSerial = 0;
 
 	$(document).ready(function(){
 		init();
@@ -364,14 +389,20 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	function refreshDisplayFromServer(){
+
+
+
+
 		$.ajax({
-		url: "/api?action=getDisplay",
+		url: "/api?action=getDisplay&canvasSerial=" + canvasSerial,
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function(){
 		},
 		success: function(json){
-			$.each(json, function(i,col){
+			canvasSerial = json.CanvasSerial;
+
+			$.each(json.Canvas, function(i,col){
 				$.each(col, function(j, px){
 					td = i +2;
 					tr = j +2;
