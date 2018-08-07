@@ -321,7 +321,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		refreshDisplayFromServer();
 
-		setTimeout('refreshDisplayFromServer', 10000);
+		setTimeout(refreshDisplayFromServer, 10000);
 	}
 
 	function setColor(){
