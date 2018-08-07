@@ -318,6 +318,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		    	setColor();
 		    },
 		});
+
+		refreshDisplayFromServer();
+
+		setTicker('refreshDisplayFromServer', 10000);
 	}
 
 	function setColor(){
@@ -417,7 +421,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</style>
 	</head>
 	<body>
-	<input id='color' type='color' />
+	<input id='color' type='color' /><button class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 	</body>
