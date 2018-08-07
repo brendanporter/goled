@@ -52,8 +52,8 @@ func main() {
 	var cols int
 	var rows int
 
-	flag.IntVal(&cols, "led-cols", 32, "LED Columns in matrix")
-	flag.IntVal(&rows, "led-rows", 32, "LED Rows in matrix")
+	flag.IntVar(&cols, "led-cols", 32, "LED Columns in matrix")
+	flag.IntVar(&rows, "led-rows", 32, "LED Rows in matrix")
 	flag.Parse()
 
 	if cols < 16 || rows < 16 {
