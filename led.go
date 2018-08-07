@@ -350,10 +350,14 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			  }
 		});
 
-		$(document).on('mousedown mouseup', function(event) {
+		$('.pixel').on('mousedown', function(event) {
   			  if ( e.type == 'mouseup' ) {
 			    drawmode = true;
-			  } else {
+			  }
+		});
+
+		$(document).on('mouseup', function(event) {
+  			  if ( e.type == 'mouseup' ) {
 			    drawmode = false;
 			  }
 		});
