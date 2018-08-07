@@ -351,15 +351,11 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 
 		$('.pixel').on('mousedown', function(event) {
-  			  if ( e.type == 'mouseup' ) {
 			    drawmode = true;
-			  }
 		});
 
 		$(document).on('mouseup', function(event) {
-  			  if ( e.type == 'mouseup' ) {
 			    drawmode = false;
-			  }
 		});
 
 		$.fn.spectrum.load = false;
