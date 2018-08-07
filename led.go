@@ -14,6 +14,7 @@ import (
 	"log"
 	"net/http"
 	//"path/filepath"
+	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -239,6 +240,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	if filePath != "/" && filePath != "" {
 
+		if strings.HasPrefix(filePath, "/") {
+			filePath = filePath[1:]
+		}
+
 		log.Printf("Someone requested file: %#v", filePath)
 
 		//absPath, _ := filepath.Abs("contactDNA.html")
@@ -280,7 +285,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 	
 	<script src="spectrum.js"></script>
-	<link href="spectrum.css" rel-"stylesheet">
+	<link href="spectrum.css" rel="stylesheet">
 
 	<script type='text/javascript'>
 
