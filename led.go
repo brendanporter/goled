@@ -351,10 +351,13 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 
 		$(document).on('mousedown mouseup', function(event) {
-  			  //if ( e.type == 'mousedown' ) {
+  			  if ( e.type == 'mouseup' ) {
 			    event.preventDefault();
-			    drawmode = !drawmode;
-			  //}
+			    drawmode = true;
+			  } else {
+			  	event.preventDefault();
+			    drawmode = false;
+			  }
 		});
 
 		$.fn.spectrum.load = false;
