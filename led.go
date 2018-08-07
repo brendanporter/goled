@@ -16,6 +16,7 @@ import (
 	//"path/filepath"
 	"strconv"
 	"strings"
+	"flag"
 	"sync"
 	"syscall"
 	"time"
@@ -48,6 +49,18 @@ var c *rgbmatrix.Canvas
 
 func main() {
 
+
+	var cols := flag.Int("led-cols", 32, "LED Columns in matrix")
+	var rows := flag.Int("led-rows", 32, "LED Rows in matrix")
+	flag.Parse()
+
+
+	if cols < 16 || rows < 16 {
+		cols = 16
+		rows = 16
+		log.Print("Values for cols or rows was too small")
+	}
+
 	chanSig := make(chan os.Signal)
 	signal.Notify(chanSig, os.Interrupt, syscall.SIGTERM)
 	go func() {
@@ -57,8 +70,8 @@ func main() {
 	}()
 
 	config := &rgbmatrix.DefaultConfig
-	config.Rows = 16
-	config.Cols = 64
+	config.Rows = rows
+	config.Cols = cols
 	config.HardwareMapping = "adafruit-hat-pwm"
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
