@@ -409,7 +409,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</head>
 	<body>
 	<div class='input-group'>
-	<input type='text' class="form-control" onchange='setColor()' type='color' value=0 />
+	<input class="form-control" onchange='setColor()' type='color' />
 	</div>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
