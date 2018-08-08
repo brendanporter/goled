@@ -479,10 +479,16 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<style>
 	td {padding: 0px !important; min-width: 25px;}
 	.pixel {background-color: black;}
+	#pixelTable {position: absolute; top:30px;}
+	#clear {position: absolute; right:0px;}
 	</style>
 	</head>
 	<body>
-	<input id='color' type='color' /><button class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
+	<input id='color' type='color' />
+	<button class='pallette btn btn-danger' onclick="$('#color').spectrum('set', 'rgb(255,0,0)');setColor();">Red</button>
+	<button class='pallette btn btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
+	<button class='pallette btn btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();"">Blue</button>
+	<button id='clear' class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 	</body>
