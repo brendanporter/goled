@@ -356,6 +356,15 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		    drawmode = true;
 		});
 
+		$('.pixel').on('contextmenu', function(event){
+			event.preventDefault();
+			dropper = $(event.target).css('background-color');
+			$("#color").spectrum('set', dropper);
+			setColor();
+
+
+		});
+
 		$(document).on('mouseup', function(event) {
 		    drawmode = false;
 		});
@@ -380,12 +389,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		color.G = p.g;
 		color.B = p.b;
 		color.A = 255;
-		/*
-		color.R = parseInt($('#red').val());
-		color.G = parseInt($('#green').val());
-		color.B = parseInt($('#blue').val());
-		color.A = parseInt($('#alpha').val());
-		*/
 	}
 
 	function hoverPixel(x,y){
