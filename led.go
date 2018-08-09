@@ -466,10 +466,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		},
 		success: function(json){
 
-			if typeof json == "undefined" {
+			if(typeof json == "undefined"){
 				return
 			}
-			
+
 			canvasSerial = json.CanvasSerial;
 
 			$.each(json.Canvas, function(i,col){
