@@ -233,6 +233,8 @@ func getDisplay(w http.ResponseWriter, req *http.Request) {
 		}
 		pLock.Unlock()
 		w.Write(p)
+	} else {
+		w.WriteHeader(http.StatusNoContent)
 	}
 }
 
@@ -410,7 +412,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function saveCanvasAsImage() {
 		$.ajax({
-		url: "/api?action=saveCanvasAsImage&canvasSerial=" + canvasSerial,
+		url: "/api?action=saveCanvasAsImage",
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function(){
@@ -422,7 +424,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function loadImageToCanvas(index) {
 		$.ajax({
-		url: "/api?action=loadImageToCanvas&index=" + index + "&canvasSerial=" + canvasSerial,
+		url: "/api?action=loadImageToCanvas&index=" + index,
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function(){
