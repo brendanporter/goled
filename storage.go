@@ -19,7 +19,7 @@ func loadImageToCanvas(index int) {
 			pLock.Lock()
 			pixels = p
 			pLock.Unlock()
-			c.Render()
+			drawCanvas()
 			return
 		}
 	}
@@ -42,7 +42,7 @@ func playAnimationToCanvas(name string) {
 		pixels = frame
 		pLock.Unlock()
 
-		c.Render()
+		drawCanvas()
 		time.Sleep(time.Millisecond * 16)
 	}
 }
