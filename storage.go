@@ -10,7 +10,7 @@ var animations map[string][][][]color.RGBA // [Many][Frames][X][Y]color
 var images [][][]color.RGBA // [Many][X][Y]color
 
 func saveCanvasAsImage() {
-	image = append(image, pixels)
+	images = append(images, pixels)
 }
 
 func loadImageToCanvas(index int) {
