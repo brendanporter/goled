@@ -19,6 +19,7 @@ func loadImageToCanvas(index int) {
 	for i, p := range images {
 		if i == index {
 			pLock.Lock()
+			bounds := c.Bounds()
 			for x := bounds.Min.X; x < bounds.Max.X; x++ {
 				for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 					pixels[x][y] = p[x][y]
