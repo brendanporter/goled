@@ -12,7 +12,7 @@ var images [][][]color.RGBA // [Many][X][Y]color
 
 func saveCanvasAsImage() {
 	images = append(images, pixels)
-	log.Printf("Image 0: %#v", images[0])
+	log.Printf("Image 0, pixel 0,0: %#v", images[0][0][0])
 }
 
 func loadImageToCanvas(index int) {
