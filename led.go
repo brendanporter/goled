@@ -408,6 +408,30 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
+	function saveCanvasAsImage() {
+		$.ajax({
+		url: "/api?action=saveCanvasAsImage&canvasSerial=" + canvasSerial,
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function(){
+		},
+		success: function(json){
+		}
+		});
+	}
+
+	function loadImageToCanvas(index) {
+		$.ajax({
+		url: "/api?action=loadImageToCanvas&index=" + index + "&canvasSerial=" + canvasSerial,
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function(){
+		},
+		success: function(json){
+		}
+		});
+	}
+
 	function clearDisplay(){
 		$.ajax({
 		url: "/api?action=clearDisplay&canvasSerial=" + canvasSerial,
