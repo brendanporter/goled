@@ -186,6 +186,17 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
+	case "saveCanvasAsImage":
+		saveCanvasAsImage()
+		break
+	case "loadImageToCanvas":
+
+		index, err := strconv.Atoi(req.Form.Get("index"))
+		if err != nil {
+			log.Print(err)
+			break
+		}
+		loadImageToCanvas(index)
 	default:
 		log.Printf("Unknown API requested: %s", action)
 		break
