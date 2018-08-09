@@ -178,6 +178,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 	case "setPixel":
 		setPixel(w, req)
+		w.WriteHeader(http.StatusNoContent)
 		break
 	case "clearDisplay":
 		clearDisplay()
@@ -188,6 +189,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 	case "saveCanvasAsImage":
 		saveCanvasAsImage()
+		w.WriteHeader(http.StatusNoContent)
 		break
 	case "loadImageToCanvas":
 
@@ -197,6 +199,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 			break
 		}
 		loadImageToCanvas(index)
+		w.WriteHeader(http.StatusNoContent)
 	default:
 		log.Printf("Unknown API requested: %s", action)
 		break
