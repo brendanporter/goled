@@ -11,6 +11,7 @@ var images [][][]color.RGBA // [Many][X][Y]color
 
 func saveCanvasAsImage() {
 	images = append(images, pixels)
+	log.Printf("Image 0: %#v", images[0])
 }
 
 func loadImageToCanvas(index int) {
@@ -18,6 +19,7 @@ func loadImageToCanvas(index int) {
 		if i == index {
 			pLock.Lock()
 			pixels = p
+			log.Printf("Pixel 0,0 color: %#v", pixels[0][0])
 			pLock.Unlock()
 			drawCanvas()
 			return
