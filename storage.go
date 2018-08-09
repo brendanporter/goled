@@ -2,6 +2,7 @@ package main
 
 import (
 	"image/color"
+	"log"
 	"time"
 )
 
