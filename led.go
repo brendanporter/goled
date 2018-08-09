@@ -465,6 +465,11 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		beforeSend: function(){
 		},
 		success: function(json){
+
+			if typeof json == "undefined" {
+				return
+			}
+			
 			canvasSerial = json.CanvasSerial;
 
 			$.each(json.Canvas, function(i,col){
