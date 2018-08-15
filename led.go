@@ -78,7 +78,7 @@ func main() {
 	config.HardwareMapping = "adafruit-hat-pwm"
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
-	config.PWMBits = pwmSlowdown
+	config.PWMLSBNanoseconds = pwmSlowdown
 
 	m, err := rgbmatrix.NewRGBLedMatrix(config)
 	if err != nil {
