@@ -51,9 +51,11 @@ func main() {
 
 	var cols int
 	var rows int
+	var pwmSlowdown int
 
-	flag.IntVar(&cols, "led-cols", 32, "LED Columns in matrix")
-	flag.IntVar(&rows, "led-rows", 32, "LED Rows in matrix")
+	flag.IntVar(&cols, "cols", 32, "LED Columns in matrix")
+	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
+	flag.IntVar(&pwmSlowdown, "slow", 1, "LED GPIO Slowdown")
 	flag.Parse()
 
 	if cols < 16 || rows < 16 {
@@ -76,6 +78,7 @@ func main() {
 	config.HardwareMapping = "adafruit-hat-pwm"
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
+	config.PWMBits = pwmSlowdown
 
 	m, err := rgbmatrix.NewRGBLedMatrix(config)
 	if err != nil {
