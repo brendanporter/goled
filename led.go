@@ -4,7 +4,8 @@ import (
 	"os"
 	"os/signal"
 	//"github.com/stianeikeland/go-rpio"
-	"github.com/mcuadros/go-rpi-rgb-led-matrix"
+	//"github.com/mcuadros/go-rpi-rgb-led-matrix"
+	"github.com/brendanporter/go-rpi-rgb-led-matrix"
 	//"image"
 	"image/color"
 	//"image/draw"
@@ -78,7 +79,7 @@ func main() {
 	config.HardwareMapping = "adafruit-hat-pwm"
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
-	config.PWMLSBNanoseconds = pwmSlowdown
+	config.GPIOSlowdown = pwmSlowdown
 
 	m, err := rgbmatrix.NewRGBLedMatrix(config)
 	if err != nil {
