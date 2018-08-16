@@ -4,8 +4,8 @@ import (
 	"os"
 	"os/signal"
 	//"github.com/stianeikeland/go-rpio"
-	//"github.com/mcuadros/go-rpi-rgb-led-matrix"
-	"github.com/brendanporter/go-rpi-rgb-led-matrix"
+	"github.com/mcuadros/go-rpi-rgb-led-matrix"
+	//"github.com/brendanporter/go-rpi-rgb-led-matrix"
 	//"image"
 	"image/color"
 	//"image/draw"
@@ -59,6 +59,8 @@ func main() {
 	flag.IntVar(&pwmSlowdown, "slow", 1, "LED GPIO Slowdown")
 	flag.Parse()
 
+	flag.Set("-gpio-slowdown", strconv.Itoa(pwmSlowdown))
+
 	if cols < 16 || rows < 16 {
 		cols = 16
 		rows = 16
@@ -79,7 +81,6 @@ func main() {
 	config.HardwareMapping = "adafruit-hat-pwm"
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
-	config.GPIOSlowdown = pwmSlowdown
 
 	m, err := rgbmatrix.NewRGBLedMatrix(config)
 	if err != nil {
