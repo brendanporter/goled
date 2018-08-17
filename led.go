@@ -197,6 +197,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "loadImageToCanvas":
 
 		index, err := strconv.Atoi(req.Form.Get("index"))
+		log.Printf("Index: %v", index)
 		if err != nil {
 			log.Print(err)
 			break
