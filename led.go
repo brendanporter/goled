@@ -4,8 +4,8 @@ import (
 	"os"
 	"os/signal"
 	//"github.com/stianeikeland/go-rpio"
-	"github.com/mcuadros/go-rpi-rgb-led-matrix"
-	//"github.com/brendanporter/go-rpi-rgb-led-matrix"
+	//"github.com/mcuadros/go-rpi-rgb-led-matrix"
+	"github.com/brendanporter/go-rpi-rgb-led-matrix"
 	//"image"
 	"image/color"
 	//"image/draw"
@@ -52,14 +52,14 @@ func main() {
 
 	var cols int
 	var rows int
-	var pwmSlowdown int
+	var gpioSlowdown int
 
 	flag.IntVar(&cols, "cols", 32, "LED Columns in matrix")
 	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
-	flag.IntVar(&pwmSlowdown, "slow", 1, "LED GPIO Slowdown")
+	flag.IntVar(&gpioSlowdown, "gpio-slowdown", 1, "LED GPIO Slowdown")
 	flag.Parse()
 
-	flag.Set("gpio-slowdown", strconv.Itoa(pwmSlowdown))
+	//flag.Set("gpio-slowdown", strconv.Itoa(gpioSlowdown))
 
 	if cols < 16 || rows < 16 {
 		cols = 16
@@ -82,7 +82,12 @@ func main() {
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
 
-	m, err := rgbmatrix.NewRGBLedMatrix(config)
+	rconfig := &rgbmatrix.RuntimeOptions{
+		GPIOSlowdown: gpioSlowdown,
+	}
+
+	//m, err := rgbmatrix.NewRGBLedMatrix(config)
+	m, err := rgbmatrix.NewRGBLedMatrixFromOptions(config, rconfig)
 	if err != nil {
 		log.Print(err)
 	}
