@@ -56,7 +56,7 @@ func main() {
 
 	flag.IntVar(&cols, "cols", 32, "LED Columns in matrix")
 	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
-	flag.IntVar(&gpioSlowdown, "gpio-slowdown", 1, "LED GPIO Slowdown")
+	flag.IntVar(&gpioSlowdown, "slowdown-gpio", 1, "LED GPIO Slowdown")
 
 	flag.Parse()
 
