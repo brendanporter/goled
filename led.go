@@ -58,7 +58,6 @@ func main() {
 	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
 	flag.IntVar(&gpioSlowdown, "gpio-slowdown", 1, "LED GPIO Slowdown")
 
-	flag.Set("gpio-slowdown", strconv.Itoa(gpioSlowdown))
 	flag.Parse()
 
 	if cols < 16 || rows < 16 {
@@ -81,8 +80,8 @@ func main() {
 	config.HardwareMapping = "adafruit-hat-pwm"
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
-	argC := len(flag.Args())
-	argV := flag.Args()
+	argC := len(os.Args)
+	argV := os.Args
 	m, err := rgbmatrix.NewRGBLedMatrix(config, &argC, &argV)
 	if err != nil {
 		log.Print(err)
