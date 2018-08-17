@@ -57,9 +57,9 @@ func main() {
 	flag.IntVar(&cols, "cols", 32, "LED Columns in matrix")
 	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
 	flag.IntVar(&gpioSlowdown, "gpio-slowdown", 1, "LED GPIO Slowdown")
-	flag.Parse()
 
 	flag.Set("gpio-slowdown", strconv.Itoa(gpioSlowdown))
+	flag.Parse()
 
 	if cols < 16 || rows < 16 {
 		cols = 16
