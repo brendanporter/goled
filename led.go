@@ -81,8 +81,8 @@ func main() {
 	config.HardwareMapping = "adafruit-hat-pwm"
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
-
-	m, err := rgbmatrix.NewRGBLedMatrix(config, &len(flag.Args()), &flag.Args())
+	argC := len(flag.Args())
+	m, err := rgbmatrix.NewRGBLedMatrix(config, &argC, &flag.Args())
 	if err != nil {
 		log.Print(err)
 	}
