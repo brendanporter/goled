@@ -54,6 +54,8 @@ func main() {
 	var rows int
 	var gpioSlowdown int
 
+	elog = log.New(os.Stdout, "Error: ", log.LstdFlags|log.Lshortfile)
+
 	flag.IntVar(&cols, "cols", 32, "LED Columns in matrix")
 	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
 	flag.IntVar(&gpioSlowdown, "led-slowdown-gpio", 1, "LED GPIO Slowdown")
@@ -135,6 +137,8 @@ type Pixel struct {
 
 var canvasSerial int
 
+var elog *log.Logger
+
 var pixels [][]color.RGBA // [X][Y]Pixel
 var pLock sync.Mutex
 
@@ -197,10 +201,10 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "loadImageToCanvas":
 
 		index, err := strconv.Atoi(req.Form.Get("index"))
-		log.Printf("Index: %v", index)
 		if err != nil {
-			log.Print(err)
+			elog.Print(err)
 		}
+		log.Printf("Index: %v", index)
 		loadImageToCanvas(index)
 		getDisplay(w, req)
 	default:
@@ -430,7 +434,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function loadImageToCanvas(index) {
 		$.ajax({
-		url: "/api?action=loadImageToCanvas,
+		url: "/api?action=loadImageToCanvas",
 		type: 'post',
 		dataType: 'json',
 		data: {index: index},
