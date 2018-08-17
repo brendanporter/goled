@@ -222,7 +222,7 @@ func getDisplay(w http.ResponseWriter, req *http.Request) {
 	clientCanvasSerialStr := req.Form.Get("canvasSerial")
 	clientCanvasSerial, err := strconv.Atoi(clientCanvasSerialStr)
 	if err != nil {
-		log.Print(err)
+		elog.Print(err)
 		w.WriteHeader(http.StatusNotModified)
 		return
 	}
