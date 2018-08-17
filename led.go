@@ -430,9 +430,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function loadImageToCanvas(index) {
 		$.ajax({
-		url: "/api?action=loadImageToCanvas&index=" + index,
+		url: "/api?action=loadImageToCanvas,
 		type: 'post',
 		dataType: 'json',
+		data: {index: index},
 		beforeSend: function(){
 		},
 		success: function(json){
