@@ -82,12 +82,7 @@ func main() {
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
 
-	rconfig := &rgbmatrix.RuntimeOptions{
-		GPIOSlowdown: gpioSlowdown,
-	}
-
-	//m, err := rgbmatrix.NewRGBLedMatrix(config)
-	m, err := rgbmatrix.NewRGBLedMatrixFromOptions(config, rconfig)
+	m, err := rgbmatrix.NewRGBLedMatrix(config, &len(flag.Args()), &flag.Args)
 	if err != nil {
 		log.Print(err)
 	}
