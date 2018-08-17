@@ -4,8 +4,8 @@ import (
 	"os"
 	"os/signal"
 	//"github.com/stianeikeland/go-rpio"
-	"github.com/mcuadros/go-rpi-rgb-led-matrix"
-	//"github.com/brendanporter/go-rpi-rgb-led-matrix"
+	//"github.com/mcuadros/go-rpi-rgb-led-matrix"
+	"github.com/brendanporter/go-rpi-rgb-led-matrix"
 	//"image"
 	"image/color"
 	//"image/draw"
@@ -82,7 +82,7 @@ func main() {
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
 
-	m, err := rgbmatrix.NewRGBLedMatrix(config, &len(flag.Args()), &flag.Args)
+	m, err := rgbmatrix.NewRGBLedMatrix(config, &len(flag.Args()), &flag.Args())
 	if err != nil {
 		log.Print(err)
 	}
