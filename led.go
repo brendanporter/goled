@@ -202,7 +202,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 			break
 		}
 		loadImageToCanvas(index)
-		w.WriteHeader(http.StatusNoContent)
+		getDisplay(w, req)
 	default:
 		log.Printf("Unknown API requested: %s", action)
 		break
