@@ -82,7 +82,8 @@ func main() {
 	config.DisableHardwarePulsing = false
 	//config.ShowRefreshRate = true
 	argC := len(flag.Args())
-	m, err := rgbmatrix.NewRGBLedMatrix(config, &argC, &flag.Args())
+	argV := flag.Args()
+	m, err := rgbmatrix.NewRGBLedMatrix(config, &argC, &argV)
 	if err != nil {
 		log.Print(err)
 	}
