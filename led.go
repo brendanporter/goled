@@ -200,7 +200,6 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		log.Printf("Index: %v", index)
 		if err != nil {
 			log.Print(err)
-			break
 		}
 		loadImageToCanvas(index)
 		getDisplay(w, req)
