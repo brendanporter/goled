@@ -437,7 +437,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		url: "/api?action=loadImageToCanvas",
 		type: 'post',
 		dataType: 'json',
-		data: {index: index},
+		data: {index: index, canvasSerial: canvasSerial},
 		beforeSend: function(){
 		},
 		success: function(json){
