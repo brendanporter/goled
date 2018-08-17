@@ -59,7 +59,7 @@ func main() {
 	flag.IntVar(&gpioSlowdown, "gpio-slowdown", 1, "LED GPIO Slowdown")
 	flag.Parse()
 
-	//flag.Set("gpio-slowdown", strconv.Itoa(gpioSlowdown))
+	flag.Set("gpio-slowdown", strconv.Itoa(gpioSlowdown))
 
 	if cols < 16 || rows < 16 {
 		cols = 16
