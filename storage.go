@@ -2,7 +2,9 @@ package main
 
 import (
 	"image/color"
+	"image/png"
 	//"log"
+	"image"
 	"time"
 )
 
@@ -40,6 +42,27 @@ func loadImageToCanvas(name string) {
 		pLock.Unlock()
 		drawCanvas()
 		return
+	}
+}
+
+func getImages() {
+	m := 5
+	bounds := c.Bounds()
+	var imageCollection []image.Image
+	for _, p := range images {
+		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X-1)*m, (bounds.Max.Y-1)*m))
+
+		for x := bounds.Min.X; x <= (bounds.Max.X-1)*m; x++ {
+			for y := bounds.Min.Y; y <= (bounds.Max.Y-1)*m; y++ {
+				for i := 0; i < m; i++ {
+					for j := 0; j < m; j++ {
+						img.Set(x+i, y+j, p[name][x][y])
+					}
+				}
+			}
+		}
+
+		imageCollection = append(imageCollection, img)
 	}
 }
 

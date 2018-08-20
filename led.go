@@ -194,6 +194,11 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
+	case "getImages":
+		imageHTMLSlice := getImages()
+
+		w.Write([]byte(strings.Join(strings.Join(imageHTMLSlice, "")))
+		break
 	case "saveCanvasAsImage":
 		name := req.Form.Get("name")
 		saveCanvasAsImage(name)
@@ -385,6 +390,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		$('.pixel').on('mousedown', function(event) {
 			event.preventDefault();
 		    drawmode = true;
+		    
 		});
 
 		$('.pixel').on('contextmenu', function(event){
@@ -466,6 +472,20 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		beforeSend: function(){
 		},
 		success: function(json){
+		}
+		});
+	}
+
+	function getImages() {
+		$.ajax({
+		url: "/api?action=getImages",
+		type: 'post',
+		dataType: 'html',
+		data: {name: name, canvasSerial: canvasSerial},
+		beforeSend: function(){
+		},
+		success: function(html){
+			$('#images').html(html)
 		}
 		});
 	}
@@ -571,6 +591,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<button id='clear' class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
+	<div id='images'></div>
 	</body>
 	</html>`, buttons)
 
