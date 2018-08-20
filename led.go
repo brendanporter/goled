@@ -319,7 +319,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	var buttons string
 	bounds := c.Bounds()
-	buttons += "<tr><td></td>"
+	buttons += "<tr><td class='marker'></td>"
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
 		if x%5 == 0 {
