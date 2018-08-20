@@ -560,7 +560,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.pixel {background-color: black; height:20px; width: 20px;}
 	#pixelTable {position: absolute; top:40px;}
 	#clear {position: absolute; right:0px;}
-	.marker {background-color: black;}
+	.marker {background-color: black; height:20px; width: 20px;}
 	</style>
 	</head>
 	<body>
