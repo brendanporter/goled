@@ -439,7 +439,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		url: "/api?action=saveCanvasAsImage",
 		type: 'post',
 		dataType: 'json',
-		data: {name: name}
+		data: {name: name},
 		beforeSend: function(){
 		},
 		success: function(json){
