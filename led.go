@@ -322,19 +322,21 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	buttons += "<tr><td></td>"
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
 		if x%5 == 0 {
-			buttons += "<td class='marker'></td>"
+			buttons += "<td class='marker'> </td>"
 		} else {
-			buttons += "<td></td>"
+			buttons += "<td> </td>"
 		}
 		//buttons += fmt.Sprintf("<td>%d</td>", x)
 	}
 	buttons += fmt.Sprintf("</tr>")
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-		if y%5 == 0 {
-			buttons += "<tr><td class='marker'></td>"
+		if y == 0 {
+			buttons += "<tr><td class='marker'>0</td>"
+		} else if y%5 == 0 {
+			buttons += "<tr><td class='marker'> </td>"
 		} else {
-			buttons += "<tr><td></td>"
+			buttons += "<tr><td> </td>"
 		}
 		//buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
@@ -555,7 +557,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</script>
 	<style>
 	td {padding: 0px !important; min-width: 25px;}
-	.pixel {background-color: black;}
+	.pixel {background-color: black; height:20px; width: 20px;}
 	#pixelTable {position: absolute; top:40px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
