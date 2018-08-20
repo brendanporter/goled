@@ -12,16 +12,17 @@ var images [][][]color.RGBA // [Many][X][Y]color
 
 func saveCanvasAsImage() {
 	var newPixels [][]color.RGBA
-	/*
-		for _, pixcol := range pixels {
+
+	for x, pixcol := range pixels {
+		/*
 			var newCol []color.RGBA
 			for _, pixel := range pixcol {
 				newCol = append(newCol, pixel)
 			}
-			newPixels = append(newPixels, newCol)
-		}
-	*/
-	copy(newPixels, pixels)
+		*/
+		newPixels[x] = append(newPixels[x], pixcol...)
+	}
+
 	images = append(images, newPixels)
 	for i, image := range images {
 		log.Printf("Image %d pixel 0,0 is: %v", i, image[0][0])
