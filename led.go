@@ -197,7 +197,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getImages":
 		imageHTMLSlice := getImages()
 
-		w.Write([]byte(strings.Join(strings.Join(imageHTMLSlice, "")))
+		w.Write([]byte(strings.Join(strings.Join(imageHTMLSlice, ""))))
 		break
 	case "saveCanvasAsImage":
 		name := req.Form.Get("name")
