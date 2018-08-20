@@ -8,60 +8,60 @@ import (
 
 var animations map[string][][][]color.RGBA // [Many][Frames][X][Y]color
 
-var images [][][]color.RGBA // [Many][X][Y]color
+var images map[string][][]color.RGBA // [Many][X][Y]color
 
 func saveCanvasAsImage() {
 	var newPixels [][]color.RGBA
-
-	for x, pixcol := range pixels {
-		/*
-			var newCol []color.RGBA
-			for _, pixel := range pixcol {
-				newCol = append(newCol, pixel)
-			}
-		*/
-		newPixels[x] = append(newPixels[x], pixcol...)
+	for _, pixcol := range pixels {
+		var newCol []color.RGBA
+		for _, pixel := range pixcol {
+			newCol = append(newCol, pixel)
+		}
+		newPixels = append(newPixels, newCol)
 	}
-
-	images = append(images, newPixels)
-	for i, image := range images {
-		log.Printf("Image %d pixel 0,0 is: %v", i, image[0][0])
-	}
+	images[name] = newPixels
 }
 
-func loadImageToCanvas(index int) {
-	for i, p := range images {
-		if i == index {
-			pLock.Lock()
-			bounds := c.Bounds()
-			for x := bounds.Min.X; x < bounds.Max.X; x++ {
-				for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-					pixels[x][y] = p[x][y]
-				}
+func loadImageToCanvas(name string) {
+	if _, ok := images[name]; ok {
+		pLock.Lock()
+		bounds := c.Bounds()
+		for x := bounds.Min.X; x < bounds.Max.X; x++ {
+			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+				pixels[x][y] = images[name][x][y]
 			}
-			log.Printf("Pixel 0,0 color: %#v", pixels[0][0])
-			pLock.Unlock()
-			drawCanvas()
-			return
 		}
+		//log.Printf("Pixel 0,0 color: %#v", pixels[0][0])
+		pLock.Unlock()
+		drawCanvas()
+		return
 	}
 }
 
 func saveCanvasAsAnimationFrame(name string, frameIndex int) {
-	if frameIndex == 0 {
-		animations[name] = append(animations[name], pixels)
-	} else {
-		animations[name][frameIndex] = pixels
+
+	var newPixels [][]color.RGBA
+	for _, pixcol := range pixels {
+		var newCol []color.RGBA
+		for _, pixel := range pixcol {
+			newCol = append(newCol, pixel)
+		}
+		newPixels = append(newPixels, newCol)
 	}
+	animations[name][frameIndex] = newPixels
+
 }
 
 func playAnimationToCanvas(name string) {
-	a := animations[name]
 
-	for _, frame := range a {
+	for _, frame := range animations[name] {
 
 		pLock.Lock()
-		pixels = frame
+		for x := bounds.Min.X; x < bounds.Max.X; x++ {
+			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+				pixels[x][y] = frame[x][y]
+			}
+		}
 		pLock.Unlock()
 
 		drawCanvas()
