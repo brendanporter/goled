@@ -12,9 +12,9 @@ var images [][][]color.RGBA // [Many][X][Y]color
 
 func saveCanvasAsImage() {
 	var newPixels [][]color.RGBA
-	for x, pixcol := range pixels {
+	for _, pixcol := range pixels {
 		var newCol []color.RGBA
-		for y, pixel := range pixcol {
+		for _, pixel := range pixcol {
 			newCol = append(newCol, pixel)
 		}
 		newPixels = append(newPixels, newCol)
