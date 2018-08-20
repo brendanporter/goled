@@ -200,12 +200,11 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 	case "loadImageToCanvas":
 
-		index, err := strconv.Atoi(req.Form.Get("index"))
+		name, err := req.Form.Get("name")
 		if err != nil {
 			elog.Print(err)
 		}
-		log.Printf("Index: %v", index)
-		loadImageToCanvas(index)
+		loadImageToCanvas(name)
 		getDisplay(w, req)
 	default:
 		log.Printf("Unknown API requested: %s", action)
@@ -324,15 +323,25 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	bounds := c.Bounds()
 	buttons += "<tr><td></td>"
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
-		buttons += fmt.Sprintf("<td>%d</td>", x)
+		if x%5 == 0 {
+			buttons += "<td class='marker'></td>"
+		} else {
+			buttons += "<td></td>"
+		}
+		//buttons += fmt.Sprintf("<td>%d</td>", x)
 	}
 	buttons += fmt.Sprintf("</tr>")
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-		buttons += fmt.Sprintf("<tr><td>%d</td>", y)
+		if y%5 == 0 {
+			buttons += "<td class='marker'></td>"
+		} else {
+			buttons += "<td></td>"
+		}
+		//buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'> </td>", x, y, x, y)
+			buttons += fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onmousedown='setPixel(%d,%d)'> </td>", x, y, x, y)
 		}
 		buttons += fmt.Sprintf("</tr>")
 	}
@@ -432,12 +441,12 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
-	function loadImageToCanvas(index) {
+	function loadImageToCanvas(name) {
 		$.ajax({
 		url: "/api?action=loadImageToCanvas",
 		type: 'post',
 		dataType: 'json',
-		data: {index: index, canvasSerial: canvasSerial},
+		data: {name: name, canvasSerial: canvasSerial},
 		beforeSend: function(){
 		},
 		success: function(json){
@@ -534,6 +543,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.pixel {background-color: black;}
 	#pixelTable {position: absolute; top:40px;}
 	#clear {position: absolute; right:0px;}
+	.marker {background-color: black;}
 	</style>
 	</head>
 	<body>
