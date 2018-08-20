@@ -21,7 +21,8 @@ func saveCanvasAsImage() {
 			newPixels = append(newPixels, newCol)
 		}
 	*/
-	images = append(images, copy(newPixels, pixels))
+	copy(newPixels, pixels)
+	images = append(images, newPixels)
 	for i, image := range images {
 		log.Printf("Image %d pixel 0,0 is: %v", i, image[0][0])
 	}
