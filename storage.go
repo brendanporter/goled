@@ -5,6 +5,7 @@ import (
 	"image/png"
 	//"log"
 	"bytes"
+	"encoding/base64"
 	"image"
 	"time"
 )
@@ -58,7 +59,7 @@ func getImages() []string {
 			for y := bounds.Min.Y; y <= (bounds.Max.Y-1)*m; y++ {
 				for i := 0; i < m; i++ {
 					for j := 0; j < m; j++ {
-						img.Set(x+i, y+j, p[name][x][y])
+						img.Set(x+i, y+j, p[x][y])
 					}
 				}
 			}
