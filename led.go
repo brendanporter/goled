@@ -12,7 +12,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	//"log"
+	"log"
 	"net/http"
 	//"path/filepath"
 	"flag"
