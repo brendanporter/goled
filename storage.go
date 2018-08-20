@@ -66,7 +66,7 @@ func getImages() []string {
 		}
 
 		png.Encode(buf, img)
-		imgBase64Str := base64.StdEncoding.EncodeToString(buf)
+		imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
 		img2html := "<img src=\"data:image/png;base64," + imgBase64Str + "\" />"
 		imageCollection = append(imageCollection, img2html)
 		buf.Reset()
