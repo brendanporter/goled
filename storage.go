@@ -11,8 +11,8 @@ var animations map[string][][][]color.RGBA // [Many][Frames][X][Y]color
 var images [][][]color.RGBA // [Many][X][Y]color
 
 func saveCanvasAsImage() {
-	images = append(images, pixels)
-	log.Printf("Image 0, pixel 0,0: %#v", images[0][0][0])
+	newPixels := [][]color.RGBA{pixels[:]}
+	images = append(images, newPixels)
 	for i, image := range images {
 		log.Printf("Image %d pixel 0,0 is: %v", i, image[0][0])
 	}
