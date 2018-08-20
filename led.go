@@ -321,7 +321,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	bounds := c.Bounds()
 	buttons += "<tr><td></td>"
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
-		if x%5 == 0 {
+
+		if x == 0 {
+			buttons += "<tr><td class='marker'>0</td>"
+		} else if x%5 == 0 {
 			buttons += "<td class='marker'> </td>"
 		} else {
 			buttons += "<td> </td>"
@@ -331,9 +334,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	buttons += fmt.Sprintf("</tr>")
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-		if y == 0 {
-			buttons += "<tr><td class='marker'>0</td>"
-		} else if y%5 == 0 {
+		if y%5 == 0 {
 			buttons += "<tr><td class='marker'> </td>"
 		} else {
 			buttons += "<tr><td> </td>"
