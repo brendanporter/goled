@@ -339,7 +339,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		//buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onmousedown='setPixel(%d,%d)'> </td>", x, y, x, y)
+			buttons += fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onmousedown='setPixel(%d,%d)'></td>", x, y, x, y)
 		}
 		buttons += fmt.Sprintf("</tr>")
 	}
@@ -429,7 +429,16 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function saveCanvasAsImage() {
 
-		name = prompt('Please name the image')
+		var name = prompt('Please name the image:')
+		if (name === "") {
+		    // user pressed OK, but the input field was empty
+		    return false;
+		} else if (name) {
+		    // user typed something and hit OK
+		} else {
+		    // user hit cancel
+		    return false;
+		}
 
 		if(name === ""){
 			return false;
@@ -484,29 +493,29 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		if(!drawmode){
 
-		$.ajax({
-		url: "/api?action=getDisplay&canvasSerial=" + canvasSerial,
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function(){
-		},
-		success: function(json){
+			$.ajax({
+			url: "/api?action=getDisplay&canvasSerial=" + canvasSerial,
+			type: 'post',
+			dataType: 'json',
+			beforeSend: function(){
+			},
+			success: function(json){
 
-			if(typeof json == "undefined"){
-				return
-			}
+				if(typeof json == "undefined"){
+					return
+				}
 
-			canvasSerial = json.CanvasSerial;
+				canvasSerial = json.CanvasSerial;
 
-			$.each(json.Canvas, function(i,col){
-				$.each(col, function(j, px){
-					td = i +2;
-					tr = j +2;
-					$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
+				$.each(json.Canvas, function(i,col){
+					$.each(col, function(j, px){
+						td = i +2;
+						tr = j +2;
+						$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
+					});
 				});
+			}
 			});
-		}
-		});
 
 		}
 	}
