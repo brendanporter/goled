@@ -53,7 +53,7 @@ func saveCanvasAsAnimationFrame(name string, frameIndex int) {
 }
 
 func playAnimationToCanvas(name string) {
-
+	bounds := c.Bounds()
 	for _, frame := range animations[name] {
 
 		pLock.Lock()

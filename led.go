@@ -12,7 +12,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
+	//"log"
 	"net/http"
 	//"path/filepath"
 	"flag"
@@ -200,10 +200,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 	case "loadImageToCanvas":
 
-		name, err := req.Form.Get("name")
-		if err != nil {
-			elog.Print(err)
-		}
+		name := req.Form.Get("name")
 		loadImageToCanvas(name)
 		getDisplay(w, req)
 	default:
