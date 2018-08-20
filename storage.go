@@ -4,6 +4,7 @@ import (
 	"image/color"
 	"image/png"
 	//"log"
+	"bytes"
 	"image"
 	"time"
 )
@@ -45,10 +46,11 @@ func loadImageToCanvas(name string) {
 	}
 }
 
-func getImages() {
+func getImages() []string {
+	buf := &bytes.Buffer{}
 	m := 5
 	bounds := c.Bounds()
-	var imageCollection []image.Image
+	var imageCollection []string
 	for _, p := range images {
 		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X-1)*m, (bounds.Max.Y-1)*m))
 
@@ -62,8 +64,13 @@ func getImages() {
 			}
 		}
 
-		imageCollection = append(imageCollection, img)
+		png.Encode(buf, img)
+		imgBase64Str := base64.StdEncoding.EncodeToString(buf)
+		img2html := "<img src=\"data:image/png;base64," + imgBase64Str + "\" />"
+		imageCollection = append(imageCollection, img2html)
+		buf.Reset()
 	}
+	return imageCollection
 }
 
 func saveCanvasAsAnimationFrame(name string, frameIndex int) {
