@@ -195,7 +195,8 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		getDisplay(w, req)
 		break
 	case "saveCanvasAsImage":
-		saveCanvasAsImage()
+		name := req.Form.Get("name")
+		saveCanvasAsImage(name)
 		w.WriteHeader(http.StatusNoContent)
 		break
 	case "loadImageToCanvas":
@@ -427,10 +428,18 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	function saveCanvasAsImage() {
+
+		name = prompt('Please name the image')
+
+		if(name === ""){
+			return false;
+		}
+
 		$.ajax({
 		url: "/api?action=saveCanvasAsImage",
 		type: 'post',
 		dataType: 'json',
+		data: {name: name}
 		beforeSend: function(){
 		},
 		success: function(json){
@@ -547,7 +556,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<input id='color' type='color' />
 	<button class='pallette btn btn-danger' onclick="$('#color').spectrum('set', 'rgb(255,0,0)');setColor();">Red</button>
 	<button class='pallette btn btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
-	<button class='pallette btn btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();"">Blue</button>
+	<button class='pallette btn btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();">Blue</button>
+	<button class='pallette btn btn-info' onclick="saveCanvasAsImage()">Save Image</button>
 	<button id='clear' class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>

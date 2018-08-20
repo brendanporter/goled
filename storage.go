@@ -10,7 +10,12 @@ var animations map[string][][][]color.RGBA // [Many][Frames][X][Y]color
 
 var images map[string][][]color.RGBA // [Many][X][Y]color
 
-func saveCanvasAsImage() {
+func init() {
+	images = make(map[string][][]color.RGBA)
+	animations = make(map[string][][][]color.RGBA)
+}
+
+func saveCanvasAsImage(name string) {
 	var newPixels [][]color.RGBA
 	for _, pixcol := range pixels {
 		var newCol []color.RGBA
