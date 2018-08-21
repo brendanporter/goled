@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"image"
 	"io/ioutil"
+	"path/filepath"
 	"time"
 )
 
@@ -35,7 +36,12 @@ func saveImagesToDisk() {
 }
 
 func loadImagesFromDisk() {
-	fileBytes, err := ioutil.ReadFile("images.json")
+	absPath, err := filepath.Abs("images.json")
+	if err != nil {
+		elog.Print(err)
+	}
+
+	fileBytes, err := ioutil.ReadFile(absPath)
 	if err != nil {
 		elog.Print(err)
 		return
