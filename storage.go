@@ -6,7 +6,9 @@ import (
 	//"log"
 	"bytes"
 	"encoding/base64"
+	"encoding/json"
 	"image"
+	"io/ioutil"
 	"time"
 )
 
@@ -17,6 +19,31 @@ var images map[string][][]color.RGBA // [Many][X][Y]color
 func init() {
 	images = make(map[string][][]color.RGBA)
 	animations = make(map[string][][][]color.RGBA)
+}
+
+func saveImagesToDisk() {
+	imagesJSON, err := json.Marshal(images)
+	if err != nil {
+		elog.Print(err)
+	}
+
+	err = ioutil.WriteFile("images.json", imagesJSON, 0755)
+	if err != nil {
+		elog.Print(err)
+	}
+}
+
+func loadImagesFromDisk() {
+	fileBytes, err := ioutil.ReadFile("images.json")
+	if err != nil {
+		elog.Print(err)
+	}
+
+	err = json.Unmarshal(fileBytes, &images)
+	if err != nil {
+		elog.Print(err)
+	}
+
 }
 
 func saveCanvasAsImage(name string) {
