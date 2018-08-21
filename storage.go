@@ -25,6 +25,7 @@ func saveImagesToDisk() {
 	imagesJSON, err := json.Marshal(images)
 	if err != nil {
 		elog.Print(err)
+		return
 	}
 
 	err = ioutil.WriteFile("images.json", imagesJSON, 0755)
@@ -37,6 +38,7 @@ func loadImagesFromDisk() {
 	fileBytes, err := ioutil.ReadFile("images.json")
 	if err != nil {
 		elog.Print(err)
+		return
 	}
 
 	err = json.Unmarshal(fileBytes, &images)
