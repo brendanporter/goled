@@ -481,7 +481,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		url: "/api?action=getImages",
 		type: 'post',
 		dataType: 'html',
-		data: {name: name, canvasSerial: canvasSerial},
+		data: {canvasSerial: canvasSerial},
 		beforeSend: function(){
 		},
 		success: function(html){
@@ -580,6 +580,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#pixelTable {position: absolute; top:40px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black; height:20px; width: 20px;}
+	#images {position:absolute; bottom:0px;}
+	#images img {margin-left:10px;}
 	</style>
 	</head>
 	<body>
