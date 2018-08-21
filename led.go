@@ -606,7 +606,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		pxJSON = JSON.stringify(pixels);
 
-		console.log(pxJSON);
 
 		$.ajax({
 		url: "/api?action=setPixel",
@@ -622,11 +621,11 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 	</script>
 	<style>
-	td {padding: 0px !important; min-width: 25px;}
-	.pixel {background-color: black; height:20px; width: 20px;}
+	td {padding: 0px !important;}
+	.pixel {background-color: black; height:25px; width: 25px;}
 	#pixelTable {position: absolute; top:40px;}
 	#clear {position: absolute; right:0px;}
-	.marker {background-color: black; height:20px; width: 20px;}
+	.marker {background-color: black;}
 	#images {position:absolute; bottom:0px;}
 	.imgContainer {margin:10px; cursor:pointer; float:left;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
