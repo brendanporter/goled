@@ -55,7 +55,7 @@ func init() {
 func main() {
 
 	sigChan := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
+	signal.Notify(sigChan, os.Interrupt)
 	go func() {
 		for sig := range sigChan {
 			// sig is a ^C, handle it
