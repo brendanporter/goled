@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"image"
 	"io/ioutil"
+	"log"
 	"path/filepath"
 	"time"
 )
