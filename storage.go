@@ -72,6 +72,7 @@ func saveCanvasAsImage(name string) {
 		newPixels = append(newPixels, newCol)
 	}
 	images[name] = newPixels
+	saveImagesToDisk()
 }
 
 func loadImageToCanvas(name string) {
