@@ -57,9 +57,9 @@ func getImages() []string {
 
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				for i := 0; i < m; i++ {
-					for j := 0; j < m; j++ {
-						img.Set(x+i, y+j, p[x][y])
+				for xx := x * m; xx < (x*m)+m; xx++ {
+					for yy := x * m; yy < (y*m)+m; yy++ {
+						img.Set(xx, yy, p[x][y])
 					}
 				}
 			}
