@@ -441,6 +441,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		setInterval(refreshDisplayFromServer, 2000);
 
+		getImages()
+
 	}
 
 	function setColor(){
