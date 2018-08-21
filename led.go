@@ -625,7 +625,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.pixel {background-color: black; height:25px; width: 25px;}
 	#pixelTable {position: absolute; top:40px;}
 	#pixelTable tr:nth-child(0) {width:25px; height:25px;}
-	#pixelTable tr td:nth-child(0) {width:25px; height:25px;}
+	#pixelTable tr:nth-child(0) td:nth-child(0) {width:25px; height:25px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
 	#images {position:absolute; bottom:0px;}
