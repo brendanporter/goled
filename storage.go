@@ -67,7 +67,7 @@ func getImages() []string {
 
 		png.Encode(buf, img)
 		imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-		img2html := "<div class='imgContainer'><h2>" + name + "</h2><span class='fas fa-trash close-btn'></span><br/><img src=\"data:image/png;base64," + imgBase64Str + "\" onclick=\"loadImageToCanvas('" + name + "')\" /></div>"
+		img2html := "<div class='imgContainer'><h2>" + name + "</h2><i class='fas fa-trash fa-lg close-btn'></i><br/><img src=\"data:image/png;base64," + imgBase64Str + "\" onclick=\"loadImageToCanvas('" + name + "')\" /></div>"
 		imageCollection = append(imageCollection, img2html)
 		buf.Reset()
 	}
