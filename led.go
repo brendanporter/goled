@@ -50,7 +50,6 @@ var c *rgbmatrix.Canvas
 
 func init() {
 	elog = log.New(os.Stdout, "Error: ", log.LstdFlags|log.Lshortfile)
-	loadImagesFromDisk()
 }
 
 func main() {
@@ -64,6 +63,8 @@ func main() {
 			saveImagesToDisk()
 		}
 	}()
+
+	loadImagesFromDisk()
 
 	var cols int
 	var rows int
