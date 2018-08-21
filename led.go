@@ -622,9 +622,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</script>
 	<style>
 	td {padding: 0px !important;}
-	.pixel {background-color: black; height:25px; width: 25px;}
+	.pixel {background-color: black;}
 	#pixelTable {position: absolute; top:40px;}
-	#pixelTable tr td {width:25px; height:25px;}
+	#pixelTable tr td {width:20px; height:25px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
 	#images {position:absolute; bottom:0px;}
