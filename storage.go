@@ -53,10 +53,10 @@ func getImages() []string {
 	bounds := c.Bounds()
 	var imageCollection []string
 	for _, p := range images {
-		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
+		img := image.NewRGBA(image.Rect(0, 0, (len(p)*m)-1, (len(p[0])*m)-1))
 
-		for x := bounds.Min.X; x < (bounds.Max.X*m)-1; x++ {
-			for y := bounds.Min.Y; y < (bounds.Max.Y*m)-1; y++ {
+		for x := bounds.Min.X; x <= (bounds.Max.X*m)-1; x++ {
+			for y := bounds.Min.Y; y <= (bounds.Max.Y*m)-1; y++ {
 				for i := 0; i < m; i++ {
 					for j := 0; j < m; j++ {
 						img.Set(x+i, y+j, p[x][y])
