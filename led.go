@@ -49,6 +49,7 @@ const me = 24 // This pin is part of the 1->32 multiplexing circuitry. Used for 
 var c *rgbmatrix.Canvas
 
 func init() {
+	elog = log.New(os.Stdout, "Error: ", log.LstdFlags|log.Lshortfile)
 	loadImagesFromDisk()
 }
 
@@ -67,8 +68,6 @@ func main() {
 	var cols int
 	var rows int
 	var gpioSlowdown int
-
-	elog = log.New(os.Stdout, "Error: ", log.LstdFlags|log.Lshortfile)
 
 	flag.IntVar(&cols, "cols", 32, "LED Columns in matrix")
 	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
