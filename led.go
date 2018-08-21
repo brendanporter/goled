@@ -194,6 +194,15 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
+	case "deleteImage":
+		name := req.Form.Get("name")
+		if name == "" {
+			w.WriteHeader(http.StatusNoContent)
+			break
+		}
+		deleteImage(name)
+		w.WriteHeader(http.StatusNoContent)
+		break
 	case "getImages":
 		imageHTMLSlice := getImages()
 
@@ -470,7 +479,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	function deleteImage(name) {
 
 		if(!confirm("Delete image '" + name + "'?")) {
-			return false;
+			return false;	
 		}
 
 		$.ajax({
