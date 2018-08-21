@@ -418,6 +418,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		refreshDisplayFromServer();
 
 		setInterval(refreshDisplayFromServer, 2000);
+
 	}
 
 	function setColor(){
@@ -459,6 +460,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		beforeSend: function(){
 		},
 		success: function(json){
+			getImages()
 		}
 		});
 	}
@@ -483,6 +485,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		dataType: 'html',
 		data: {canvasSerial: canvasSerial},
 		beforeSend: function(){
+			$('#images').html('')
 		},
 		success: function(html){
 			$('#images').html(html)
