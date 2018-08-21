@@ -48,13 +48,21 @@ const me = 24 // This pin is part of the 1->32 multiplexing circuitry. Used for 
 
 var c *rgbmatrix.Canvas
 
-
 func init() {
 	loadImagesFromDisk()
 }
 
-
 func main() {
+
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		for sig := range sigChan {
+			// sig is a ^C, handle it
+			log.Printf("GOLED shutting down for SIGINT: %v", sig)
+			saveImagesToDisk()
+		}
+	}()
 
 	var cols int
 	var rows int
@@ -666,13 +674,3 @@ func cylon(clr color.RGBA, timeout time.Time) {
 	}
 	c.Clear()
 }
-
-c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	go func() {
-		for sig := range c {
-			// sig is a ^C, handle it
-			log.Printf("GOLED shutting down for SIGINT: %v", sig)
-			saveImagesToDisk()
-		}
-	}()
