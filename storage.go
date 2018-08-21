@@ -52,7 +52,7 @@ func getImages() []string {
 	m := 5
 	bounds := c.Bounds()
 	var imageCollection []string
-	for _, p := range images {
+	for name, p := range images {
 		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
 
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
@@ -67,7 +67,7 @@ func getImages() []string {
 
 		png.Encode(buf, img)
 		imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-		img2html := "<img src=\"data:image/png;base64," + imgBase64Str + "\" />"
+		img2html := "<img src=\"data:image/png;base64," + imgBase64Str + "\" onclick=\"loadImageToCanvas('" + name + "')\" />"
 		imageCollection = append(imageCollection, img2html)
 		buf.Reset()
 	}

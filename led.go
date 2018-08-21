@@ -581,7 +581,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black; height:20px; width: 20px;}
 	#images {position:absolute; bottom:0px;}
-	#images img {margin-left:10px;}
+	#images img {margin-left:10px; margin-bottom:10px; cursor:pointer;}
 	</style>
 	</head>
 	<body>
