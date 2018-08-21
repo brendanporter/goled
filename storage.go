@@ -48,7 +48,7 @@ func loadImageToCanvas(name string) {
 }
 
 func deleteImage(name string) {
-	delete(image, name)
+	delete(images, name)
 }
 
 func getImages() []string {
