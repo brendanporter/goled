@@ -23,13 +23,18 @@ func init() {
 }
 
 func saveImagesToDisk() {
+	absPath, err := filepath.Abs("images.json")
+	if err != nil {
+		elog.Print(err)
+	}
+
 	imagesJSON, err := json.Marshal(images)
 	if err != nil {
 		elog.Print(err)
 		return
 	}
 
-	err = ioutil.WriteFile("images.json", imagesJSON, 0755)
+	err = ioutil.WriteFile(absPath, imagesJSON, 0755)
 	if err != nil {
 		elog.Print(err)
 	}
@@ -51,6 +56,8 @@ func loadImagesFromDisk() {
 	if err != nil {
 		elog.Print(err)
 	}
+
+	log.Printf("Loaded %d images from disk", len(images))
 
 }
 
