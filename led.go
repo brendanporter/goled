@@ -611,7 +611,24 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
+	function deleteAnimation(name) {
 
+		if(!confirm("Delete image '" + name + "'?")) {
+			return false;	
+		}
+
+		$.ajax({
+		url: "/api?action=deleteAnimation",
+		type: 'post',
+		dataType: 'json',
+		data: {name: name, canvasSerial: canvasSerial},
+		beforeSend: function(){
+		},
+		success: function(){
+			getAnimations()
+		}
+		});
+	}
 
 	function deleteImage(name) {
 
