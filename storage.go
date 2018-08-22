@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"log"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -120,6 +121,48 @@ func getImages() []string {
 		img2html := "<div class='imgContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>" + name + "</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteImage('" + name + "')\"></i></div><div class='card-body'><img src=\"data:image/png;base64," + imgBase64Str + "\" onclick=\"loadImageToCanvas('" + name + "')\" /></div></div>"
 		imageCollection = append(imageCollection, img2html)
 		buf.Reset()
+	}
+	return imageCollection
+}
+
+func saveNewAnimation(name string) {
+	animations[name] = [][][]color.RGBA{}
+}
+
+func getAnimations() []string {
+	buf := &bytes.Buffer{}
+	m := 2
+	bounds := c.Bounds()
+	var animationCollection []string
+	for name, animationFrames := range animations {
+
+		var frames []string
+
+		for i, animationFrame := range animationFrames {
+			img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
+
+			for x := bounds.Min.X; x < bounds.Max.X; x++ {
+				for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+					for xx := x * m; xx < (x*m)+m; xx++ {
+						for yy := y * m; yy < (y*m)+m; yy++ {
+							img.Set(xx, yy, p[x][y])
+						}
+					}
+				}
+			}
+
+			png.Encode(buf, img)
+			imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
+			frames = append(frames, "<img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" />")
+			buf.Reset()
+		}
+
+		frameThumbnails := strings.Join(frames, "")
+
+		img2html := fmt.Sprintf("<div class='imgContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>"+name+"</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteImage('"+name+"')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><button class='btn btn-primary' onclick=\"editAnimation('"+name+"')\">Edit Animation</button><button class='btn btn-primary' onclick=\"saveFrameToAnimation('"+name+"')\">Save Frame</button></div></div>", frameThumbnails)
+		animationCollection = append(animationCollection, img2html)
+		buf.Reset()
+
 	}
 	return imageCollection
 }

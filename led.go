@@ -625,7 +625,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
 	#storage {position:absolute; bottom:0px; left:0px; right:0px;}
-	.imageCarousel {width:100%%; white-space: nowrap; overflow-x: scroll; overflow-y: hidden; background-color:lightgrey;}
+	.imageCarousel {width:100%%; white-space: nowrap; overflow-x: scroll; overflow-y: hidden; background-color:lightgrey; margin-bottom: 10px;}
 	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	.carouselTitle {font-size:28px; font-weight:bold; padding-left:5px;}
