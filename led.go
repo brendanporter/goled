@@ -528,6 +528,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		beforeSend: function(){
 		},
 		success: function(json){
+			getAnimations();
 		}
 		});
 	}
