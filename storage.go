@@ -264,6 +264,11 @@ func saveCanvasAsAnimationFrame(name string, frameIndex int) {
 }
 
 func getAnimationEditor(w http.ResponseWriter, req *http.Request) {
+
+	output := &strings.Builder{}
+
+	output.WriteString(`<table class='table table-striped table-condensed'><tr><th>Frame</th></tr>`)
+
 	name := req.Form.Get("name")
 
 	buf := &bytes.Buffer{}
@@ -286,16 +291,15 @@ func getAnimationEditor(w http.ResponseWriter, req *http.Request) {
 
 		png.Encode(buf, img)
 		imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-		frames = append(frames, "<img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" />")
+		output.WriteString("<tr><td><img class='animationFrame' src=\"data:image/png;base64," + imgBase64Str + "\" /></td></tr>")
 		buf.Reset()
 
-		frameThumbnails := strings.Join(frames, "")
-
-		img2html := fmt.Sprintf("<div class='animContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>%s</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteAnimation('%s')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><div class='btn-group'><button class='btn btn-secondary' onclick=\"editAnimation('%s')\">Edit Animation <i class='fas fa-edit'></i></button><button class='btn btn-success' onclick=\"saveFrameToAnimation('%s')\">Save Frame <i class='fas fa-save'></i></button></div> <button class='btn btn-success' onclick=\"playAnimation('%s')\">Play <i class='fas fa-play'></i></button></div></div>", name, name, frameThumbnails, name, name, name)
-		frames = append(frames, img2html)
-		buf.Reset()
+		//img2html := fmt.Sprintf("<div class='animContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>%s</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteAnimation('%s')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><div class='btn-group'><button class='btn btn-secondary' onclick=\"editAnimation('%s')\">Edit Animation <i class='fas fa-edit'></i></button><button class='btn btn-success' onclick=\"saveFrameToAnimation('%s')\">Save Frame <i class='fas fa-save'></i></button></div> <button class='btn btn-success' onclick=\"playAnimation('%s')\">Play <i class='fas fa-play'></i></button></div></div>", name, name, frameThumbnails, name, name, name)
+		//frames = append(frames, img2html)
 
 	}
+
+	output.WriteString("</table>")
 	//return frames
 }
 

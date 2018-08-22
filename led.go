@@ -609,16 +609,17 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
-	function showAnimationEditor(name){
+	function getAnimationEditor(name){
 		$.ajax({
-		url: "/api?action=getAnimations",
+		url: "/api?action=getAnimationEditor",
 		type: 'post',
 		dataType: 'html',
-		data: {canvasSerial: canvasSerial},
+		data: {name: name, canvasSerial: canvasSerial},
 		beforeSend: function(){
 			$('.modal .modal-body').html('')
 		},
 		success: function(html){
+			$('.modal .modal-body').html(html)
 			$('.modal').modal('show')
 		}
 		});
