@@ -274,8 +274,7 @@ func getAnimationEditor(w http.ResponseWriter, req *http.Request) {
 	buf := &bytes.Buffer{}
 	m := 5
 	bounds := c.Bounds()
-	var frames []string
-	for name, animationFrame := range animations[name] {
+	for _, animationFrame := range animations[name] {
 
 		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
 
