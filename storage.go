@@ -136,6 +136,23 @@ func loadImageToCanvas(name string) {
 	}
 }
 
+func loadAnimationFrameToCanvas(name string, frame int) {
+	if i, ok := images[name]; ok {
+		if i == frame {
+			pLock.Lock()
+			bounds := c.Bounds()
+			for x := bounds.Min.X; x < bounds.Max.X; x++ {
+				for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+					pixels[x][y] = images[name][x][y]
+				}
+			}
+			pLock.Unlock()
+			drawCanvas()
+			return
+		}
+	}
+}
+
 func deleteImage(name string) {
 	delete(images, name)
 	saveImagesToDisk()
@@ -200,7 +217,7 @@ func getAnimations() []string {
 
 		var frames []string
 
-		for _, animationFrame := range animationFrames {
+		for i, animationFrame := range animationFrames {
 			img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
 
 			for x := bounds.Min.X; x < bounds.Max.X; x++ {
@@ -215,7 +232,7 @@ func getAnimations() []string {
 
 			png.Encode(buf, img)
 			imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-			frames = append(frames, "<img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" />")
+			frames = append(frames, fmt.Sprintf("<img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" onclick=\"loadAnimationFrameToCanvas('"+name+"',%d)\"/>", i))
 			buf.Reset()
 		}
 
@@ -241,6 +258,42 @@ func saveCanvasAsAnimationFrame(name string, frameIndex int) {
 	}
 	animations[name][frameIndex] = newPixels
 
+}
+
+func getAnimationEditor(w http.ResponseWriter, req *http.Request) {
+	name := req.Form.Get("name")
+
+	buf := &bytes.Buffer{}
+	m := 5
+	bounds := c.Bounds()
+	var frames []string
+	for name, animationFrame := range animations[name] {
+
+		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
+
+		for x := bounds.Min.X; x < bounds.Max.X; x++ {
+			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+				for xx := x * m; xx < (x*m)+m; xx++ {
+					for yy := y * m; yy < (y*m)+m; yy++ {
+						img.Set(xx, yy, animationFrame[x][y])
+					}
+				}
+			}
+		}
+
+		png.Encode(buf, img)
+		imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
+		frames = append(frames, "<img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" />")
+		buf.Reset()
+
+		frameThumbnails := strings.Join(frames, "")
+
+		img2html := fmt.Sprintf("<div class='animContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>"+name+"</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteAnimation('"+name+"')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><div class='btn-group'><button class='btn btn-secondary' onclick=\"editAnimation('"+name+"')\">Edit Animation <i class='fas fa-edit'></i></button><button class='btn btn-success' onclick=\"saveFrameToAnimation('"+name+"')\">Save Frame <i class='fas fa-save'></i></button></div> <button class='btn btn-success' onclick=\"playAnimation('"+name+"')\">Play <i class='fas fa-play'></i></button></div></div>", frameThumbnails)
+		frames = append(frames, img2html)
+		buf.Reset()
+
+	}
+	return frames
 }
 
 func playAnimationToCanvas(name string, loops int) {

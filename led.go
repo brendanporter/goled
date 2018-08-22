@@ -210,6 +210,9 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
+	case "getAnimationEditor":
+		getAnimationEditor(w, req)
+		break
 	case "deleteAnimation":
 		name := req.Form.Get("name")
 		deleteAnimation(name)
@@ -264,6 +267,16 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "saveCanvasAsImage":
 		name := req.Form.Get("name")
 		saveCanvasAsImage(name)
+		w.WriteHeader(http.StatusNoContent)
+		break
+	case "loadAnimationFrameToCanvas":
+		frameStr := req.Form.Get("frame")
+		frame, err := strconv.Atoi(frameStr)
+		if err != nil {
+			loops = 3
+		}
+		name := req.Form.Get("name")
+		loadAnimationFrameToCanvas(name, frame)
 		w.WriteHeader(http.StatusNoContent)
 		break
 	case "loadImageToCanvas":
@@ -596,6 +609,21 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
+	function showAnimationEditor(name){
+		$.ajax({
+		url: "/api?action=getAnimations",
+		type: 'post',
+		dataType: 'html',
+		data: {canvasSerial: canvasSerial},
+		beforeSend: function(){
+			$('.modal .modal-body').html('')
+		},
+		success: function(html){
+			$('.modal').modal('show')
+		}
+		});
+	}
+
 	function getAnimations() {
 		$.ajax({
 		url: "/api?action=getAnimations",
@@ -655,6 +683,19 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		type: 'post',
 		dataType: 'json',
 		data: {name: name, canvasSerial: canvasSerial},
+		beforeSend: function(){
+		},
+		success: function(json){
+		}
+		});
+	}
+
+	function loadAnimationFrameToCanvas(name, frame) {
+		$.ajax({
+		url: "/api?action=loadAnimationFrameToCanvas",
+		type: 'post',
+		dataType: 'json',
+		data: {name: name, frame: frame},
 		beforeSend: function(){
 		},
 		success: function(json){
@@ -801,6 +842,26 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			</span>
 			<div id='animations'></div>
 		</div>
+	</div>
+
+	<div class="modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Modal title</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>Modal body text goes here.</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 	</body>
 	</html>`, buttons)
