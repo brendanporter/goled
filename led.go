@@ -524,7 +524,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
-	function playAnimation() {
+	function playAnimation(name) {
 		/*
 		var name = prompt('How many loops?')
 		if (loops === "") {
