@@ -235,8 +235,8 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 			loops = 3
 		}
 
-		if loops < 1 || loops > 10 {
-			loops = 10
+		if loops < 1 {
+			loops = 3
 		}
 
 		name := req.Form.Get("name")
@@ -525,7 +525,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	function playAnimation(name) {
-		/*
+		
 		var name = prompt('How many loops?')
 		if (loops === "") {
 		    // user pressed OK, but the input field was empty
@@ -535,9 +535,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		} else {
 		    // user hit cancel
 		    return false;
-		}*/
+		}
 
-		loops = 3;
 
 		$.ajax({
 		url: "/api?action=playAnimation",
