@@ -525,14 +525,27 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	function playAnimation() {
+
+		var name = prompt('How many loops?')
+		if (loops === "") {
+		    // user pressed OK, but the input field was empty
+		    loops = 3;
+		} else if (loops) {
+		    // user typed something and hit OK
+		} else {
+		    // user hit cancel
+		    return false;
+		}
+
 		$.ajax({
 		url: "/api?action=playAnimation",
 		type: 'post',
 		dataType: 'json',
-		data: {name: name},
+		data: {name: name, loops: loops},
 		beforeSend: function(){
 		},
 		success: function(json){
+			clearDisplay();
 		}
 		});
 	}
