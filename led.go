@@ -627,7 +627,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#pixelTable tr td {width:20px; height:25px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
-	#images {position:absolute; bottom:0px; left:0px; right:0px; white-space: nowrap;}
+	#images {position:absolute; bottom:0px; left:0px; right:0px; white-space: nowrap; overflow-x: scroll; overflow-y: hidden;}
 	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	</style>
