@@ -139,7 +139,7 @@ func getAnimations() []string {
 
 		var frames []string
 
-		for i, animationFrame := range animationFrames {
+		for _, animationFrame := range animationFrames {
 			img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
 
 			for x := bounds.Min.X; x < bounds.Max.X; x++ {
