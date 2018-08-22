@@ -263,6 +263,7 @@ func saveCanvasAsAnimationFrame(name string, frameIndex int) {
 
 }
 
+/*
 func getAnimationEditor(w http.ResponseWriter, req *http.Request) {
 	name := req.Form.Get("name")
 
@@ -298,6 +299,7 @@ func getAnimationEditor(w http.ResponseWriter, req *http.Request) {
 	}
 	return frames
 }
+*/
 
 func playAnimationToCanvas(name string, loops int) {
 	bounds := c.Bounds()

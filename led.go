@@ -272,9 +272,6 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "loadAnimationFrameToCanvas":
 		frameStr := req.Form.Get("frame")
 		frame, err := strconv.Atoi(frameStr)
-		if err != nil {
-			loops = 3
-		}
 		name := req.Form.Get("name")
 		loadAnimationFrameToCanvas(name, frame)
 		w.WriteHeader(http.StatusNoContent)
