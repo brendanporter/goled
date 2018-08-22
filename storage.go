@@ -25,6 +25,47 @@ func init() {
 	animations = make(map[string][][][]color.RGBA)
 }
 
+func saveAnimationsToDisk() {
+	absPath, err := filepath.Abs("animations.json")
+	if err != nil {
+		elog.Print(err)
+	}
+
+	animationsJSON, err := json.Marshal(animations)
+	if err != nil {
+		elog.Print(err)
+		return
+	}
+
+	err = ioutil.WriteFile(absPath, animationsJSON, 0755)
+	if err != nil {
+		elog.Print(err)
+	}
+
+	log.Printf("Saved %d animations", len(images))
+}
+
+func loadAnimationsFromDisk() {
+	absPath, err := filepath.Abs("animations.json")
+	if err != nil {
+		elog.Print(err)
+	}
+
+	fileBytes, err := ioutil.ReadFile(absPath)
+	if err != nil {
+		elog.Print(err)
+		return
+	}
+
+	err = json.Unmarshal(fileBytes, &animations)
+	if err != nil {
+		elog.Print(err)
+	}
+
+	log.Printf("Loaded %d animations from disk", len(images))
+
+}
+
 func saveImagesToDisk() {
 	absPath, err := filepath.Abs("images.json")
 	if err != nil {

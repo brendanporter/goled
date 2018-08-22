@@ -61,10 +61,12 @@ func main() {
 			// sig is a ^C, handle it
 			log.Printf("GOLED shutting down for SIGINT: %v", sig)
 			saveImagesToDisk()
+			saveAnimationsToDisk()
 		}
 	}()
 
 	loadImagesFromDisk()
+	loadAnimationsFromDisk()
 
 	var cols int
 	var rows int
