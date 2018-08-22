@@ -42,7 +42,7 @@ func saveAnimationsToDisk() {
 		elog.Print(err)
 	}
 
-	log.Printf("Saved %d animations", len(images))
+	log.Printf("Saved %d animations", len(animations))
 }
 
 func loadAnimationsFromDisk() {
@@ -62,7 +62,7 @@ func loadAnimationsFromDisk() {
 		elog.Print(err)
 	}
 
-	log.Printf("Loaded %d animations from disk", len(images))
+	log.Printf("Loaded %d animations from disk", len(animations))
 
 }
 
