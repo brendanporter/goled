@@ -278,7 +278,7 @@ func clearDisplay() {
 	bounds := c.Bounds()
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
 		for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-			pixels[x][y] = color.RGBA{0, 0, 0, 0}
+			pixels[x][y] = color.RGBA{0, 0, 0, 255}
 			c.Set(x, y, pixels[x][y])
 		}
 	}
@@ -627,8 +627,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#pixelTable tr td {width:20px; height:25px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
-	#images {position:absolute; bottom:0px;}
-	.imgContainer {margin:10px; cursor:pointer; float:left;}
+	#images {position:absolute; bottom:0px; left:0px; right:0px; white-space: nowrap;}
+	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	</style>
 	</head>
