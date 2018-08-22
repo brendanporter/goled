@@ -636,17 +636,24 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<button class='pallette btn btn-danger' onclick="$('#color').spectrum('set', 'rgb(255,0,0)');setColor();">Red</button>
 	<button class='pallette btn btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
 	<button class='pallette btn btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();">Blue</button>
-	<button class='pallette btn btn-info' onclick="saveCanvasAsImage()">Save Image</button>
+	
 	<button id='clear' class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 	<div id='storage'>
 		<div class='imageCarousel'>
-			<span class='carouselTitle'>Images<span>
+			<span class='carouselTitle'>
+				Images 
+				<button class='pallette btn btn-info' onclick="saveCanvasAsImage()">Save Image</button>
+			<span>
 			<div id='images'></div>
 		</div>
 		<div class='imageCarousel'>
-			<span class='carouselTitle'>Animations</span>
+			<span class='carouselTitle'>
+				Animations 
+				<button class='pallette btn btn-info' onclick="newAnimation()">New Animation</button> 
+				<button class='pallette btn btn-info' onclick="saveCanvasAsAnimationFrame()">Save Frame To Animation</button>
+			</span>
 			<div id='animations'></div>
 		</div>
 	</div>
