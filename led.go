@@ -404,17 +404,12 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 
 	function init() {
-		$(document).keyup(function(event) {
-  			  if ( event.which == 68 ) {
-			    event.preventDefault();
-			    drawmode = !drawmode;
-			  }
-		});
+
 
 		$('.pixel').on('mousedown', function(event) {
+			event.target.onclick.apply(event);
 			event.preventDefault();
 		    drawmode = true;
-		    event.target.onclick.apply(event)
 		});
 
 		$('.pixel').on('contextmenu', function(event){
