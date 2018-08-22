@@ -407,7 +407,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 
 		$('.pixel').on('mousedown', function(event) {
-			event.target.onclick.apply(event);
+			if event.which == 3 {
+				event.target.onclick.apply(event);
+			}
 			event.preventDefault();
 		    drawmode = true;
 		});
@@ -636,8 +638,12 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<button id='clear' class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
-	<div id='images' class='imageCarousel'></div>
-	<div id='animations' class='imageCarousel'></div>
+	<div><span>Images</span>
+		<div id='images' class='imageCarousel'></div>
+	</div>
+	<div><span>Animations</span>
+		<div id='animations' class='imageCarousel'></div>
+	</div>
 	</body>
 	</html>`, buttons)
 
