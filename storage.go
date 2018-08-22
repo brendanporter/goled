@@ -221,7 +221,7 @@ func getAnimations() []string {
 
 		frameThumbnails := strings.Join(frames, "")
 
-		img2html := fmt.Sprintf("<div class='imgContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>"+name+"</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteAnimation('"+name+"')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><div class='btn-group'><button class='btn btn-secondary' onclick=\"editAnimation('"+name+"')\">Edit Animation</button><button class='btn btn-success' onclick=\"saveFrameToAnimation('"+name+"')\">Save Frame</button><button class='btn btn-success' onclick=\"playAnimation('"+name+"')\"><i class='fas fas-play fas-2x'></i>Play</button></div></div></div>", frameThumbnails)
+		img2html := fmt.Sprintf("<div class='animContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>"+name+"</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteAnimation('"+name+"')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><div class='btn-group'><button class='btn btn-secondary' onclick=\"editAnimation('"+name+"')\">Edit Animation</button><button class='btn btn-success' onclick=\"saveFrameToAnimation('"+name+"')\">Save Frame</button><button class='btn btn-success' onclick=\"playAnimation('"+name+"')\"><i class='fas fas-play fas-2x'></i>Play</button></div></div></div>", frameThumbnails)
 		animationCollection = append(animationCollection, img2html)
 		buf.Reset()
 

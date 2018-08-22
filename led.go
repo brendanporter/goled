@@ -59,9 +59,9 @@ func main() {
 	go func() {
 		for sig := range sigChan {
 			// sig is a ^C, handle it
+
 			log.Printf("GOLED shutting down for SIGINT: %v", sig)
-			saveImagesToDisk()
-			saveAnimationsToDisk()
+			os.Exit(0)
 		}
 	}()
 
@@ -770,6 +770,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#storage {position:absolute; bottom:0px; left:0px; right:0px;}
 	.imageCarousel {width:100%%; white-space: nowrap; overflow-x: scroll; overflow-y: hidden; background-color:lightgrey; margin-bottom: 10px;}
 	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
+	.animContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	.carouselTitle {font-size:28px; font-weight:bold; padding-left:5px;}
 	.animationFrame {margin: 3px;}
