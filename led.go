@@ -402,7 +402,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		init();
 	});
 
-	myEvent = {};
 
 	function init() {
 		$(document).keyup(function(event) {
@@ -415,7 +414,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		$('.pixel').on('mousedown', function(event) {
 			event.preventDefault();
 		    drawmode = true;
-		    myEvent = event;
+		    event.target.onclick.apply(event)
 		});
 
 		$('.pixel').on('contextmenu', function(event){
