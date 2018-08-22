@@ -299,7 +299,7 @@ func getAnimationEditor(w http.ResponseWriter, req *http.Request) {
 	}
 
 	output.WriteString("</table>")
-	//return frames
+	w.Write([]byte(output.String())
 }
 
 func playAnimationToCanvas(name string, loops int) {
