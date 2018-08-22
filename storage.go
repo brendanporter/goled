@@ -169,6 +169,7 @@ func getImages() []string {
 
 func saveNewAnimation(name string) {
 	animations[name] = [][][]color.RGBA{}
+	saveAnimationsToDisk()
 }
 
 func saveFrameToAnimation(name string) {
@@ -181,7 +182,7 @@ func saveFrameToAnimation(name string) {
 		newPixels = append(newPixels, newCol)
 	}
 	animations[name] = append(animations[name], newPixels)
-	//saveImagesToDisk()
+	saveAnimationsToDisk()
 }
 
 func deleteAnimation(name string) {
