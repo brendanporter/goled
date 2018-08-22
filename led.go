@@ -531,6 +531,20 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
+	function getAnimations() {
+		$.ajax({
+		url: "/api?action=getAnimations",
+		type: 'post',
+		dataType: 'html',
+		data: {canvasSerial: canvasSerial},
+		beforeSend: function(){
+			$('#animations').html('')
+		},
+		success: function(html){
+			$('#animations').html(html)
+		}
+		});
+	}
 
 
 
