@@ -235,13 +235,13 @@ func getAnimations() []string {
 
 			png.Encode(buf, img)
 			imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-			frames = append(frames, fmt.Sprintf("<img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" onclick=\"loadAnimationFrameToCanvas('"+name+"',%d)\"/>", i))
+			frames = append(frames, fmt.Sprintf("<li><img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" onclick=\"loadAnimationFrameToCanvas('"+name+"',%d)\"/></li>", i))
 			buf.Reset()
 		}
 
 		frameThumbnails := strings.Join(frames, "")
 
-		img2html := fmt.Sprintf("<div class='animContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>"+name+"</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteAnimation('"+name+"')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><div class='btn-group'><button class='btn btn-secondary' onclick=\"getAnimationEditor('"+name+"')\">Edit Animation <i class='fas fa-edit'></i></button><button class='btn btn-success' onclick=\"saveFrameToAnimation('"+name+"')\">Save Frame <i class='fas fa-save'></i></button></div> <button class='btn btn-success' onclick=\"playAnimation('"+name+"')\">Play <i class='fas fa-play'></i></button></div></div>", frameThumbnails)
+		img2html := fmt.Sprintf("<div class='animContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>"+name+"</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteAnimation('"+name+"')\"></i></div><div class='card-body'><ul class='sortable'>%s</ul></div><div class='card-footer'><div class='btn-group'><button class='btn btn-secondary' onclick=\"getAnimationEditor('"+name+"')\">Edit Animation <i class='fas fa-edit'></i></button><button class='btn btn-success' onclick=\"saveFrameToAnimation('"+name+"')\">Save Frame <i class='fas fa-save'></i></button></div> <button class='btn btn-success' onclick=\"playAnimation('"+name+"')\">Play <i class='fas fa-play'></i></button></div></div>", frameThumbnails)
 		animationCollection = append(animationCollection, img2html)
 		buf.Reset()
 

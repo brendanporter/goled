@@ -817,6 +817,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	.carouselTitle {font-weight:bold; padding-left:5px;}
 	.animationFrame {margin: 3px;}
+
+	.sortable {list-style-type: none; margin: 0px; padding: 0; width:100%%;}
+	.sortable li {margin:3px 3px 3px 0; padding: 1px; float:left;}
 	</style>
 	</head>
 	<body>
