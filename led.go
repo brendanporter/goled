@@ -210,7 +210,8 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 
 	case "saveNewAnimation":
-		saveNewAnimation()
+		name := req.Form.Get("name")
+		saveNewAnimation(name)
 		break
 	case "getAnimations":
 		imageHTMLSlice := getAnimations()
