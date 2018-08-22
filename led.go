@@ -208,6 +208,22 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
+
+	case "saveNewAnimation":
+		saveNewAnimation()
+		break
+	case "getAnimations":
+		imageHTMLSlice := getAnimations()
+
+		w.Write([]byte(strings.Join(imageHTMLSlice, "")))
+		break
+	case "playAnimation":
+		name := req.Form.Get("name")
+		if name == "" {
+			w.WriteHeader(http.StatusNoContent)
+			break
+		}
+		playAnimationToCanvas(name)
 	case "deleteImage":
 		name := req.Form.Get("name")
 		if name == "" {
@@ -485,6 +501,36 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		}
 		});
 	}
+
+	function newAnimation() {
+		var name = prompt('Please name the animation:')
+		if (name === "") {
+		    // user pressed OK, but the input field was empty
+		    return false;
+		} else if (name) {
+		    // user typed something and hit OK
+		} else {
+		    // user hit cancel
+		    return false;
+		}
+
+		if(name === ""){
+			return false;
+		}
+
+		$.ajax({
+		url: "/api?action=saveNewAnimation",
+		type: 'post',
+		dataType: 'json',
+		data: {name: name},
+		beforeSend: function(){
+		},
+		success: function(json){
+		}
+		});
+	}
+
+
 
 
 	function deleteImage(name) {

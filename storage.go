@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"image"
 	"io/ioutil"
 	"log"
@@ -145,7 +146,7 @@ func getAnimations() []string {
 				for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 					for xx := x * m; xx < (x*m)+m; xx++ {
 						for yy := y * m; yy < (y*m)+m; yy++ {
-							img.Set(xx, yy, p[x][y])
+							img.Set(xx, yy, animationFrame[x][y])
 						}
 					}
 				}
@@ -164,7 +165,7 @@ func getAnimations() []string {
 		buf.Reset()
 
 	}
-	return imageCollection
+	return animationCollection
 }
 
 func saveCanvasAsAnimationFrame(name string, frameIndex int) {
