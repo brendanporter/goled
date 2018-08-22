@@ -407,7 +407,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 
 		$('.pixel').on('mousedown', function(event) {
-			if event.which == 3 {
+			if(event.which == 3){
 				event.target.onclick.apply(event);
 			}
 			event.preventDefault();
