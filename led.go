@@ -639,11 +639,11 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 		<div class='imageCarousel'>
-			<span>Images<span>
+			<span class='carouselTitle'>Images<span>
 			<div id='images'></div>
 		</div>
 		<div class='imageCarousel'>
-			<span>Animations</span>
+			<span class='carouselTitle'>Animations</span>
 			<div id='animations'></div>
 		</div>
 	</body>
