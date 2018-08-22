@@ -402,6 +402,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		init();
 	});
 
+	myEvent = {};
 
 	function init() {
 		$(document).keyup(function(event) {
@@ -414,7 +415,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		$('.pixel').on('mousedown', function(event) {
 			event.preventDefault();
 		    drawmode = true;
-		    
+		    myEvent = event;
 		});
 
 		$('.pixel').on('contextmenu', function(event){
@@ -627,7 +628,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#pixelTable tr td {width:20px; height:25px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
-	#images {position:absolute; bottom:0px; left:0px; right:0px; white-space: nowrap; overflow-x: scroll; overflow-y: hidden;}
+	.imageCarousel {position:absolute; bottom:0px; left:0px; right:0px; white-space: nowrap; overflow-x: scroll; overflow-y: hidden;}
 	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	</style>
@@ -641,7 +642,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<button id='clear' class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
-	<div id='images'></div>
+	<div id='images' class='imageCarousel'></div>
+	<div id='animations' class='imageCarousel'></div>
 	</body>
 	</html>`, buttons)
 
