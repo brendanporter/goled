@@ -493,6 +493,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		getImages()
 		getAnimations()
 
+		$('.sortable').sortable();
+		//$('.sortable').disableSelection();
+
 	}
 
 	function setColor(){
