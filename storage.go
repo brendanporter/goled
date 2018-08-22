@@ -177,7 +177,7 @@ func getAnimations() []string {
 
 		frameThumbnails := strings.Join(frames, "")
 
-		img2html := fmt.Sprintf("<div class='imgContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>"+name+"</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteImage('"+name+"')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><button class='btn btn-primary' onclick=\"editAnimation('"+name+"')\">Edit Animation</button><button class='btn btn-primary' onclick=\"saveFrameToAnimation('"+name+"')\">Save Frame</button></div></div>", frameThumbnails)
+		img2html := fmt.Sprintf("<div class='imgContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>"+name+"</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteImage('"+name+"')\"></i></div><div class='card-body'>%s</div><div class='card-footer'><div class='btn-group'><button class='btn btn-secondary' onclick=\"editAnimation('"+name+"')\">Edit Animation</button><button class='btn btn-success' onclick=\"saveFrameToAnimation('"+name+"')\">Save Frame</button><button class='btn btn-success' onclick=\"playAnimation('"+name+"')\"><i class='fas fas-play fas-2x'></i>Play</button></div></div></div>", frameThumbnails)
 		animationCollection = append(animationCollection, img2html)
 		buf.Reset()
 
@@ -199,20 +199,23 @@ func saveCanvasAsAnimationFrame(name string, frameIndex int) {
 
 }
 
-func playAnimationToCanvas(name string) {
+func playAnimationToCanvas(name string, loops int) {
 	bounds := c.Bounds()
-	for _, frame := range animations[name] {
+	for i := 0; i < loops; i++ {
+		for _, frame := range animations[name] {
 
-		pLock.Lock()
-		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-				pixels[x][y] = frame[x][y]
+			pLock.Lock()
+			for x := bounds.Min.X; x < bounds.Max.X; x++ {
+				for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+					pixels[x][y] = frame[x][y]
+				}
 			}
-		}
-		pLock.Unlock()
+			pLock.Unlock()
 
-		drawCanvas()
-		//time.Sleep(time.Millisecond * 16)
-		time.Sleep(time.Millisecond * 500)
+			drawCanvas()
+			//time.Sleep(time.Millisecond * 16)
+			time.Sleep(time.Millisecond * 500)
+		}
 	}
+
 }

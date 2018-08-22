@@ -229,12 +229,22 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(strings.Join(imageHTMLSlice, "")))
 		break
 	case "playAnimation":
+		loopsStr := req.Form.Get("loops")
+		loops, err := strconv.Atoi(loops)
+		if err != nil {
+			loops = 3
+		}
+
+		if loops < 1 || loops > 10 {
+			loops = 10
+		}
+
 		name := req.Form.Get("name")
 		if name == "" {
 			w.WriteHeader(http.StatusNoContent)
 			break
 		}
-		playAnimationToCanvas(name)
+		playAnimationToCanvas(name, loops)
 	case "deleteImage":
 		name := req.Form.Get("name")
 		if name == "" {
@@ -514,6 +524,19 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
+	function playAnimation() {
+		$.ajax({
+		url: "/api?action=playAnimation",
+		type: 'post',
+		dataType: 'json',
+		data: {name: name},
+		beforeSend: function(){
+		},
+		success: function(json){
+		}
+		});
+	}
+
 	function newAnimation() {
 		var name = prompt('Please name the animation:')
 		if (name === "") {
@@ -716,6 +739,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	.carouselTitle {font-size:28px; font-weight:bold; padding-left:5px;}
+	.animationFrame {margin: 3px;}
 	</style>
 	</head>
 	<body>
@@ -737,9 +761,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		</div>
 		<div class='imageCarousel'>
 			<span class='carouselTitle'>
-				Animations 
-				<button class='pallette btn btn-info' onclick="newAnimation()">New Animation</button> 
-				<button class='pallette btn btn-info' onclick="saveCanvasAsAnimationFrame()">Save Frame To Animation</button>
+				Animations
+				<button class='pallette btn btn-success' onclick="newAnimation()">New Animation</button> 
 			</span>
 			<div id='animations'></div>
 		</div>
