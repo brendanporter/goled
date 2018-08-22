@@ -624,10 +624,11 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#pixelTable tr td {width:20px; height:25px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
-	.imageCarousel {position:absolute; bottom:0px; left:0px; right:0px; white-space: nowrap; overflow-x: scroll; overflow-y: hidden; background-color:lightgrey;}
+	#storage {position:absolute; bottom:0px; left:0px; right:0px;}
+	.imageCarousel {width:100%; white-space: nowrap; overflow-x: scroll; overflow-y: hidden; background-color:lightgrey;}
 	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
-	.carouselTitle {color:white; font-size:28px}
+	.carouselTitle {color:white; font-size:28px; font-weight:bold; padding-left:5px;}
 	</style>
 	</head>
 	<body>
@@ -639,6 +640,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<button id='clear' class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
+	<div id='storage'>
 		<div class='imageCarousel'>
 			<span class='carouselTitle'>Images<span>
 			<div id='images'></div>
@@ -647,6 +649,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			<span class='carouselTitle'>Animations</span>
 			<div id='animations'></div>
 		</div>
+	</div>
 	</body>
 	</html>`, buttons)
 
