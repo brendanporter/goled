@@ -138,6 +138,7 @@ func loadImageToCanvas(name string) {
 
 func deleteImage(name string) {
 	delete(images, name)
+	saveImagesToDisk()
 }
 
 func getImages() []string {
@@ -187,6 +188,7 @@ func saveFrameToAnimation(name string) {
 
 func deleteAnimation(name string) {
 	delete(animations, name)
+	saveAnimationsToDisk()
 }
 
 func getAnimations() []string {
