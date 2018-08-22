@@ -39,6 +39,8 @@ func saveImagesToDisk() {
 	if err != nil {
 		elog.Print(err)
 	}
+
+	log.Printf("Saved %d images", len(images))
 }
 
 func loadImagesFromDisk() {
