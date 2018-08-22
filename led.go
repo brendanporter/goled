@@ -212,6 +212,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "saveNewAnimation":
 		name := req.Form.Get("name")
 		saveNewAnimation(name)
+		w.WriteHeader(http.StatusNoContent)
 		break
 	case "getAnimations":
 		imageHTMLSlice := getAnimations()
