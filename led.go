@@ -526,7 +526,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	function playAnimation(name) {
 		
-		var name = prompt('How many loops?')
+		var loops = prompt('How many loops?')
 		if (loops === "") {
 		    // user pressed OK, but the input field was empty
 		    loops = 3;
