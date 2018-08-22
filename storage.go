@@ -296,7 +296,7 @@ func getAnimationEditor(w http.ResponseWriter, req *http.Request) {
 		buf.Reset()
 
 	}
-	return frames
+	//return frames
 }
 
 func playAnimationToCanvas(name string, loops int) {
