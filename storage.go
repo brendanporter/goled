@@ -11,6 +11,7 @@ import (
 	"image"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"path/filepath"
 	"strings"
 	"time"
@@ -137,18 +138,20 @@ func loadImageToCanvas(name string) {
 }
 
 func loadAnimationFrameToCanvas(name string, frame int) {
-	if i, ok := images[name]; ok {
-		if i == frame {
-			pLock.Lock()
-			bounds := c.Bounds()
-			for x := bounds.Min.X; x < bounds.Max.X; x++ {
-				for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
-					pixels[x][y] = images[name][x][y]
+	if _, ok := animations[name]; ok {
+		for i, aFrame := range animations[name] {
+			if i == frame {
+				pLock.Lock()
+				bounds := c.Bounds()
+				for x := bounds.Min.X; x < bounds.Max.X; x++ {
+					for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+						pixels[x][y] = aFrame[x][y]
+					}
 				}
+				pLock.Unlock()
+				drawCanvas()
+				return
 			}
-			pLock.Unlock()
-			drawCanvas()
-			return
 		}
 	}
 }
