@@ -486,26 +486,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
-
-	function deleteImage(name) {
-
-		if(!confirm("Delete image '" + name + "'?")) {
-			return false;	
-		}
-
-		$.ajax({
-		url: "/api?action=deleteImage",
-		type: 'post',
-		dataType: 'json',
-		data: {name: name, canvasSerial: canvasSerial},
-		beforeSend: function(){
-		},
-		success: function(){
-			getImages()
-		}
-		});
-	}
-
 	function loadImageToCanvas(name) {
 		$.ajax({
 		url: "/api?action=loadImageToCanvas",
