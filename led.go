@@ -525,7 +525,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	function playAnimation() {
-
+		/*
 		var name = prompt('How many loops?')
 		if (loops === "") {
 		    // user pressed OK, but the input field was empty
@@ -535,7 +535,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		} else {
 		    // user hit cancel
 		    return false;
-		}
+		}*/
+
+		loops = 3;
 
 		$.ajax({
 		url: "/api?action=playAnimation",
