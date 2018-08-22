@@ -130,6 +130,23 @@ func saveNewAnimation(name string) {
 	animations[name] = [][][]color.RGBA{}
 }
 
+func saveFrameToAnimation(name string) {
+	var newPixels [][]color.RGBA
+	for _, pixcol := range pixels {
+		var newCol []color.RGBA
+		for _, pixel := range pixcol {
+			newCol = append(newCol, pixel)
+		}
+		newPixels = append(newPixels, newCol)
+	}
+	animations[name] = append(animations[name], newPixels)
+	//saveImagesToDisk()
+}
+
+func deleteAnimation(name string) {
+	delete(animations, name)
+}
+
 func getAnimations() []string {
 	buf := &bytes.Buffer{}
 	m := 2

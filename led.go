@@ -208,10 +208,19 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
-
+	case "deleteAnimation":
+		name := req.Form.Get("name")
+		deleteAnimation(name)
+		w.WriteHeader(http.StatusNoContent)
+		break
 	case "saveNewAnimation":
 		name := req.Form.Get("name")
 		saveNewAnimation(name)
+		w.WriteHeader(http.StatusNoContent)
+		break
+	case "saveFrameToAnimation":
+		name := req.Form.Get("name")
+		saveFrameToAnimation(name)
 		w.WriteHeader(http.StatusNoContent)
 		break
 	case "getAnimations":
@@ -523,6 +532,20 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		$.ajax({
 		url: "/api?action=saveNewAnimation",
+		type: 'post',
+		dataType: 'json',
+		data: {name: name},
+		beforeSend: function(){
+		},
+		success: function(json){
+			getAnimations();
+		}
+		});
+	}
+
+	function saveFrameToAnimation(name){
+		$.ajax({
+		url: "/api?action=saveFrameToAnimation",
 		type: 'post',
 		dataType: 'json',
 		data: {name: name},
