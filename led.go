@@ -624,7 +624,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	#pixelTable tr td {width:20px; height:25px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
-	.imageCarousel {position:absolute; bottom:0px; left:0px; right:0px; white-space: nowrap; overflow-x: scroll; overflow-y: hidden;}
+	.imageCarousel {position:absolute; bottom:0px; left:0px; right:0px; white-space: nowrap; overflow-x: scroll; overflow-y: hidden; background-color:lightgrey;}
 	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	</style>
@@ -638,12 +638,14 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<button id='clear' class='btn btn-danger' onclick='clearDisplay()'>Clear</button>
 
 	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
-	<div><span>Images</span>
-		<div id='images' class='imageCarousel'></div>
-	</div>
-	<div><span>Animations</span>
-		<div id='animations' class='imageCarousel'></div>
-	</div>
+		<div class='imageCarousel'>
+			Images
+			<div id='images'></div>
+		</div>
+		<div class='imageCarousel'>
+			Animations
+			<div id='animations'></div>
+		</div>
 	</body>
 	</html>`, buttons)
 
