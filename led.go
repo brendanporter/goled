@@ -230,7 +230,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 	case "playAnimation":
 		loopsStr := req.Form.Get("loops")
-		loops, err := strconv.Atoi(loops)
+		loops, err := strconv.Atoi(loopsStr)
 		if err != nil {
 			loops = 3
 		}
