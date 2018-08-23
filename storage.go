@@ -251,6 +251,9 @@ func getAnimations() []string {
 }
 
 func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
+
+	log.Printf("%#v", req.Form)
+
 	frameOrderStrSlice := req.Form["frame"]
 	name := req.Form.Get("name")
 
