@@ -498,8 +498,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		getImages()
 		getAnimations()
 
-		$('.sortable').sortable();
-		$('.sortable').disableSelection();
+		
 
 	}
 
@@ -644,6 +643,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		},
 		success: function(html){
 			$('#animations').html(html)
+			$('.sortable').sortable();
+			$('.sortable').disableSelection();
 		}
 		});
 	}
