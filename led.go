@@ -501,20 +501,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		getImages()
 		getAnimations()
 
-		$('.sortable').on('sortstop', function(event,ui){
-			frames = $('.sortable').serialize();
-			$.ajax({
-				url: "/api?action=rearrangedAnimationFrames&" + frames,
-				type: 'post',
-				dataType: 'json',
-				data: {name: name},
-				beforeSend: function(){
-				},
-				success: function(json){
-					getAnimations()
-				}
-			});
-		});
+		
 
 	}
 
@@ -661,6 +648,20 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			$('#animations').html(html)
 			$('.sortable').sortable();
 			$('.sortable').disableSelection();
+			$('.sortable').on('sortstop', function(event,ui){
+				frames = $('.sortable').serialize();
+				$.ajax({
+					url: "/api?action=rearrangedAnimationFrames&" + frames,
+					type: 'post',
+					dataType: 'json',
+					data: {name: name},
+					beforeSend: function(){
+					},
+					success: function(json){
+						getAnimations()
+					}
+				});
+			});
 		}
 		});
 	}
