@@ -218,6 +218,9 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		deleteAnimation(name)
 		w.WriteHeader(http.StatusNoContent)
 		break
+	case "rearrangedAnimationFrames":
+		rearrangedAnimationFrames(w, req)
+		break
 	case "saveNewAnimation":
 		name := req.Form.Get("name")
 		saveNewAnimation(name)
@@ -498,7 +501,20 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		getImages()
 		getAnimations()
 
-		
+		$('.sortable').on('sortstop', function(event,ui){
+			frames = $(.sortable).serialize();
+			$.ajax({
+				url: "/api?action=rearrangedAnimationFrames&" + frames,
+				type: 'post',
+				dataType: 'json',
+				data: {name: name},
+				beforeSend: function(){
+				},
+				success: function(json){
+					getAnimations()
+				}
+			});
+		});
 
 	}
 

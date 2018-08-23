@@ -13,6 +13,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -235,7 +236,7 @@ func getAnimations() []string {
 
 			png.Encode(buf, img)
 			imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-			frames = append(frames, fmt.Sprintf("<li><img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" onclick=\"loadAnimationFrameToCanvas('"+name+"',%d)\"/></li>", i))
+			frames = append(frames, fmt.Sprintf("<li><img id='frame-%d' class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" onclick=\"loadAnimationFrameToCanvas('"+name+"',%d)\"/></li>", i, i))
 			buf.Reset()
 		}
 
@@ -247,6 +248,25 @@ func getAnimations() []string {
 
 	}
 	return animationCollection
+}
+
+func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
+	frameOrderStrSlice := req.Form["frames"]
+	name := req.Form.Get("name")
+
+	var newAnimationsFrames [][][]color.RGBA
+	for _, v := range frameOrderStrSlice {
+		newIndex, err := strconv.Atoi(v)
+		if err != nil {
+			elog.Print(err)
+			return
+		}
+
+		newAnimationsFrames = append(newAnimationsFrames, animations[name][newIndex])
+	}
+
+	animations[name] = newAnimationsFrames
+	w.WriteHeader(http.StatusOK)
 }
 
 func saveCanvasAsAnimationFrame(name string, frameIndex int) {
