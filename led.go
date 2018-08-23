@@ -647,7 +647,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		success: function(html){
 			$('#animations').html(html)
 			$('.sortable').sortable();
-			$('.sortable').disableSelection();
+			//$('.sortable').disableSelection();
 			$('.sortable').on('sortstop', function(event,ui){
 				name = $(event.target).data('animation');
 				frames = $('.sortable').sortable("serialize");

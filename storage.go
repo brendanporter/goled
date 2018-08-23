@@ -269,6 +269,7 @@ func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
 	}
 
 	animations[name] = newAnimationsFrames
+	saveAnimationsToDisk()
 	w.WriteHeader(http.StatusOK)
 }
 
