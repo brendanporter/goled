@@ -650,7 +650,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			$('.sortable').disableSelection();
 			$('.sortable').on('sortstop', function(event,ui){
 				name = $(event.target).data('animation');
-				frames = $('.sortable').sorable("serialize");
+				frames = $('.sortable').sortable("serialize");
 				$.ajax({
 					url: "/api?action=rearrangedAnimationFrames&" + frames,
 					type: 'post',
