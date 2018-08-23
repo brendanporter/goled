@@ -301,8 +301,8 @@ func playAnimationToCanvas(name string, loops int) {
 			pLock.Unlock()
 
 			drawCanvas()
-			//time.Sleep(time.Millisecond * 16)
-			time.Sleep(time.Millisecond * 500)
+			time.Sleep(time.Millisecond * 16)
+			//time.Sleep(time.Millisecond * 500)
 		}
 	}
 
