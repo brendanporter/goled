@@ -254,6 +254,8 @@ func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
 	frameOrderStrSlice := req.Form["frames"]
 	name := req.Form.Get("name")
 
+	log.Printf("New order: %s", strings.Join(frameOrderStrSlice, ", "))
+
 	var newAnimationsFrames [][][]color.RGBA
 	for _, v := range frameOrderStrSlice {
 		newIndex, err := strconv.Atoi(v)
