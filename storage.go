@@ -236,7 +236,7 @@ func getAnimations() []string {
 
 			png.Encode(buf, img)
 			imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-			frames = append(frames, fmt.Sprintf("<li><img id='frame-%d' class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" onclick=\"loadAnimationFrameToCanvas('"+name+"',%d)\"/></li>", i, i))
+			frames = append(frames, fmt.Sprintf("<li><img id='frame-%d' class='animationFrame' data-animation='"+name+"' src=\"data:image/png;base64,"+imgBase64Str+"\" onclick=\"loadAnimationFrameToCanvas('"+name+"',%d)\"/></li>", i, i))
 			buf.Reset()
 		}
 
