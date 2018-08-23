@@ -502,7 +502,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		getAnimations()
 
 		$('.sortable').on('sortstop', function(event,ui){
-			frames = $(.sortable).serialize();
+			frames = $('.sortable').serialize();
 			$.ajax({
 				url: "/api?action=rearrangedAnimationFrames&" + frames,
 				type: 'post',
