@@ -496,7 +496,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		getAnimations()
 
 		$('.sortable').sortable();
-		//$('.sortable').disableSelection();
+		$('.sortable').disableSelection();
 
 	}
 
