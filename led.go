@@ -210,9 +210,6 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
-	case "getAnimationEditor":
-		getAnimationEditor(w, req)
-		break
 	case "deleteAnimation":
 		name := req.Form.Get("name")
 		deleteAnimation(name)
@@ -619,21 +616,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
-	function getAnimationEditor(name){
-		$.ajax({
-		url: "/api?action=getAnimationEditor",
-		type: 'post',
-		dataType: 'html',
-		data: {name: name, canvasSerial: canvasSerial},
-		beforeSend: function(){
-			$('.modal .modal-body').html('')
-		},
-		success: function(html){
-			$('.modal .modal-body').html(html)
-			$('.modal').modal('show')
-		}
-		});
-	}
 
 	function getAnimations() {
 		$.ajax({
@@ -875,25 +857,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		</div>
 	</div>
 
-	<div class="modal" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title">Modal title</h5>
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	        </button>
-	      </div>
-	      <div class="modal-body">
-	        <p>Modal body text goes here.</p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+
 	</body>
 	</html>`, buttons)
 
