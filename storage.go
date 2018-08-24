@@ -164,7 +164,7 @@ func deleteImage(name string) {
 
 func getImages() []string {
 	buf := &bytes.Buffer{}
-	m := 3
+	m := 2
 	bounds := c.Bounds()
 	var imageCollection []string
 	for name, p := range images {
