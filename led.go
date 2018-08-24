@@ -602,6 +602,25 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
+	function deleteSelectedAnimationFrames(name) {
+		frames = [];
+		$('#animations .card-header b:contains("'+name+'")').filter(function(){return $(this).text() === name;}).parent().parent().find('input:checked').each(function(i,e){
+			frames.push($(e).data('frame'));
+		});
+
+		$.ajax({
+		url: "/api?action=deleteAnimationFrame",
+		type: 'post',
+		dataType: 'json',
+		data: {name: name, frames: frames},
+		beforeSend: function(){
+		},
+		success: function(json){
+			getAnimations();
+		}
+		});
+	}
+
 	function saveFrameToAnimation(name){
 		$.ajax({
 		url: "/api?action=saveFrameToAnimation",
@@ -644,11 +663,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						getAnimations()
 					}
 				});
-			});
-			$('.sortable img').on('contextmenu', function(event){
-				event.preventDefault();
-				console.log("Trigger context menu for element")
-				console.log(event);
 			});
 		}
 		});
@@ -838,6 +852,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.card-header {padding: 0.25rem 0.5rem}
 	.card-body {padding: 0.5rem}
 	.card-footer {padding: 0.25rem 0.5rem}
+
+	.imageSelector {}
 	</style>
 	</head>
 	<body>
@@ -868,6 +884,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		</div>
 
 	</div>
+	<ul id="menu">
+		<li><div onclick='deleteAnimationFrame()'>Delete</div></li>
+	</ul>
 	</body>
 	</html>`, buttons)
 

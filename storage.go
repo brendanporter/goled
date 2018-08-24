@@ -236,7 +236,7 @@ func getAnimations() []string {
 
 			png.Encode(buf, img)
 			imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-			frames = append(frames, fmt.Sprintf("<li id='frame-%d'><img class='animationFrame' src=\"data:image/png;base64,"+imgBase64Str+"\" onclick=\"loadAnimationFrameToCanvas('"+name+"',%d)\"/></li>", i, i))
+			frames = append(frames, fmt.Sprintf("<li id='frame-%d'><input data-frame='%d' class='imageSelector' type='checkbox' /><img class='animationFrame' src=\"data:image/png;base64,%s\" onclick=\"loadAnimationFrameToCanvas('%s',%d)\"/></li>", i, i, imgBase64Str, name i,))
 			buf.Reset()
 		}
 
@@ -251,10 +251,11 @@ func getAnimations() []string {
 					<ul class='sortable' data-animation='%s'>%s</ul>
 				</div>
 				<div class='card-footer'>
+					<button class='btn btn-sm btn-danger' onclick="deleteSelectedAnimationFrames(%s)"
 					<button class='btn btn-sm btn-success' onclick="saveFrameToAnimation('%s')">Save Frame <i class='fas fa-save'></i></button> 
 					<button class='btn btn-sm btn-success' onclick="playAnimation('%s')">Play <i class='fas fa-play'></i></button>
 				</div>
-			</div>`, name, name, name, frameThumbnails, name, name)
+			</div>`, name, name, name, frameThumbnails, name, name, name)
 		animationCollection = append(animationCollection, img2html)
 		buf.Reset()
 
