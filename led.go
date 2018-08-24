@@ -827,7 +827,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.carouselTitle {font-weight:bold; padding-left:5px;}
 	.animationFrame {margin: 3px;}
 
-	.sortable {list-style-type: none; margin: 0px; padding: 0; width:100%%;}
+	.sortable {list-style-type: none; margin: 0px; padding: 0; width:100%%; display:inline-block;}
 	.sortable li {margin:3px 3px 3px 0; padding: 1px; float:left;}
 
 	.card-header {padding: 0.25rem 0.5rem}
