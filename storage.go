@@ -247,7 +247,7 @@ func getAnimations() []string {
 			<div class='card-body'><ul class='sortable' data-animation='%s'>%s</ul></div>
 			<div class='card-footer'>
 				<button class='btn btn-success' onclick="saveFrameToAnimation('%s')">Save Frame <i class='fas fa-save'></i></button> <button class='btn btn-success' onclick="playAnimation('%s')">Play <i class='fas fa-play'></i></button>
-			</div>`, name, name, name, name, frameThumbnails, name, name)
+			</div></div>`, name, name, name, name, frameThumbnails, name, name)
 		animationCollection = append(animationCollection, img2html)
 		buf.Reset()
 
