@@ -646,6 +646,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				});
 			});
 			$('.sortable img').on('contextmenu', function(event){
+				event.preventDefault();
+				console.log("Trigger context menu for element")
 				console.log(event);
 			});
 		}
