@@ -645,6 +645,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 					}
 				});
 			});
+			$('.sortable img').on('contextmenu', function(event){
+				console.log(event);
+			});
 		}
 		});
 	}
