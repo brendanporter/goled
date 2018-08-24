@@ -182,7 +182,7 @@ func getImages() []string {
 
 		png.Encode(buf, img)
 		imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
-		img2html := "<div class='imgContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:28px;'>" + name + "</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteImage('" + name + "')\"></i></div><div class='card-body'><img src=\"data:image/png;base64," + imgBase64Str + "\" onclick=\"loadImageToCanvas('" + name + "')\" /></div></div>"
+		img2html := "<div class='imgContainer card text-white bg-dark mb-3'><div class='card-header'><b style='font-size:18px;'>" + name + "</b><i class='fas fa-times fa-2x close-btn' onclick=\"deleteImage('" + name + "')\"></i></div><div class='card-body'><img src=\"data:image/png;base64," + imgBase64Str + "\" onclick=\"loadImageToCanvas('" + name + "')\" /></div></div>"
 		imageCollection = append(imageCollection, img2html)
 		buf.Reset()
 	}
@@ -245,7 +245,7 @@ func getAnimations() []string {
 		img2html := fmt.Sprintf(`
 			<div class='animContainer card text-white bg-dark mb-3'>
 				<div class='card-header'>
-					<b style='font-size:28px;'>%s</b><i class='fas fa-times fa-2x close-btn' onclick="deleteAnimation('%s')"></i>
+					<b style='font-size:18px;'>%s</b><i class='fas fa-times fa-2x close-btn' onclick="deleteAnimation('%s')"></i>
 				</div>
 				<div class='card-body'>
 					<ul class='sortable' data-animation='%s'>%s</ul>
