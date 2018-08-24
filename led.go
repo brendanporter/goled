@@ -837,8 +837,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</head>
 	<body>
 	<div class='container-fluid'>
-		<div class='row'>
-		<div class='col-sm-12'>
 		<input id='color' type='color' />
 		<button class='pallette btn btn-sm btn-danger' onclick="$('#color').spectrum('set', 'rgb(255,0,0)');setColor();">Red</button>
 		<button class='pallette btn btn-sm btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
@@ -862,8 +860,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				</span>
 				<div id='animations'></div>
 			</div>
-		</div>
-		</div>
 		</div>
 
 	</div>
