@@ -836,32 +836,33 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</style>
 	</head>
 	<body>
-	<input id='color' type='color' />
-	<button class='pallette btn btn-sm btn-danger' onclick="$('#color').spectrum('set', 'rgb(255,0,0)');setColor();">Red</button>
-	<button class='pallette btn btn-sm btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
-	<button class='pallette btn btn-sm btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();">Blue</button>
-	
-	<button id='clear' class='btn btn-sm btn-danger' onclick='clearDisplay()'>Clear</button>
+	<div class='container'>
+		<input id='color' type='color' />
+		<button class='pallette btn btn-sm btn-danger' onclick="$('#color').spectrum('set', 'rgb(255,0,0)');setColor();">Red</button>
+		<button class='pallette btn btn-sm btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
+		<button class='pallette btn btn-sm btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();">Blue</button>
+		
+		<button id='clear' class='btn btn-sm btn-danger' onclick='clearDisplay()'>Clear</button>
 
-	<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
-	<div id='storage'>
-		<div class='imageCarousel'>
-			<span class='carouselTitle'>
-				<b style='font-size:18px;'>Images</b>
-				<button class='pallette btn btn-sm btn-info' onclick="saveCanvasAsImage()">Save Image <i class='fas fa-save'></i></button>
-			<span>
-			<div id='images'></div>
+		<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
+		<div id='storage'>
+			<div class='imageCarousel'>
+				<span class='carouselTitle'>
+					<b style='font-size:18px;'>Images</b>
+					<button class='pallette btn btn-sm btn-info' onclick="saveCanvasAsImage()">Save Image <i class='fas fa-save'></i></button>
+				<span>
+				<div id='images'></div>
+			</div>
+			<div class='animationCollection'>
+				<span class='carouselTitle'>
+					<b style='font-size:18px;'>Animations</b>
+					<button class='pallette btn btn-sm btn-success' onclick="newAnimation()">New Animation <i class='fas fa-plus'></i></button> 
+				</span>
+				<div id='animations'></div>
+			</div>
 		</div>
-		<div class='animationCollection'>
-			<span class='carouselTitle'>
-				<b style='font-size:18px;'>Animations</b>
-				<button class='pallette btn btn-sm btn-success' onclick="newAnimation()">New Animation <i class='fas fa-plus'></i></button> 
-			</span>
-			<div id='animations'></div>
-		</div>
+
 	</div>
-
-
 	</body>
 	</html>`, buttons)
 
