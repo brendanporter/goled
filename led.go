@@ -829,6 +829,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 	.sortable {list-style-type: none; margin: 0px; padding: 0; width:100%%;}
 	.sortable li {margin:3px 3px 3px 0; padding: 1px; float:left;}
+
+	.card-header {padding: 0.25rem 0.5rem}
+	.card-body {padding: 0.5rem}
+	.card-footer {padding: 0.25rem 0.5rem}
 	</style>
 	</head>
 	<body>
