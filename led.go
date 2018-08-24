@@ -843,14 +843,14 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<div id='storage'>
 		<div class='imageCarousel'>
 			<span class='carouselTitle'>
-				<b style='font-size:28px;'>Images</b>
+				<b style='font-size:18px;'>Images</b>
 				<button class='pallette btn btn-info' onclick="saveCanvasAsImage()">Save Image <i class='fas fa-save'></i></button>
 			<span>
 			<div id='images'></div>
 		</div>
 		<div class='animationCollection'>
 			<span class='carouselTitle'>
-				<b style='font-size:28px;'>Animations</b>
+				<b style='font-size:18px;'>Animations</b>
 				<button class='pallette btn btn-success' onclick="newAnimation()">New Animation <i class='fas fa-plus'></i></button> 
 			</span>
 			<div id='animations'></div>
