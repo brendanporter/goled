@@ -164,7 +164,7 @@ func deleteImage(name string) {
 
 func getImages() []string {
 	buf := &bytes.Buffer{}
-	m := 5
+	m := 3
 	bounds := c.Bounds()
 	var imageCollection []string
 	for name, p := range images {
@@ -214,7 +214,7 @@ func deleteAnimation(name string) {
 
 func getAnimations() []string {
 	buf := &bytes.Buffer{}
-	m := 2
+	m := 1
 	bounds := c.Bounds()
 	var animationCollection []string
 	for name, animationFrames := range animations {
@@ -242,12 +242,19 @@ func getAnimations() []string {
 
 		frameThumbnails := strings.Join(frames, "")
 
-		img2html := fmt.Sprintf(`<div class='animContainer card text-white bg-dark mb-3'>
-			<div class='card-header'><b style='font-size:28px;'>%s</b><i class='fas fa-times fa-2x close-btn' onclick="deleteAnimation('%s')"></i></div>
-			<div class='card-body'><ul class='sortable' data-animation='%s'>%s</ul></div>
-			<div class='card-footer'>
-				<button class='btn btn-success' onclick="saveFrameToAnimation('%s')">Save Frame <i class='fas fa-save'></i></button> <button class='btn btn-success' onclick="playAnimation('%s')">Play <i class='fas fa-play'></i></button>
-			</div></div>`, name, name, name, frameThumbnails, name, name)
+		img2html := fmt.Sprintf(`
+			<div class='animContainer card text-white bg-dark mb-3'>
+				<div class='card-header'>
+					<b style='font-size:28px;'>%s</b><i class='fas fa-times fa-2x close-btn' onclick="deleteAnimation('%s')"></i>
+				</div>
+				<div class='card-body'>
+					<ul class='sortable' data-animation='%s'>%s</ul>
+				</div>
+				<div class='card-footer'>
+					<button class='btn btn-success' onclick="saveFrameToAnimation('%s')">Save Frame <i class='fas fa-save'></i></button> 
+					<button class='btn btn-success' onclick="playAnimation('%s')">Play <i class='fas fa-play'></i></button>
+				</div>
+			</div>`, name, name, name, frameThumbnails, name, name)
 		animationCollection = append(animationCollection, img2html)
 		buf.Reset()
 
