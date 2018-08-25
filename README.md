@@ -35,6 +35,9 @@ If using the Adafruit HAT or Bonnet, make sure to use HardwareConfiguration `ada
   - ~~Play animation button~~
   - ~~Rearrange animation frames with drag-n-drop~~
   - ~~Delete animation frames using checkbox selection~~
+  - Per-animation frame rate selector
+  - Animation elements like sleep and loop?
+  - Programmatic animation? (Define pixel regions, loops, sleep, etc programmatically)
   - Upgrade to HTML5 Canvas
   - Support copy-paste of pixel regions
   - Optimize updates to animations to update only the modified animations
