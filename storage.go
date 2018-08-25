@@ -231,7 +231,7 @@ func deleteAnimationFrames(w http.ResponseWriter, req *http.Request) {
 
 		for j := len(deletable) - 1; j >= 0; j-- {
 			if deletable[j] == i {
-				animations[name] = append(animations[name][:i], animations[name][i+1:])
+				animations[name] = append(animations[name][:i], animations[name][i+1:]...)
 			}
 		}
 
