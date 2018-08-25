@@ -212,6 +212,34 @@ func deleteAnimation(name string) {
 	saveAnimationsToDisk()
 }
 
+func deleteAnimationFrames(w http.ResponseWriter, req *http.Request) {
+	framesStrSlice := req.Form["frame[]"]
+	name := req.Form.Get("name")
+
+	//log.Printf("New order: %s", strings.Join(frameOrderStrSlice, ", "))
+	var deletable []int
+	for _, v := range framesStrSlice {
+		d, err := strconv.Atoi(v)
+		if err != nil {
+			elog.Print(err)
+			return
+		}
+		deletable = append(deletable, d)
+	}
+
+	for i := len(animations[name]) - 1; i >= 0; i-- {
+
+		for j := len(deletable) - 1; j >= 0; j-- {
+			if deletable[j] == i {
+				animations[name] = append(animations[name][:i], animations[name][i+1:])
+			}
+		}
+
+	}
+	saveAnimationsToDisk()
+	w.WriteHeader(http.StatusOK)
+}
+
 func getAnimations() []string {
 	buf := &bytes.Buffer{}
 	m := 1
