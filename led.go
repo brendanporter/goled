@@ -614,11 +614,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		$.ajax({
 		url: "/api?action=deleteAnimationFrames",
 		type: 'post',
-		dataType: 'json',
 		data: {name: name, frames: frames},
 		beforeSend: function(){
 		},
-		success: function(json){
+		success: function(){
 			getAnimations();
 		}
 		});
