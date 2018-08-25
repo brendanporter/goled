@@ -27,12 +27,17 @@ If using the Adafruit HAT or Bonnet, make sure to use HardwareConfiguration `ada
   - Write text with font selection
   - Create scrolling images and text
 - Create frame capture and re-play logic to enable animation creation
-  - Save canvas
-  - Recall canvas
-  - Create animation (slice of canvas frames)
-  - Save animation frame
-  - Recall animation frame
-  - Play animation button
+  - ~~Save canvas~~
+  - ~~Recall canvas~~
+  - ~~Create animation (slice of canvas frames)~~
+  - ~~Save animation frame~~
+  - ~~Recall animation frame~~
+  - ~~Play animation button~~
+  - ~~Rearrange animation frames with drag-n-drop~~
+  - ~~Delete animation frames using checkbox selection~~
+  - Upgrade to HTML5 Canvas
+  - Support copy-paste of pixel regions
+  - Optimize updates to animations to update only the modified animations
 - Create API-hooking code to allow piping in data from outside sources
 
 # Stretch Goals
