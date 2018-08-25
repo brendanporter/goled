@@ -210,7 +210,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
-	case "deleteAnimationFramess":
+	case "deleteAnimationFrames":
 		deleteAnimationFrames(w, req)
 		break
 	case "deleteAnimation":
