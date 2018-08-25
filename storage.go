@@ -213,7 +213,7 @@ func deleteAnimation(name string) {
 }
 
 func deleteAnimationFrames(w http.ResponseWriter, req *http.Request) {
-	framesStrSlice := req.Form["frame[]"]
+	framesStrSlice := req.Form["frames[]"]
 	name := req.Form.Get("name")
 
 	log.Printf("Deleted: %s", strings.Join(framesStrSlice, ", "))
