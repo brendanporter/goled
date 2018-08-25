@@ -71,10 +71,12 @@ func main() {
 	var cols int
 	var rows int
 	var gpioSlowdown int
+	var addrType int
 
 	flag.IntVar(&cols, "cols", 32, "LED Columns in matrix")
 	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
 	flag.IntVar(&gpioSlowdown, "led-slowdown-gpio", 1, "LED GPIO Slowdown")
+	flag.IntVar(&addrType, "led-addr-type", 0, "LED Address Type")
 
 	flag.Parse()
 
