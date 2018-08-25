@@ -216,7 +216,7 @@ func deleteAnimationFrames(w http.ResponseWriter, req *http.Request) {
 	framesStrSlice := req.Form["frame[]"]
 	name := req.Form.Get("name")
 
-	//log.Printf("New order: %s", strings.Join(frameOrderStrSlice, ", "))
+	log.Printf("Deleted: %s", strings.Join(frameStrSlice, ", "))
 	var deletable []int
 	for _, v := range framesStrSlice {
 		d, err := strconv.Atoi(v)
