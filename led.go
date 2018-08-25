@@ -210,7 +210,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "getDisplay":
 		getDisplay(w, req)
 		break
-	case "deleteAnimationFrames":
+	case "deleteAnimationFramess":
 		deleteAnimationFrames(w, req)
 		break
 	case "deleteAnimation":
@@ -605,14 +605,14 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
-	function deleteSelectedAnimationFrames(name) {
+	function deleteAnimationFrames(name) {
 		frames = [];
 		$('#animations .card-header b:contains("'+name+'")').filter(function(){return $(this).text() === name;}).parent().parent().find('input:checked').each(function(i,e){
 			frames.push($(e).data('frame'));
 		});
 
 		$.ajax({
-		url: "/api?action=deleteAnimationFrame",
+		url: "/api?action=deleteAnimationFrames",
 		type: 'post',
 		dataType: 'json',
 		data: {name: name, frames: frames},
@@ -887,9 +887,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		</div>
 
 	</div>
-	<ul id="menu">
-		<li><div onclick='deleteAnimationFrame()'>Delete</div></li>
-	</ul>
+
 	</body>
 	</html>`, buttons)
 
