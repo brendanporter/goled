@@ -839,7 +839,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	<style>
 	td {padding: 0px !important;}
 	.pixel {background-color: black;}
-	#pixelTable {position: absolute; top:40px;}
+	#pixelTable {position: absolute; top:40px; width:initial;}
 	#pixelTable tr td {width:10px; height:10px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
@@ -858,6 +858,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.card-header {padding: 0.25rem 0.5rem}
 	.card-body {padding: 0.5rem}
 	.card-footer {padding: 0.25rem 0.5rem}
+
+	img {width:50%;}
 
 	.imageSelector {}
 	</style>
