@@ -840,7 +840,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	td {padding: 0px !important;}
 	.pixel {background-color: black;}
 	#pixelTable {position: absolute; top:40px;}
-	#pixelTable tr td {width:20px; height:25px;}
+	#pixelTable tr td {width:10px; height:10px;}
 	#clear {position: absolute; right:0px;}
 	.marker {background-color: black;}
 	#storage {position:absolute; bottom:0px; left:0px; right:0px;}
