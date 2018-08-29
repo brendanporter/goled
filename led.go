@@ -404,32 +404,32 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	var buttons string
+	buttons := &strings.Builder{}
 	bounds := c.Bounds()
-	buttons += "<tr><td></td>"
+	buttons.WriteString("<tr><td></td>")
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
 		if x%5 == 0 {
-			buttons += "<td class='marker'> </td>"
+			buttons.WriteString("<td class='marker'> </td>")
 		} else {
-			buttons += "<td> </td>"
+			buttons.WriteString("<td> </td>")
 		}
 		//buttons += fmt.Sprintf("<td>%d</td>", x)
 	}
-	buttons += fmt.Sprintf("</tr>")
+	buttons.WriteString("</tr>")
 
 	for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
 		if y%5 == 0 {
-			buttons += "<tr><td class='marker'> </td>"
+			buttons.WriteString("<tr><td class='marker'> </td>")
 		} else {
-			buttons += "<tr><td> </td>"
+			buttons.WriteString("<tr><td> </td>")
 		}
 		//buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons += fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'></td>", x, y, x, y)
+			buttons.WriteString(fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'></td>", x, y, x, y))
 		}
-		buttons += fmt.Sprintf("</tr>")
+		buttons.WriteString(fmt.Sprintf("</tr>"))
 	}
 
 	h := fmt.Sprintf(`<!DOCTYPE html>
@@ -894,7 +894,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	</div>
 
 	</body>
-	</html>`, buttons)
+	</html>`, buttons.String())
 
 	w.Write([]byte(h))
 }
