@@ -884,7 +884,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 		<div id='storage'>
 			<div class='imageCarousel'>
-				<div class='drawerToggle' data-target='images' onclick="toggleDrawer(this)"><i class='fas fa-eye'></i><i class='fas fa-eye-slash default-hidden'></i></div>
+				<div class='drawerToggle' data-target='images' onclick="toggleDrawer(this)"><i class='fas fa-window-minimize'></i><i class='fas fa-window-maximize default-hidden'></i></div>
 				<span class='carouselTitle'>
 					<b style='font-size:18px;'>Images</b>
 					<button class='pallette btn btn-sm btn-info' onclick="saveCanvasAsImage()">Save Image <i class='fas fa-save'></i></button>
@@ -892,7 +892,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				<div id='images'></div>
 			</div>
 			<div class='animationCollection'>
-				<div class='drawerToggle' data-target='animations' onclick="toggleDrawer(this)"><i class='fas fa-eye'></i><i class='fas fa-eye-slash default-hidden'></i></div>
+				<div class='drawerToggle' data-target='animations' onclick="toggleDrawer(this)"><i class='fas fa-window-minimize'></i><i class='fas fa-window-maximize default-hidden'></i></div>
 				<span class='carouselTitle'>
 					<b style='font-size:18px;'>Animations</b>
 					<button class='pallette btn btn-sm btn-success' onclick="newAnimation()">New Animation <i class='fas fa-plus'></i></button> 
