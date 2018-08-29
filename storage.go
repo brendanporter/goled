@@ -126,8 +126,8 @@ func loadImageToCanvas(name string) {
 	if _, ok := images[name]; ok {
 		pLock.Lock()
 		bounds := c.Bounds()
-		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+		for x := bounds.Min.X; x < bounds.Max.X && x < len(images[name]); x++ {
+			for y := bounds.Min.Y; y < bounds.Max.Y && y < len(images[name][0]); y++ {
 				pixels[x][y] = images[name][x][y]
 			}
 		}
@@ -144,8 +144,8 @@ func loadAnimationFrameToCanvas(name string, frame int) {
 			if i == frame {
 				pLock.Lock()
 				bounds := c.Bounds()
-				for x := bounds.Min.X; x < bounds.Max.X; x++ {
-					for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+				for x := bounds.Min.X; x < bounds.Max.X && x < len(aFrame); x++ {
+					for y := bounds.Min.Y; y < bounds.Max.Y && y < len(aFrame[0]); y++ {
 						pixels[x][y] = aFrame[x][y]
 					}
 				}
@@ -340,8 +340,8 @@ func playAnimationToCanvas(name string, loops int) {
 		for _, frame := range animations[name] {
 
 			pLock.Lock()
-			for x := bounds.Min.X; x < bounds.Max.X; x++ {
-				for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+			for x := bounds.Min.X; x < bounds.Max.X && x < len(frame); x++ {
+				for y := bounds.Min.Y; y < bounds.Max.Y && y < len(frame[0]); y++ {
 					pixels[x][y] = frame[x][y]
 				}
 			}
