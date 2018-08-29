@@ -870,7 +870,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	img {width:50%%;}
 
 	.imageSelector {}
-	.drawerToggle {float:left;}
+	.drawerToggle {float:left; margin-left:10px; margin-right:5px;}
 	</style>
 	</head>
 	<body>
