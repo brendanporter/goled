@@ -259,7 +259,7 @@ func getAnimations() []string {
 			imgMaxY := len(animationFrame[0])
 
 			for x := bounds.Min.X; x < bounds.Max.X && x < imgMaxX; x++ {
-				for y := bounds.Min.Y; y < bounds.Max.Y && x < imgMaxY; y++ {
+				for y := bounds.Min.Y; y < bounds.Max.Y && y < imgMaxY; y++ {
 					for xx := x * m; xx < (x*m)+m; xx++ {
 						for yy := y * m; yy < (y*m)+m; yy++ {
 							img.Set(xx, yy, animationFrame[x][y])
