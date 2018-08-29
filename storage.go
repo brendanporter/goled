@@ -319,7 +319,35 @@ func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
 
 	animations[name] = newAnimationsFrames
 	saveAnimationsToDisk()
-	w.WriteHeader(http.StatusOK)
+
+	buf := &bytes.Buffer{}
+	m := 1
+	bounds := c.Bounds()
+	for i, animationFrame := range newAnimationsFrames {
+		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
+
+		imgMaxX := len(animationFrame)
+		imgMaxY := len(animationFrame[0])
+
+		for x := bounds.Min.X; x < bounds.Max.X && x < imgMaxX; x++ {
+			for y := bounds.Min.Y; y < bounds.Max.Y && y < imgMaxY; y++ {
+				for xx := x * m; xx < (x*m)+m; xx++ {
+					for yy := y * m; yy < (y*m)+m; yy++ {
+						img.Set(xx, yy, animationFrame[x][y])
+					}
+				}
+			}
+		}
+
+		png.Encode(buf, img)
+		imgBase64Str := base64.StdEncoding.EncodeToString(buf.Bytes())
+		frames = append(frames, fmt.Sprintf("<li id='frame-%d'><input data-frame='%d' class='imageSelector' type='checkbox' /><img class='animationFrame' src=\"data:image/png;base64,%s\" onclick=\"loadAnimationFrameToCanvas('%s',%d)\"/></li>", i, i, imgBase64Str, name, i))
+		buf.Reset()
+	}
+
+	frameThumbnails := strings.Join(frames, "")
+
+	w.Write([]byte(frameThumbnails))
 }
 
 func saveCanvasAsAnimationFrame(name string, frameIndex int) {

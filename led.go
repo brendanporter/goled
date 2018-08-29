@@ -659,12 +659,13 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				$.ajax({
 					url: "/api?action=rearrangedAnimationFrames&" + frames,
 					type: 'post',
-					dataType: 'json',
+					dataType: 'html',
 					data: {name: name},
 					beforeSend: function(){
 					},
-					success: function(json){
-						getAnimations()
+					success: function(html){
+						console.log('Retrieved new frames');
+						$(event.target).html(html);
 					}
 				});
 			});
