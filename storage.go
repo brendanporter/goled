@@ -170,8 +170,11 @@ func getImages() []string {
 	for name, p := range images {
 		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
 
-		for x := bounds.Min.X; x < bounds.Max.X; x++ {
-			for y := bounds.Min.Y; y < bounds.Max.Y; y++ {
+		imgMaxX := len(p)
+		imgMaxY := len(p[0])
+
+		for x := bounds.Min.X; x < bounds.Max.X && x < imgMaxX; x++ {
+			for y := bounds.Min.Y; y < bounds.Max.Y && y < imgMaxY; y++ {
 				for xx := x * m; xx < (x*m)+m; xx++ {
 					for yy := y * m; yy < (y*m)+m; yy++ {
 						img.Set(xx, yy, p[x][y])
