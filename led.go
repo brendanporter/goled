@@ -414,7 +414,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		} else {
 			buttons.WriteString("<td> </td>")
 		}
-		//buttons += fmt.Sprintf("<td>%d</td>", x)
 	}
 	buttons.WriteString("</tr>")
 
@@ -424,7 +423,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		} else {
 			buttons.WriteString("<tr><td> </td>")
 		}
-		//buttons += fmt.Sprintf("<tr><td>%d</td>", y)
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
 			buttons.WriteString(fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'></td>", x, y, x, y))
@@ -859,7 +857,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.card-body {padding: 0.5rem}
 	.card-footer {padding: 0.25rem 0.5rem}
 
-	img {width:50%;}
+	img {width:50%%;}
 
 	.imageSelector {}
 	</style>
