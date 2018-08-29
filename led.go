@@ -770,6 +770,14 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		});
 	}
 
+	function toggleDrawer(e){
+		target = $(e).data('target');
+		$('#' + target).toggle();
+		$(e).find('.fas').each(function(i,el){
+				$(el).toggle();
+			})
+	}
+
 	function refreshDisplayFromServer(){
 
 
@@ -848,7 +856,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.animContainer {margin:10px; cursor:pointer; display:inline-block;}
 	.close-btn {right:25px; top: 15px; position: absolute;}
 	.carouselTitle {font-weight:bold; padding-left:5px;}
-	.animationFrame {margin: 3px;}
+	.animationFrame {border: white 1px dashed;}
 
 	.sortable {list-style-type: none; margin: 0px; padding: 0; width:100%%; display:inline-block;}
 	.sortable li {margin:3px 3px 3px 0; padding: 1px; float:left;}
@@ -856,6 +864,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	.card-header {padding: 0.25rem 0.5rem}
 	.card-body {padding: 0.5rem}
 	.card-footer {padding: 0.25rem 0.5rem}
+
+	.default-hidden {display: none;}
 
 	img {width:50%%;}
 
@@ -874,6 +884,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
 		<div id='storage'>
 			<div class='imageCarousel'>
+				<div class='drawerToggle' data-target='images' onclick="toggleDrawer(this)"><i class='fas fa-caret-square-left'></i><i class='fas fa-caret-square-right default-hidden'></i></div>
 				<span class='carouselTitle'>
 					<b style='font-size:18px;'>Images</b>
 					<button class='pallette btn btn-sm btn-info' onclick="saveCanvasAsImage()">Save Image <i class='fas fa-save'></i></button>
@@ -881,6 +892,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				<div id='images'></div>
 			</div>
 			<div class='animationCollection'>
+				<div class='drawerToggle' data-target='animations' onclick="toggleDrawer(this)"><i class='fas fa-caret-square-left'></i><i class='fas fa-caret-square-right default-hidden'></i></div>
 				<span class='carouselTitle'>
 					<b style='font-size:18px;'>Animations</b>
 					<button class='pallette btn btn-sm btn-success' onclick="newAnimation()">New Animation <i class='fas fa-plus'></i></button> 
