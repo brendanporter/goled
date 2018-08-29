@@ -123,6 +123,7 @@ func saveCanvasAsImage(name string) {
 }
 
 func loadImageToCanvas(name string) {
+	clearDisplay()
 	if _, ok := images[name]; ok {
 		pLock.Lock()
 		bounds := c.Bounds()
@@ -139,6 +140,7 @@ func loadImageToCanvas(name string) {
 }
 
 func loadAnimationFrameToCanvas(name string, frame int) {
+	clearDisplay()
 	if _, ok := animations[name]; ok {
 		for i, aFrame := range animations[name] {
 			if i == frame {
@@ -335,6 +337,7 @@ func saveCanvasAsAnimationFrame(name string, frameIndex int) {
 }
 
 func playAnimationToCanvas(name string, loops int) {
+	clearDisplay()
 	bounds := c.Bounds()
 	for i := 0; i < loops; i++ {
 		for _, frame := range animations[name] {
