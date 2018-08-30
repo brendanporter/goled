@@ -897,6 +897,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						if(isNeighbor(pixels, {X: $(v).data('x'), Y: $(v).data('y')})){
 							pixels.push({X: $(v).data('x'), Y: $(v).data('y'), R: color.R, G: color.G, B: color.B, A: 255});
 							added++;
+							console.log("Added " + $(v).data('x') + ", " + $(v).data('y'));
 						}
 					});
 				}
@@ -907,6 +908,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						if(isNeighbor(pixels, {X: $(v).data('x'), Y: $(v).data('y')})){
 							pixels.push({X: $(v).data('x'), Y: $(v).data('y'), R: color.R, G: color.G, B: color.B, A: 255});
 							added++;
+							console.log("Added " + $(v).data('x') + ", " + $(v).data('y'));
 						}
 					});
 				}
