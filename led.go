@@ -872,6 +872,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		thing = target;
 
+		return;
+
 
 		pixels = []
 		px = {}
