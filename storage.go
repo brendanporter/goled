@@ -299,7 +299,7 @@ func getAnimations() []string {
 	return animationCollection
 }
 
-func getFramesForAnimation(name string) {
+func getFramesForAnimation(name string) string {
 
 	buf := &bytes.Buffer{}
 	m := 1
