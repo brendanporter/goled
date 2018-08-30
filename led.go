@@ -902,32 +902,64 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 			
 
-				for(var yy = tr; yy >= 0; y--){
-					rowCandidates = $(target).siblings();
-					$.each(rowCandidates, function(i,v){
+				for(var yy = tr; yy >= 0; yy--){
+					//rowCandidates = $(target).siblings();
+					for(var xx = td; xx >= 0; xx--){
 						if($(v).css('background-color') != targetColor){
-							return
+							break;
 						}
-						if(isNeighbor(pixels, {X: $(v).data('x'), Y: $(v).data('y')})){
-							pixels.push({X: $(v).data('x'), Y: $(v).data('y'), R: color.R, G: color.G, B: color.B, A: 255});
+						if(isNeighbor(pixels, {X: xx, Y: yy})){
+							pixels.push({X: xx, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
 							added++;
-							console.log("Added " + $(v).data('x') + ", " + $(v).data('y'));
+							console.log("Added " + xx + ", " + yy);
 						}
-					});
+					}
+					for(var xx = td; xx < rowCandidates.length; xx++){
+						if($(v).css('background-color') != targetColor){
+							break;
+						}
+						if(isNeighbor(pixels, {X: xx, Y: yy})){
+							pixels.push({X: xx, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
+							added++;
+							console.log("Added " + xx + ", " + yy);
+						}
+					}
 				}
 
-				for(var yy = tr; yy < $('#pixelTable tr').length - 1; y++){
+				for(var yy = tr; yy < $('#pixelTable tr').length - 1; yy++){
+					/*
 					rowCandidates = $(target).siblings();
 					$.each(rowCandidates, function(i,v){
 						if($(v).css('background-color') != targetColor){
 							return
 						}
-						if(isNeighbor(pixels, {X: $(v).data('x'), Y: $(v).data('y')})){
-							pixels.push({X: $(v).data('x'), Y: $(v).data('y'), R: color.R, G: color.G, B: color.B, A: 255});
+						if(isNeighbor(pixels, {X: i, Y: yy})){
+							pixels.push({X: i, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
 							added++;
-							console.log("Added " + $(v).data('x') + ", " + $(v).data('y'));
+							console.log("Added " + i + ", " + yy);
 						}
 					});
+					*/
+					for(var xx = td; xx >= 0; xx--){
+						if($(v).css('background-color') != targetColor){
+							break;
+						}
+						if(isNeighbor(pixels, {X: xx, Y: yy})){
+							pixels.push({X: xx, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
+							added++;
+							console.log("Added " + xx + ", " + yy);
+						}
+					}
+					for(var xx = td; xx < rowCandidates.length; xx++){
+						if($(v).css('background-color') != targetColor){
+							break;
+						}
+						if(isNeighbor(pixels, {X: xx, Y: yy})){
+							pixels.push({X: xx, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
+							added++;
+							console.log("Added " + xx + ", " + yy);
+						}
+					}
 				}
 
 			//}
