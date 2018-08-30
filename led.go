@@ -902,9 +902,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 			
 
-				for(var yy = tr; yy >= 0; yy--){
+				for(var yy = px.Y; yy >= 0; yy--){
 					rowCandidates = $('#pixelTable tr:nth-child('+yy+') td');
-					for(var xx = td; xx >= 0; xx--){
+					for(var xx = px.X; xx >= 0; xx--){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
@@ -914,7 +914,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 							console.log("Added " + xx + ", " + yy);
 						}
 					}
-					for(var xx = td+1; xx < canvasMaxX; xx++){
+					for(var xx = px.X+1; xx < canvasMaxX; xx++){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
@@ -926,9 +926,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 					}
 				}
 
-				for(var yy = tr+1; yy < $('#pixelTable tr').length - 1; yy++){
+				for(var yy = px.Y+1; yy < $('#pixelTable tr').length - 1; yy++){
 					rowCandidates = $('#pixelTable tr:nth-child('+yy+') td');
-					for(var xx = td; xx >= 0; xx--){
+					for(var xx = px.X; xx >= 0; xx--){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
@@ -938,7 +938,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 							console.log("Added " + xx + ", " + yy);
 						}
 					}
-					for(var xx = td+1; xx < canvasMaxX; xx++){
+					for(var xx = px.X+1; xx < canvasMaxX; xx++){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
