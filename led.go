@@ -854,9 +854,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	var thing;
 
 	function isNeighbor(pixelArray, target) {
-		$.each(pixelArray, function(j,paPx){
-				console.log("Testing if " + target.X + " is neighbor of " + paPx.X);
-				if(Math.abs(target.X - paPx.X) == 1 || Math.abs(target.Y - paPx.Y) == 1){
+		$.each(pixelArray, function(j,px){
+				console.log("Testing if " + target.X + "," + target.Y + " is neighbor of " + px.X + "," + px.Y);
+				if(Math.abs(target.X - px.X) == 1 || Math.abs(target.Y - px.Y) == 1){
 					return true;
 				}
 		});
@@ -927,19 +927,6 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				}
 
 				for(var yy = tr; yy < $('#pixelTable tr').length - 1; yy++){
-					/*
-					rowCandidates = $(target).siblings();
-					$.each(rowCandidates, function(i,v){
-						if($(rowCandidates[xx]).css('background-color') != targetColor){
-							return
-						}
-						if(isNeighbor(pixels, {X: i, Y: yy})){
-							pixels.push({X: i, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
-							added++;
-							console.log("Added " + i + ", " + yy);
-						}
-					});
-					*/
 					rowCandidates = $(target).siblings();
 					for(var xx = td; xx >= 0; xx--){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
