@@ -856,7 +856,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	function isNeighbor(pixelArray, target) {
 		$.each(pixelArray, function(j,px){
 				console.log("Testing if " + target.X + "," + target.Y + " is neighbor of " + px.X + "," + px.Y);
-				if(Math.abs(target.X - px.X) == 1 || Math.abs(target.Y - px.Y) == 1){
+				if(Math.abs(target.X - px.X) == 1 && Math.abs(target.Y - px.Y) == 1){
 					return true;
 				}
 		});
@@ -957,7 +957,12 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		pxJSON = JSON.stringify(pixels);
 
 		// Set the target to the specified color
-		$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
+		$.each(pixels, function(i, v){
+			ltr = v.Y+2;
+			ltd = v.X+2;
+			$('#pixelTable tr:nth-child('+ltr+') td:nth-child('+ltd+')').css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
+		});
+		
 
 
 
