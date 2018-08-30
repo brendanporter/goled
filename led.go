@@ -852,11 +852,11 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	function isNeighbor(pixelArray, target) {
-		$.each(pixelArray, function(i,px){
-			console.log("Testing if " + target.X + " is neighbor of " + px.X);
-			if(Math.abs(target.X - px.X) == 1 || Math.abs(target.Y - px.Y) == 1){
-				return true;
-			}
+		$.each(pixelArray, function(j,paPx){
+				console.log("Testing if " + target.X + " is neighbor of " + paPx.X);
+				if(Math.abs(target.X - paPx.X) == 1 || Math.abs(target.Y - paPx.Y) == 1){
+					return true;
+				}
 		});
 		return false;
 	}
