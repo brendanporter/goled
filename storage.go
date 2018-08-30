@@ -299,32 +299,13 @@ func getAnimations() []string {
 	return animationCollection
 }
 
-func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
-
-	frameOrderStrSlice := req.Form["frame[]"]
-	name := req.Form.Get("name")
-
-	log.Printf("New order for %s: %s", name, strings.Join(frameOrderStrSlice, ", "))
-
-	var newAnimationsFrames [][][]color.RGBA
-	for _, v := range frameOrderStrSlice {
-		newIndex, err := strconv.Atoi(v)
-		if err != nil {
-			elog.Print(err)
-			return
-		}
-
-		newAnimationsFrames = append(newAnimationsFrames, animations[name][newIndex])
-	}
-
-	animations[name] = newAnimationsFrames
-	saveAnimationsToDisk()
+func getFramesForAnimation(name string) {
 
 	buf := &bytes.Buffer{}
 	m := 1
 	bounds := c.Bounds()
 	var frames []string
-	for i, animationFrame := range newAnimationsFrames {
+	for i, animationFrame := range animations[name] {
 		img := image.NewRGBA(image.Rect(0, 0, (bounds.Max.X*m)-1, (bounds.Max.Y*m)-1))
 
 		imgMaxX := len(animationFrame)
@@ -347,6 +328,30 @@ func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
 	}
 
 	frameThumbnails := strings.Join(frames, "")
+}
+
+func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
+
+	frameOrderStrSlice := req.Form["frame[]"]
+	name := req.Form.Get("name")
+
+	log.Printf("New order for %s: %s", name, strings.Join(frameOrderStrSlice, ", "))
+
+	var newAnimationsFrames [][][]color.RGBA
+	for _, v := range frameOrderStrSlice {
+		newIndex, err := strconv.Atoi(v)
+		if err != nil {
+			elog.Print(err)
+			return
+		}
+
+		newAnimationsFrames = append(newAnimationsFrames, animations[name][newIndex])
+	}
+
+	animations[name] = newAnimationsFrames
+	saveAnimationsToDisk()
+
+	frameThumbnails := getFramesForAnimation(name)
 
 	w.Write([]byte(frameThumbnails))
 }

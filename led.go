@@ -180,6 +180,24 @@ func setPixel(w http.ResponseWriter, req *http.Request) {
 	drawCanvas()
 }
 
+func setPixels(w http.ResponseWriter, req *http.Request) {
+	pxJSON := req.Form.Get("px")
+
+	var px []Pixel
+	err := json.Unmarshal([]byte(pxJSON), &px)
+	if err != nil {
+		log.Print(err)
+		return
+	}
+
+	pLock.Lock()
+	for _, p := range px {
+		pixels[p.X][p.Y] = color.RGBA{p.R, p.G, p.B, p.A}
+	}
+	pLock.Unlock()
+	drawCanvas()
+}
+
 func drawCanvas() {
 	pLock.Lock()
 	bounds := c.Bounds()
@@ -205,6 +223,10 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		break
 	case "setPixel":
 		setPixel(w, req)
+		w.WriteHeader(http.StatusNoContent)
+		break
+	case "setPixels":
+		setPixels(w, req)
 		w.WriteHeader(http.StatusNoContent)
 		break
 	case "clearDisplay":
@@ -425,7 +447,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		}
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons.WriteString(fmt.Sprintf("<td class='pixel' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'></td>", x, y, x, y))
+			buttons.WriteString(fmt.Sprintf("<td class='pixel' data-x='%d' data-y='%d' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'></td>", x, y, x, y, x, y))
 		}
 		buttons.WriteString(fmt.Sprintf("</tr>"))
 	}
@@ -456,6 +478,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	color.G = 0;
 	color.B = 0;
 	color.A = 0;
+
+	flood = false;
 
 	drawmode = false;
 	canvasSerial = 0;
@@ -640,6 +664,22 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 
+	function getFramesForAnimation(name) {
+		$.ajax({
+			url: "/api?action=getAnimations",
+			type: 'post',
+			dataType: 'html',
+			data: {canvasSerial: canvasSerial},
+			beforeSend: function(){
+				$('#animations').html('')
+			},
+			success: function(html){
+
+			}
+		});
+	}
+
+
 	function getAnimations() {
 		$.ajax({
 		url: "/api?action=getAnimations",
@@ -811,11 +851,22 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
+	function isNeighbor(pixelArray, target) {
+		$.each(pixelArray, function(i,px){
+			if(Math.abs(target.X - px.X) == 1 || Math.abs(target.Y - px.Y) == 1){
+				return true;
+			}
+		});
+		return false;
+	}
+
 	function setPixel(x,y){
 
 		tr = y +2;
 		td = x +2;
-		$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
+		target = $('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')');
+		targetColor = $(target).css('background-color');
+
 
 		pixels = []
 		px = {}
@@ -827,7 +878,49 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		px.A = 255;
 		pixels.push(px);
 
+		
+
+		if(flood === true){
+			// Find all other pixels currently matching the target pixel color and add to array to be changed
+
+			// Radius is unlimited, but only seeking pixels that share borders, not diagonals
+
+			// Find all TDs on the same row that match color, then look up and down
+
+			var added = 1;
+			while(added > 0){
+				added = 0;
+
+				for(var yy = tr; yy >= 0; y--){
+					rowCandidates = $(target).siblings().filter('td[style="background-color:'+targetColor+';');
+					$.each(rowCandidates, function(i,v){
+						if(isNeighbor(pixels, {X: $(v).data('x'), Y: $(v).data('y')})){
+							pixels.push({X: $(v).data('x'), Y: $(v).data('y'), R: color.R, G: color.G, B: color.B, A: 255});
+							added++;
+						}
+					});
+				}
+
+				for(var yy = tr; yy < $('#pixelTable tr').length - 1; y++){
+					rowCandidates = $(target).siblings().filter('td[style="background-color:'+targetColor+';');
+					$.each(rowCandidates, function(i,v){
+						if(isNeighbor(pixels, {X: $(v).data('x'), Y: $(v).data('y')})){
+							pixels.push({X: $(v).data('x'), Y: $(v).data('y'), R: color.R, G: color.G, B: color.B, A: 255});
+							added++;
+						}
+					});
+				}
+				
+			}
+		
+		}
+
 		pxJSON = JSON.stringify(pixels);
+
+		// Set the target to the specified color
+		$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+color.R+','+color.G+','+color.B+','+color.A+')');
+
+
 
 
 		$.ajax({
