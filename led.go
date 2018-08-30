@@ -903,8 +903,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			
 
 				for(var yy = tr; yy >= 0; yy--){
-					rowCandidates = $(target).siblings();
-					for(var xx = td; xx >= 0; xx--){
+					ltr = yy + 2;
+					ltd = xx + 2;
+					rowCandidates = $('#pixelTable tr:nth-child('+ltr+') td:nth-child('+ltd+')');.siblings();
+					for(var xx = ltd; xx >= 0; xx--){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
@@ -914,7 +916,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 							console.log("Added " + xx + ", " + yy);
 						}
 					}
-					for(var xx = td+1; xx < rowCandidates.length; xx++){
+					for(var xx = ltd+1; xx < rowCandidates.length; xx++){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
@@ -927,8 +929,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				}
 
 				for(var yy = tr+1; yy < $('#pixelTable tr').length - 1; yy++){
-					rowCandidates = $(target).siblings();
-					for(var xx = td; xx >= 0; xx--){
+					ltr = yy + 2;
+					ltd = xx + 2;
+					rowCandidates = $('#pixelTable tr:nth-child('+ltr+') td:nth-child('+ltd+')');.siblings();
+					for(var xx = ltd; xx >= 0; xx--){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
@@ -938,7 +942,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 							console.log("Added " + xx + ", " + yy);
 						}
 					}
-					for(var xx = td+1; xx < rowCandidates.length; xx++){
+					for(var xx = ltd+1; xx < rowCandidates.length; xx++){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
