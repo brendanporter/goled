@@ -479,7 +479,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	color.B = 0;
 	color.A = 0;
 
-	flood = false;
+	fill = false;
 
 	drawmode = false;
 	canvasSerial = 0;
@@ -880,7 +880,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		
 
-		if(flood === true){
+		if(fill === true){
 			// Find all other pixels currently matching the target pixel color and add to array to be changed
 
 			// Radius is unlimited, but only seeking pixels that share borders, not diagonals
