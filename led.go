@@ -872,7 +872,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		thing = target;
 
-		canvasMaxX = $('#pixelTable tr:nth-child(1) td').length
+		canvasMaxX = $('#pixelTable tr:nth-child(1) td').length -1
 
 
 		pixels = []
@@ -903,9 +903,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			
 
 				for(var yy = px.Y; yy >= 0; yy--){
-					rowCandidates = $('#pixelTable tr:nth-child('+yy+') td');
+					ltr = yy+1;
+					rowCandidates = $('#pixelTable tr:nth-child('+ltr+') td');
 					for(var xx = px.X; xx >= 0; xx--){
-						if($(rowCandidates[xx]).css('background-color') != targetColor){
+						if($(rowCandidates[xx+1]).css('background-color') != targetColor){
 							break;
 						}
 						if(isNeighbor(pixels, {X: xx, Y: yy})){
@@ -915,7 +916,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						}
 					}
 					for(var xx = px.X+1; xx < canvasMaxX; xx++){
-						if($(rowCandidates[xx]).css('background-color') != targetColor){
+						if($(rowCandidates[xx+1]).css('background-color') != targetColor){
 							break;
 						}
 						if(isNeighbor(pixels, {X: xx, Y: yy})){
@@ -927,9 +928,10 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				}
 
 				for(var yy = px.Y+1; yy < $('#pixelTable tr').length - 1; yy++){
-					rowCandidates = $('#pixelTable tr:nth-child('+yy+') td');
+					ltr = yy+1;
+					rowCandidates = $('#pixelTable tr:nth-child('+ltr+') td');
 					for(var xx = px.X; xx >= 0; xx--){
-						if($(rowCandidates[xx]).css('background-color') != targetColor){
+						if($(rowCandidates[xx+1]).css('background-color') != targetColor){
 							break;
 						}
 						if(isNeighbor(pixels, {X: xx, Y: yy})){
@@ -939,7 +941,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						}
 					}
 					for(var xx = px.X+1; xx < canvasMaxX; xx++){
-						if($(rowCandidates[xx]).css('background-color') != targetColor){
+						if($(rowCandidates[xx+1]).css('background-color') != targetColor){
 							break;
 						}
 						if(isNeighbor(pixels, {X: xx, Y: yy})){
