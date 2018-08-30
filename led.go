@@ -892,7 +892,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				added = 0;
 
 				for(var yy = tr; yy >= 0; y--){
-					rowCandidates = $(target).siblings().filter('td[style="background-color:'+targetColor+';');
+					rowCandidates = $(target).siblings().filter('td[style="background-color:'+targetColor+';"]');
 					$.each(rowCandidates, function(i,v){
 						if(isNeighbor(pixels, {X: $(v).data('x'), Y: $(v).data('y')})){
 							pixels.push({X: $(v).data('x'), Y: $(v).data('y'), R: color.R, G: color.G, B: color.B, A: 255});
@@ -902,7 +902,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				}
 
 				for(var yy = tr; yy < $('#pixelTable tr').length - 1; y++){
-					rowCandidates = $(target).siblings().filter('td[style="background-color:'+targetColor+';');
+					rowCandidates = $(target).siblings().filter('td[style="background-color:'+targetColor+';"]');
 					$.each(rowCandidates, function(i,v){
 						if(isNeighbor(pixels, {X: $(v).data('x'), Y: $(v).data('y')})){
 							pixels.push({X: $(v).data('x'), Y: $(v).data('y'), R: color.R, G: color.G, B: color.B, A: 255});
@@ -910,7 +910,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						}
 					});
 				}
-				
+
 			}
 		
 		}
