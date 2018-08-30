@@ -872,7 +872,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 		thing = target;
 
-		return;
+
 
 
 		pixels = []
@@ -899,6 +899,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			while(added > 0){
 				added = 0;
 			*/
+
+			return;
 
 				for(var yy = tr; yy >= 0; y--){
 					rowCandidates = $(target).siblings().filter('td[style="background-color:'+targetColor+';"]');
