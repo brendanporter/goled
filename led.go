@@ -851,6 +851,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		}
 	}
 
+	var thing;
+
 	function isNeighbor(pixelArray, target) {
 		$.each(pixelArray, function(j,paPx){
 				console.log("Testing if " + target.X + " is neighbor of " + paPx.X);
@@ -867,6 +869,8 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		td = x +2;
 		target = $('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')');
 		targetColor = $(target).css('background-color');
+
+		thing = target;
 
 
 		pixels = []
