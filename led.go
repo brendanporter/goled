@@ -903,9 +903,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 			
 
 				for(var yy = tr; yy >= 0; yy--){
-					//rowCandidates = $(target).siblings();
+					rowCandidates = $(target).siblings();
 					for(var xx = td; xx >= 0; xx--){
-						if($(v).css('background-color') != targetColor){
+						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
 						if(isNeighbor(pixels, {X: xx, Y: yy})){
@@ -930,7 +930,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 					/*
 					rowCandidates = $(target).siblings();
 					$.each(rowCandidates, function(i,v){
-						if($(v).css('background-color') != targetColor){
+						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							return
 						}
 						if(isNeighbor(pixels, {X: i, Y: yy})){
@@ -940,8 +940,9 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						}
 					});
 					*/
+					rowCandidates = $(target).siblings();
 					for(var xx = td; xx >= 0; xx--){
-						if($(v).css('background-color') != targetColor){
+						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
 						if(isNeighbor(pixels, {X: xx, Y: yy})){
@@ -951,7 +952,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						}
 					}
 					for(var xx = td; xx < rowCandidates.length; xx++){
-						if($(v).css('background-color') != targetColor){
+						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
 						if(isNeighbor(pixels, {X: xx, Y: yy})){
