@@ -915,7 +915,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 						}
 					}
 					for(var xx = td; xx < rowCandidates.length; xx++){
-						if($(v).css('background-color') != targetColor){
+						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
 						if(isNeighbor(pixels, {X: xx, Y: yy})){
