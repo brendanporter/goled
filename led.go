@@ -856,7 +856,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 	function isNeighbor(pixelArray, target) {
 		$.each(pixelArray, function(j,px){
 				console.log("Testing if " + target.X + "," + target.Y + " is neighbor of " + px.X + "," + px.Y);
-				if((Math.abs(target.X - px.X) == 1 || target.X === px.X) && (Math.abs(target.Y - px.Y) == 1) || target.Y === px.Y{
+				if((Math.abs(target.X - px.X) == 1 || target.X === px.X) && (Math.abs(target.Y - px.Y) == 1 || target.Y === px.Y)){
 					return true;
 				}
 		});
