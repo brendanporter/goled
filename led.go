@@ -887,9 +887,11 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 
 			// Find all TDs on the same row that match color, then look up and down
 
+			/*
 			var added = 1;
 			while(added > 0){
 				added = 0;
+			*/
 
 				for(var yy = tr; yy >= 0; y--){
 					rowCandidates = $(target).siblings().filter('td[style="background-color:'+targetColor+';"]');
@@ -913,7 +915,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 					});
 				}
 
-			}
+			//}
 		
 		}
 
