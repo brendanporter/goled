@@ -327,7 +327,7 @@ func getFramesForAnimation(name string) string {
 		buf.Reset()
 	}
 
-	frameThumbnails := strings.Join(frames, "")
+	return strings.Join(frames, "")
 }
 
 func rearrangedAnimationFrames(w http.ResponseWriter, req *http.Request) {
