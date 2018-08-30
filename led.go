@@ -914,7 +914,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 							console.log("Added " + xx + ", " + yy);
 						}
 					}
-					for(var xx = td; xx < rowCandidates.length; xx++){
+					for(var xx = td+1; xx < rowCandidates.length; xx++){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
@@ -926,7 +926,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 					}
 				}
 
-				for(var yy = tr; yy < $('#pixelTable tr').length - 1; yy++){
+				for(var yy = tr+1; yy < $('#pixelTable tr').length - 1; yy++){
 					rowCandidates = $(target).siblings();
 					for(var xx = td; xx >= 0; xx--){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
@@ -938,7 +938,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 							console.log("Added " + xx + ", " + yy);
 						}
 					}
-					for(var xx = td; xx < rowCandidates.length; xx++){
+					for(var xx = td+1; xx < rowCandidates.length; xx++){
 						if($(rowCandidates[xx]).css('background-color') != targetColor){
 							break;
 						}
