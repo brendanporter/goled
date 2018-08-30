@@ -900,7 +900,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 				added = 0;
 			*/
 
-			return;
+			
 
 				for(var yy = tr; yy >= 0; y--){
 					rowCandidates = $(target).siblings();
