@@ -388,6 +388,10 @@ function isNeighbor(pixelArray, target) {
 	return false;
 }
 
+function setFill() {
+	fill = true;
+}
+
 function setPixel(x,y){
 
 	tr = y +2;
