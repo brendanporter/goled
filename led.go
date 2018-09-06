@@ -14,7 +14,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	//"path/filepath"
+	"path/filepath"
 	"flag"
 	"strconv"
 	"strings"
@@ -419,6 +419,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		fileBytes, err := ioutil.ReadFile(filePath)
 		if err != nil {
 			log.Print(err)
+			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 
@@ -452,90 +453,15 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		buttons.WriteString(fmt.Sprintf("</tr>"))
 	}
 
-	h := fmt.Sprintf(`<!DOCTYPE html>
-	<html>
-	<head>
-	<title>Sign</title>
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js"
-			  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-			  crossorigin="anonymous"></script>
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	index := filepath.Abs("index.html")
+	fileBytes, err := ioutil.ReadFile(index)
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
 
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	
-
-	<script type='text/javascript' src='app.js'></script>
-	<style>
-	td {padding: 0px !important;}
-	.pixel {background-color: black;}
-	#pixelTable {position: absolute; top:40px; width:initial;}
-	#pixelTable tr td {width:9px; height:9px;}
-	#clear {position: absolute; right:0px;}
-	.marker {background-color: black;}
-	#storage {position:absolute; bottom:0px; left:0px; right:0px;}
-	.imageCarousel {width:100%%; white-space: nowrap; overflow-x: scroll; overflow-y: hidden; background-color:lightgrey; margin-bottom: 10px;}
-	.imgContainer {margin:10px; cursor:pointer; display:inline-block;}
-	.animationCollection {width:100%%; overflow-x: scroll; overflow-y: scroll; background-color:lightgrey; margin-bottom: 10px; max-height: 200px;}
-	.animContainer {margin:10px; cursor:pointer; display:inline-block;}
-	.close-btn {right:25px; top: 15px; position: absolute;}
-	.carouselTitle {font-weight:bold; padding-left:5px;}
-	.animationFrame {border: white 1px dashed;}
-
-	.sortable {list-style-type: none; margin: 0px; padding: 0; width:100%%; display:inline-block;}
-	.sortable li {margin:3px 3px 3px 0; padding: 1px; float:left;}
-
-	.card-header {padding: 0.25rem 0.5rem}
-	.card-body {padding: 0.5rem}
-	.card-footer {padding: 0.25rem 0.5rem}
-
-	.default-hidden {display: none;}
-
-	img {width:50%%;}
-
-	.imageSelector {}
-	.drawerToggle {float:left; margin-left:10px; margin-right:5px;}
-	</style>
-	</head>
-	<body>
-	<div class='container-fluid'>
-		<input id='color' type='color' />
-		<button class='pallette btn btn-sm btn-danger' onclick="$('#color').spectrum('set', 'rgb(255,0,0)');setColor();">Red</button>
-		<button class='pallette btn btn-sm btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
-		<button class='pallette btn btn-sm btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();">Blue</button>
-		
-		<button id='clear' class='btn btn-sm btn-danger' onclick='clearDisplay()'>Clear</button>
-
-		<table id='pixelTable' class='table table-striped table-bordered table-condensed'>%s</table>
-		<div id='storage'>
-			<div class='imageCarousel'>
-				<div class='drawerToggle' data-target='images' onclick="toggleDrawer(this)"><i class='fas fa-window-minimize'></i><i class='fas fa-window-maximize default-hidden'></i></div>
-				<span class='carouselTitle'>
-					<b style='font-size:18px;'>Images</b>
-					<button class='pallette btn btn-sm btn-info' onclick="saveCanvasAsImage()">Save Image <i class='fas fa-save'></i></button>
-				<span>
-				<div id='images'></div>
-			</div>
-			<div class='animationCollection'>
-				<div class='drawerToggle' data-target='animations' onclick="toggleDrawer(this)"><i class='fas fa-window-minimize'></i><i class='fas fa-window-maximize default-hidden'></i></div>
-				<span class='carouselTitle'>
-					<b style='font-size:18px;'>Animations</b>
-					<button class='pallette btn btn-sm btn-success' onclick="newAnimation()">New Animation <i class='fas fa-plus'></i></button> 
-				</span>
-				<div id='animations'></div>
-			</div>
-		</div>
-
-	</div>
-
-	</body>
-	</html>`, buttons.String())
+	h := fmt.Sprintf(string(fileBytes, buttons.String())
 
 	w.Write([]byte(h))
 }
