@@ -466,7 +466,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	h := fmt.Sprintf(string(fileBytes, buttons.String()))
+	h := fmt.Sprintf(string(fileBytes), buttons.String())
 
 	w.Write([]byte(h))
 }
