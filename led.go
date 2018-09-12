@@ -453,7 +453,12 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		buttons.WriteString(fmt.Sprintf("</tr>"))
 	}
 
-	index := filepath.Abs("index.html")
+	index, err := filepath.Abs("index.html")
+	if err != nil {
+		log.Print(err)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
 	fileBytes, err := ioutil.ReadFile(index)
 	if err != nil {
 		log.Print(err)
