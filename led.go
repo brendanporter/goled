@@ -10,12 +10,12 @@ import (
 	"image/color"
 	//"image/draw"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"path/filepath"
-	"flag"
 	"strconv"
 	"strings"
 	"sync"
@@ -461,7 +461,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	h := fmt.Sprintf(string(fileBytes, buttons.String())
+	h := fmt.Sprintf(string(fileBytes, buttons.String()))
 
 	w.Write([]byte(h))
 }
