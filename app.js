@@ -397,7 +397,11 @@ function setPixel(x,y){
 	tr = y +2;
 	td = x +2;
 	target = $('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')');
+
+
 	targetColor = $(target).css('background-color');
+
+	console.log("Target color: " + targetColor);
 
 	thing = target;
 
