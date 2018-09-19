@@ -18,11 +18,11 @@ function init() {
 
 
 	$('.pixel').on('mousedown', function(event) {
+		drawmode = true;
 		if(event.button == 0){
 			event.target.onclick.apply(event);
 		}
 		event.preventDefault();
-	    drawmode = true;
 	});
 
 	$('.pixel').on('contextmenu', function(event){
