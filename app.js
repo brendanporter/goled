@@ -380,7 +380,7 @@ var thing;
 
 function isNeighbor(pixelArray, target) {
 	$.each(pixelArray, function(j,px){
-			console.log("Testing if " + target.X + "," + target.Y + " is neighbor of " + px.X + "," + px.Y);
+			//console.log("Testing if " + target.X + "," + target.Y + " is neighbor of " + px.X + "," + px.Y);
 			if((Math.abs(target.X - px.X) == 1 || target.X === px.X) && (Math.abs(target.Y - px.Y) == 1 || target.Y === px.Y)){
 				return true;
 			}
@@ -414,7 +414,6 @@ function setPixel(x,y){
 	px.A = 255;
 	pixels.push(px);
 
-	
 
 	if(fill === true){
 		// Find all other pixels currently matching the target pixel color and add to array to be changed
@@ -429,7 +428,7 @@ function setPixel(x,y){
 			added = 0;
 		*/
 
-		
+			
 
 			for(var yy = px.Y; yy >= 0; yy--){
 				ltr = yy+1;
