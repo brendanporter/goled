@@ -428,71 +428,20 @@ function setPixel(x,y){
 
 
 	if(fill === true){
-		// Find all other pixels currently matching the target pixel color and add to array to be changed
+		
+		$.ajax({
+		url: "/api?action=fillPixel",
+		type: 'post',
+		data: {px: JSON.stringify(px)},
+		dataType: 'json',
+		beforeSend: function(){
+		},
+		success: function(json){
 
-		// Radius is unlimited, but only seeking pixels that share borders, not diagonals
+		}
+		});
 
-		// Find all TDs on the same row that match color, then look up and down
-
-		/*
-		var added = 1;
-		while(added > 0){
-			added = 0;
-		*/
-
-			
-
-			for(var yy = px.Y; yy >= 0; yy--){
-				ltr = yy+1;
-				rowCandidates = $('#pixelTable tr:nth-child('+ltr+') td');
-				for(var xx = px.X; xx >= 0; xx--){
-					if($(rowCandidates[xx+1]).css('background-color') != targetColor){
-						break;
-					}
-					if(isNeighbor(pixels, {X: xx, Y: yy})){
-						pixels.push({X: xx, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
-						added++;
-						console.log("Added " + xx + ", " + yy);
-					}
-				}
-				for(var xx = px.X+1; xx < canvasMaxX; xx++){
-					if($(rowCandidates[xx+1]).css('background-color') != targetColor){
-						break;
-					}
-					if(isNeighbor(pixels, {X: xx, Y: yy})){
-						pixels.push({X: xx, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
-						added++;
-						console.log("Added " + xx + ", " + yy);
-					}
-				}
-			}
-
-			for(var yy = px.Y+1; yy < $('#pixelTable tr').length - 1; yy++){
-				ltr = yy+1;
-				rowCandidates = $('#pixelTable tr:nth-child('+ltr+') td');
-				for(var xx = px.X; xx >= 0; xx--){
-					if($(rowCandidates[xx+1]).css('background-color') != targetColor){
-						break;
-					}
-					if(isNeighbor(pixels, {X: xx, Y: yy})){
-						pixels.push({X: xx, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
-						added++;
-						console.log("Added " + xx + ", " + yy);
-					}
-				}
-				for(var xx = px.X+1; xx < canvasMaxX; xx++){
-					if($(rowCandidates[xx+1]).css('background-color') != targetColor){
-						break;
-					}
-					if(isNeighbor(pixels, {X: xx, Y: yy})){
-						pixels.push({X: xx, Y: yy, R: color.R, G: color.G, B: color.B, A: 255});
-						added++;
-						console.log("Added " + xx + ", " + yy);
-					}
-				}
-			}
-
-		//}
+		return
 	
 	}
 

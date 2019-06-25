@@ -227,6 +227,20 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	action := req.Form.Get("action")
 
 	switch action {
+
+	case "fillPixel":
+
+		pxJSON := req.Form.Get("px")
+
+		var p Pixel
+		err := json.Unmarshal([]byte(pxJSON), &p)
+		if err != nil {
+			log.Print(err)
+			return
+		}
+
+		fill(p)
+
 	case "test":
 		log.Printf("Running %s", action)
 		go cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
@@ -332,6 +346,118 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 type PXResponse struct {
 	CanvasSerial int
 	Canvas       [][]color.RGBA
+}
+
+func (p Pixel) matches(otherP Pixel) bool {
+	if p.R != otherP.R {
+		return false
+	}
+	if p.G != otherP.G {
+		return false
+	}
+	if p.B != otherP.B {
+		return false
+	}
+
+	return true
+}
+
+func pixelFromLocation(x, y int) Pixel {
+	return Pixel{
+		X: x,
+		Y: y,
+		R: pixels[x][y].R,
+		G: pixels[x][y].G,
+		B: pixels[x][y].B,
+		A: uint8(255),
+	}
+}
+
+func (p Pixel) neighbors() []Pixel {
+
+	var neighbors []Pixel
+
+	if p.X > 0 {
+		pp := pixelFromLocation(p.X-1, p.Y)
+		if pp.matches(p) {
+			neighbors = append(neighbors, pp)
+		}
+	}
+
+	if p.Y == 0 {
+		pp := pixelFromLocation(p.X, p.Y-1)
+		if pp.matches(p) {
+			neighbors = append(neighbors, pp)
+		}
+	}
+
+	if p.X <= len(pixels)-1 {
+		pp := pixelFromLocation(p.X+1, p.Y)
+		if pp.matches(p) {
+			neighbors = append(neighbors, pp)
+		}
+	}
+
+	if p.X <= len(pixels[len(pixels)-1])-1 {
+		pp := pixelFromLocation(p.X, p.Y+1)
+		if pp.matches(p) {
+			neighbors = append(neighbors, pp)
+		}
+	}
+
+	return neighbors
+}
+
+func (p Pixel) in(pix []Pixel) bool {
+	for _, aPixel := range pix {
+		if aPixel.X == p.X && aPixel.Y == p.Y {
+			return true
+		}
+	}
+	return false
+}
+
+func fill(p Pixel) {
+
+	pLock.Lock()
+	defer pLock.Unlock()
+
+	var toFill []Pixel
+
+	var neighbors []Pixel
+	var fillable []Pixel
+
+	neighbors = p.neighbors()
+
+	fillable = append(fillable, neighbors...)
+
+	for {
+
+		if len(neighbors) == 0 {
+			break
+		}
+
+		var positives []Pixel
+
+		for _, neighborPx := range neighbors {
+			if !neighborPx.in(fillable) {
+				positives = append(positives, neighborPx)
+			}
+		}
+
+		neighbors = []Pixel{}
+
+		for _, posPX := range positives {
+			neighbors = append(neighbors, posPX.neighbors()...)
+		}
+
+	}
+
+	for _, px := range fillable {
+		pixels[px.X][px.Y] = color.RGBA{px.R, px.G, px.B, px.A}
+	}
+
+	drawCanvas()
 }
 
 func getDisplay(w http.ResponseWriter, req *http.Request) {
