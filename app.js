@@ -371,12 +371,8 @@ function refreshDisplayFromServer(){
 
 			$.each(json.Canvas, function(i,col){
 				$.each(col, function(j, px){
-					td = i +2;
-					tr = j +2;
 
 					ID = pad(i+2,2) + pad(j+2,2)
-
-					console.log("Filling ID " + ID);
 
 					//$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
 					$('#px' + ID).css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
