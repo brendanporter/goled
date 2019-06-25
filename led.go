@@ -232,7 +232,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 
 		pxJSON := req.Form.Get("px")
 
-		log.Print("Received flood fill for pixel %s", pxJSON)
+		log.Printf("Received flood fill for pixel %s", pxJSON)
 
 		var p Pixel
 		err := json.Unmarshal([]byte(pxJSON), &p)
@@ -427,7 +427,9 @@ func fill(p Pixel) {
 	var neighbors []Pixel
 	var fillable []Pixel
 
-	neighbors = p.neighbors()
+	origPix := pixelFromLocation(p.X, p.Y)
+
+	neighbors = origPix.neighbors()
 
 	fillable = append(fillable, neighbors...)
 
