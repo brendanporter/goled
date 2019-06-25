@@ -139,10 +139,12 @@ func main() {
 
 	server := http.Server{
 		Handler:      nil,
-		Addr:         ":80",
+		Addr:         "0.0.0.0:80",
 		ReadTimeout:  time.Second * 30,
 		WriteTimeout: time.Second * 30,
 	}
+
+	log.Print("Starting web server")
 
 	err = server.ListenAndServe()
 	if err != nil {
