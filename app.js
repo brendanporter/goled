@@ -428,6 +428,8 @@ function setPixel(x,y){
 
 
 	if(fill === true){
+
+		fill = false;
 		
 		$.ajax({
 		url: "/api?action=fillPixel",
