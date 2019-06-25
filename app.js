@@ -376,6 +376,8 @@ function refreshDisplayFromServer(){
 
 					ID = pad(i+2,2) + pad(j+2,2)
 
+					console.log("Filling ID " + ID);
+
 					//$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
 					$('#' + ID).css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
 				});
