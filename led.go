@@ -461,7 +461,7 @@ func baseHandler(w http.ResponseWriter, req *http.Request) {
 		}
 		for x := bounds.Min.X; x < bounds.Max.X; x++ {
 
-			buttons.WriteString(fmt.Sprintf("<td class='pixel' data-x='%d' data-y='%d' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'></td>", x, y, x, y, x, y))
+			buttons.WriteString(fmt.Sprintf("<td id='px%02d%02d' class='pixel' data-x='%d' data-y='%d' onmouseover='hoverPixel(%d,%d)' onclick='setPixel(%d,%d)'></td>", x, y, x, y, x, y, x, y))
 		}
 		buttons.WriteString(fmt.Sprintf("</tr>"))
 	}

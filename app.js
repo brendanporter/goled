@@ -344,6 +344,12 @@ function toggleDrawer(e){
 		})
 }
 
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+
 function refreshDisplayFromServer(){
 
 
@@ -367,7 +373,11 @@ function refreshDisplayFromServer(){
 				$.each(col, function(j, px){
 					td = i +2;
 					tr = j +2;
-					$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
+
+					ID = pad(i+2,2) + pad(j+2,2)
+
+					//$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
+					$('#' + ID).css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
 				});
 			});
 		}
