@@ -409,11 +409,11 @@ function setPixel(x,y){
 
 	targetColor = $(target).css('background-color');
 
-	console.log("Target color: " + targetColor);
+	//console.log("Target color: " + targetColor);
 
 	thing = target;
 
-	canvasMaxX = $('#pixelTable tr:nth-child(1) td').length -1
+	canvasMaxX = $('#pixelTable tr:nth-child(1) td').length -1;
 
 
 	pixels = []
@@ -429,12 +429,16 @@ function setPixel(x,y){
 
 	if(fill === true){
 
-		console.log(JSON.stringify(px));
+	
+		pxJSON = JSON.stringify(px);
+
+		console.log(pxJSON);
+
 
 		$.ajax({
 		url: "/api?action=fillPixel",
 		type: 'post',
-		data: {px: JSON.stringify(px)},
+		data: {px: pxJSON},
 		dataType: 'json',
 		beforeSend: function(){
 		},
