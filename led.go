@@ -1,11 +1,13 @@
 package main
 
 import (
+	"net"
 	"os"
 	"os/signal"
+
 	//"github.com/stianeikeland/go-rpio"
 	//"github.com/mcuadros/go-rpi-rgb-led-matrix"
-	"github.com/brendanporter/go-rpi-rgb-led-matrix"
+	rgbmatrix "github.com/brendanporter/go-rpi-rgb-led-matrix"
 	//"image"
 	"image/color"
 	//"image/draw"
@@ -51,6 +53,8 @@ var c *rgbmatrix.Canvas
 func init() {
 	elog = log.New(os.Stdout, "Error: ", log.LstdFlags|log.Lshortfile)
 }
+
+// Web UI gets slow sometimes waiting for updates.
 
 func main() {
 
@@ -139,14 +143,18 @@ func main() {
 
 	server := http.Server{
 		Handler:      nil,
-		Addr:         "0.0.0.0:80",
 		ReadTimeout:  time.Second * 30,
 		WriteTimeout: time.Second * 30,
 	}
 
 	log.Print("Starting web server")
 
-	err = server.ListenAndServe()
+	l, err := net.Listen("tcp4", ":80")
+	if err != nil {
+		log.Panic(err)
+	}
+
+	err = server.Serve(l)
 	if err != nil {
 		log.Print(err)
 	}
