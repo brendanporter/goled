@@ -429,8 +429,8 @@ function setPixel(x,y){
 
 	if(fill === true){
 
-		fill = false;
-		
+		console.log(JSON.stringify(px));
+
 		$.ajax({
 		url: "/api?action=fillPixel",
 		type: 'post',
@@ -443,8 +443,9 @@ function setPixel(x,y){
 		}
 		});
 
+		fill = false;
+
 		return
-	
 	}
 
 	pxJSON = JSON.stringify(pixels);
