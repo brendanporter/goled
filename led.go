@@ -232,6 +232,8 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 
 		pxJSON := req.Form.Get("px")
 
+		log.Print("Received flood fill for pixel %s", pxJSON)
+
 		var p Pixel
 		err := json.Unmarshal([]byte(pxJSON), &p)
 		if err != nil {
