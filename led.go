@@ -422,8 +422,6 @@ func fill(p Pixel) {
 	pLock.Lock()
 	defer pLock.Unlock()
 
-	var toFill []Pixel
-
 	var neighbors []Pixel
 	var fillable []Pixel
 
