@@ -243,6 +243,8 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 
 		fill(p)
 
+		break
+
 	case "test":
 		log.Printf("Running %s", action)
 		go cylon(color.RGBA{255, 255, 255, 255}, time.Now().Add(time.Second*10))
@@ -420,6 +422,8 @@ func (p Pixel) in(pix []Pixel) bool {
 }
 
 func fill(p Pixel) {
+
+	log.Printf("Filling pixel %v", p)
 
 	pLock.Lock()
 	defer pLock.Unlock()
