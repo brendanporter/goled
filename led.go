@@ -343,6 +343,8 @@ func getDisplay(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	pLock.Lock()
+
 	if canvasSerial != clientCanvasSerial {
 
 		pxResponse := PXResponse{
@@ -350,18 +352,19 @@ func getDisplay(w http.ResponseWriter, req *http.Request) {
 			CanvasSerial: canvasSerial,
 		}
 
-		pLock.Lock()
 		p, err := json.Marshal(pxResponse)
 		if err != nil {
 			log.Print(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		pLock.Unlock()
+
 		w.Write(p)
 	} else {
 		w.WriteHeader(http.StatusNoContent)
 	}
+
+	pLock.Unlock()
 }
 
 func clearDisplay() {
