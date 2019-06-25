@@ -379,7 +379,7 @@ function refreshDisplayFromServer(){
 					console.log("Filling ID " + ID);
 
 					//$('#pixelTable tr:nth-child('+tr+') td:nth-child('+td+')').css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
-					$('#' + ID).css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
+					$('#px' + ID).css('background-color','rgba('+px.R+','+px.G+','+px.B+',255)');
 				});
 			});
 		}
