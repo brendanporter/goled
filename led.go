@@ -149,7 +149,7 @@ func main() {
 
 	log.Print("Starting web server")
 
-	l, err := net.Listen("tcp4", ":80")
+	l, err := net.Listen("tcp4", "0.0.0.0:80")
 	if err != nil {
 		log.Panic(err)
 	}
