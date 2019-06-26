@@ -496,7 +496,7 @@ func fill(p Pixel, speed int) {
 		drawCanvas()
 
 		if speed > 0 {
-			time.Sleep(time.Millisecond * time.Duration(speed*100000))
+			time.Sleep(time.Millisecond * time.Duration(speed))
 		}
 
 	}
