@@ -369,11 +369,11 @@ func (p Pixel) matches(otherP Pixel) bool {
 
 func pixelFromLocation(x, y int) (Pixel, error) {
 	bounds := c.Bounds()
-	if x > bounds.Max.X {
+	if x >= bounds.Max.X {
 		return Pixel{}, errors.New("Pixel out of bounds")
 	}
 
-	if y > bounds.Max.Y {
+	if y >= bounds.Max.Y {
 		return Pixel{}, errors.New("Pixel out of bounds")
 	}
 
