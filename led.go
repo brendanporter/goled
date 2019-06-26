@@ -451,7 +451,7 @@ func (p Pixel) in(pix []Pixel) bool {
 
 func fill(p Pixel, speed int) {
 
-	log.Printf("Filling pixel %v", p)
+	//log.Printf("Filling pixel %v", p)
 
 	var neighbors []Pixel
 	fillable := make(map[string]Pixel)
@@ -460,7 +460,7 @@ func fill(p Pixel, speed int) {
 
 	neighbors = origPix.neighbors()
 
-	log.Printf("Original neighbors: %#v", neighbors)
+	//log.Printf("Original neighbors: %#v", neighbors)
 
 	for {
 
@@ -480,13 +480,13 @@ func fill(p Pixel, speed int) {
 
 		neighbors = []Pixel{}
 
-		log.Printf("Positives: %d", len(positives))
+		//log.Printf("Positives: %d", len(positives))
 
 		for _, posPX := range positives {
 			neighbors = append(neighbors, posPX.neighbors()...)
 		}
 
-		log.Printf("Fillable: %d, Neighbors: %d", len(fillable), len(neighbors))
+		//log.Printf("Fillable: %d, Neighbors: %d", len(fillable), len(neighbors))
 
 		pLock.Lock()
 		for _, px := range fillable {
