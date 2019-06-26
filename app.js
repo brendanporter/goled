@@ -18,8 +18,8 @@ function init() {
 
 
 	$('.pixel').on('mousedown', function(event) {
-		drawmode = true;
 		if(event.button == 0){
+			drawmode = true;
 			event.target.onclick.apply(event);
 		}
 		event.preventDefault();
@@ -434,11 +434,12 @@ function setPixel(x,y){
 
 		console.log(pxJSON);
 
+		speed = $('#fillSpeed').val();
 
 		$.ajax({
 		url: "/api?action=fillPixel",
 		type: 'post',
-		data: {px: pxJSON},
+		data: {px: pxJSON, speed: speed},
 		dataType: 'json',
 		beforeSend: function(){
 		},
