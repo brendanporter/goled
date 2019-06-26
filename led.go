@@ -455,6 +455,8 @@ func fill(p Pixel) {
 
 		neighbors = []Pixel{}
 
+		log.Printf("Positives: %d", len(positives))
+
 		for _, posPX := range positives {
 			neighbors = append(neighbors, posPX.neighbors()...)
 		}
