@@ -219,6 +219,7 @@ func drawCanvas() {
 	pLock.Unlock()
 	c.Render()
 	canvasSerial++
+	log.Printf("Done drawing canvas")
 }
 
 func apiHandler(w http.ResponseWriter, req *http.Request) {
