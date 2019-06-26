@@ -56,6 +56,7 @@
 		<button class='pallette btn btn-sm btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
 		<button class='pallette btn btn-sm btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();">Blue</button>
 		<button class='pallette btn btn-sm btn-primary' onclick="setFill()">Fill</button>
+		<div class='form-group'><input class='form-control' type='number' value='0' id='fillSpeed' /></div>
 		
 		<button id='clear' class='btn btn-sm btn-danger' onclick='clearDisplay()'>Clear</button>
 
@@ -65,7 +66,7 @@
 				<div class='drawerToggle' data-target='images' onclick="toggleDrawer(this)"><i class='fas fa-window-minimize'></i><i class='fas fa-window-maximize default-hidden'></i></div>
 				<span class='carouselTitle'>
 					<b style='font-size:18px;'>Images</b>
-					<button class='pallette btn btn-sm btn-info' onclick="saveCanvasAsImage()">Save Image <i class='fas fa-save'></i></button>
+					<button class='btn btn-sm btn-info' onclick="saveCanvasAsImage()">Save Image <i class='fas fa-save'></i></button>
 				<span>
 				<div id='images'></div>
 			</div>
@@ -73,7 +74,7 @@
 				<div class='drawerToggle' data-target='animations' onclick="toggleDrawer(this)"><i class='fas fa-window-minimize'></i><i class='fas fa-window-maximize default-hidden'></i></div>
 				<span class='carouselTitle'>
 					<b style='font-size:18px;'>Animations</b>
-					<button class='pallette btn btn-sm btn-success' onclick="newAnimation()">New Animation <i class='fas fa-plus'></i></button> 
+					<button class='btn btn-sm btn-success' onclick="newAnimation()">New Animation <i class='fas fa-plus'></i></button> 
 				</span>
 				<div id='animations'></div>
 			</div>

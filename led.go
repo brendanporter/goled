@@ -232,6 +232,12 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 	case "fillPixel":
 
 		pxJSON := req.Form.Get("px")
+		speedStr := req.Form.Get("speed")
+
+		speed, err := strconv.Atoi(speedStr)
+		if err != nil {
+			log.Print(err)
+		}
 
 		log.Printf("Received flood fill for pixel %s", pxJSON)
 
@@ -242,7 +248,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		fill(p)
+		fill(p, speed)
 
 		break
 
@@ -443,7 +449,7 @@ func (p Pixel) in(pix []Pixel) bool {
 	return false
 }
 
-func fill(p Pixel) {
+func fill(p Pixel, speed int) {
 
 	log.Printf("Filling pixel %v", p)
 
@@ -489,7 +495,9 @@ func fill(p Pixel) {
 		pLock.Unlock()
 		drawCanvas()
 
-		time.Sleep(time.Millisecond * 20)
+		if speed > 0 {
+			time.Sleep(time.Millisecond * speed)
+		}
 
 	}
 
