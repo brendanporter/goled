@@ -426,7 +426,6 @@ func fill(p Pixel) {
 	log.Printf("Filling pixel %v", p)
 
 	pLock.Lock()
-	defer pLock.Unlock()
 
 	var neighbors []Pixel
 	var fillable []Pixel
@@ -471,6 +470,8 @@ func fill(p Pixel) {
 	}
 
 	log.Printf("Drawing Canvas")
+
+	pLock.Unlock()
 
 	drawCanvas()
 }
