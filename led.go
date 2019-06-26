@@ -488,18 +488,25 @@ func fill(p Pixel, speed int) {
 
 		//log.Printf("Fillable: %d, Neighbors: %d", len(fillable), len(neighbors))
 
-		pLock.Lock()
-		for _, px := range fillable {
-			pixels[px.X][px.Y] = color.RGBA{p.R, p.G, p.B, p.A}
-		}
-		pLock.Unlock()
-		drawCanvas()
-
 		if speed > 0 {
+			pLock.Lock()
+			for _, px := range fillable {
+				pixels[px.X][px.Y] = color.RGBA{p.R, p.G, p.B, p.A}
+			}
+			pLock.Unlock()
+			drawCanvas()
+
 			time.Sleep(time.Millisecond * time.Duration(speed))
 		}
 
 	}
+
+	pLock.Lock()
+	for _, px := range fillable {
+		pixels[px.X][px.Y] = color.RGBA{p.R, p.G, p.B, p.A}
+	}
+	pLock.Unlock()
+	drawCanvas()
 
 }
 
