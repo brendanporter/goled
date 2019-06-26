@@ -426,8 +426,6 @@ func fill(p Pixel) {
 
 	log.Printf("Filling pixel %v", p)
 
-	pLock.Lock()
-
 	var neighbors []Pixel
 	var fillable []Pixel
 
@@ -466,13 +464,13 @@ func fill(p Pixel) {
 
 	log.Printf("Painting %d pixels", len(fillable))
 
+	pLock.Lock()
 	for _, px := range fillable {
 		pixels[px.X][px.Y] = color.RGBA{px.R, px.G, px.B, px.A}
 	}
+	pLock.Unlock()
 
 	log.Printf("Drawing Canvas")
-
-	pLock.Unlock()
 
 	drawCanvas()
 }
