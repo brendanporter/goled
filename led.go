@@ -219,7 +219,6 @@ func drawCanvas() {
 	pLock.Unlock()
 	c.Render()
 	canvasSerial++
-	log.Printf("Done drawing canvas")
 }
 
 func apiHandler(w http.ResponseWriter, req *http.Request) {
@@ -466,7 +465,7 @@ func fill(p Pixel) {
 
 	pLock.Lock()
 	for _, px := range fillable {
-		pixels[px.X][px.Y] = color.RGBA{px.R, px.G, px.B, px.A}
+		pixels[px.X][px.Y] = color.RGBA{p.R, p.G, p.B, p.A}
 	}
 	pLock.Unlock()
 
