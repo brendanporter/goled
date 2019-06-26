@@ -450,7 +450,7 @@ func fill(p Pixel) {
 	var neighbors []Pixel
 	var fillable []Pixel
 
-	origPix := pixelFromLocation(p.X, p.Y)
+	origPix, _ := pixelFromLocation(p.X, p.Y)
 
 	neighbors = origPix.neighbors()
 
