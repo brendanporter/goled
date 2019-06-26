@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"net"
 	"os"
 	"os/signal"
@@ -366,7 +367,20 @@ func (p Pixel) matches(otherP Pixel) bool {
 	return true
 }
 
-func pixelFromLocation(x, y int) Pixel {
+func pixelFromLocation(x, y int) (Pixel, error) {
+	bounds := c.Bounds()
+	if x > bounds.Min.X {
+		return Pixel{}, errors.New("Pixel out of bounds")
+	}
+
+	if y > bounds.Min.Y {
+		return Pixel{}, errors.New("Pixel out of bounds")
+	}
+
+	if x < 0 || y < 0 {
+		return Pixel{}, errors.New("Pixel out of bounds")
+	}
+
 	return Pixel{
 		X: x,
 		Y: y,
@@ -374,7 +388,7 @@ func pixelFromLocation(x, y int) Pixel {
 		G: pixels[x][y].G,
 		B: pixels[x][y].B,
 		A: uint8(255),
-	}
+	}, nil
 }
 
 func (p Pixel) neighbors() []Pixel {
@@ -382,30 +396,38 @@ func (p Pixel) neighbors() []Pixel {
 	var neighbors []Pixel
 
 	if p.X > 0 {
-		pp := pixelFromLocation(p.X-1, p.Y)
-		if pp.matches(p) {
-			neighbors = append(neighbors, pp)
+		pp, err := pixelFromLocation(p.X-1, p.Y)
+		if err == nil {
+			if pp.matches(p) {
+				neighbors = append(neighbors, pp)
+			}
 		}
 	}
 
 	if p.Y > 0 {
-		pp := pixelFromLocation(p.X, p.Y-1)
-		if pp.matches(p) {
-			neighbors = append(neighbors, pp)
+		pp, err := pixelFromLocation(p.X, p.Y-1)
+		if err == nil {
+			if pp.matches(p) {
+				neighbors = append(neighbors, pp)
+			}
 		}
 	}
 
 	if p.X <= len(pixels)-1 {
-		pp := pixelFromLocation(p.X+1, p.Y)
-		if pp.matches(p) {
-			neighbors = append(neighbors, pp)
+		pp, err := pixelFromLocation(p.X+1, p.Y)
+		if err == nil {
+			if pp.matches(p) {
+				neighbors = append(neighbors, pp)
+			}
 		}
 	}
 
 	if p.X <= len(pixels[len(pixels)-1])-1 {
-		pp := pixelFromLocation(p.X, p.Y+1)
-		if pp.matches(p) {
-			neighbors = append(neighbors, pp)
+		pp, err := pixelFromLocation(p.X, p.Y+1)
+		if err == nil {
+			if pp.matches(p) {
+				neighbors = append(neighbors, pp)
+			}
 		}
 	}
 
