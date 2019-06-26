@@ -464,9 +464,13 @@ func fill(p Pixel) {
 
 	}
 
+	log.Printf("Painting %d pixels", len(fillable))
+
 	for _, px := range fillable {
 		pixels[px.X][px.Y] = color.RGBA{px.R, px.G, px.B, px.A}
 	}
+
+	log.Printf("Drawing Canvas")
 
 	drawCanvas()
 }
