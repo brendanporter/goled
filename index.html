@@ -47,6 +47,8 @@
 
 	.imageSelector {}
 	.drawerToggle {float:left; margin-left:10px; margin-right:5px;}
+	#fillSpeed {display: inline;}
+
 	</style>
 	</head>
 	<body>
@@ -56,7 +58,7 @@
 		<button class='pallette btn btn-sm btn-success' onclick="$('#color').spectrum('set', 'rgb(0,255,0)');setColor();">Green</button>
 		<button class='pallette btn btn-sm btn-primary' onclick="$('#color').spectrum('set', 'rgb(0,0,255)');setColor();">Blue</button>
 		<button class='pallette btn btn-sm btn-primary' onclick="setFill()">Fill</button>
-		<div class='form-group'><input class='form-control' type='number' value='0' id='fillSpeed' /></div>
+		<div class='form-group-sm'><input class='form-control-sm' type='number' value='0' id='fillSpeed' /></div>
 		
 		<button id='clear' class='btn btn-sm btn-danger' onclick='clearDisplay()'>Clear</button>
 
