@@ -388,7 +388,7 @@ func (p Pixel) neighbors() []Pixel {
 		}
 	}
 
-	if p.Y == 0 {
+	if p.Y > 0 {
 		pp := pixelFromLocation(p.X, p.Y-1)
 		if pp.matches(p) {
 			neighbors = append(neighbors, pp)
