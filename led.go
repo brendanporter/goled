@@ -457,7 +457,7 @@ func fill(p Pixel) {
 			neighbors = append(neighbors, posPX.neighbors()...)
 		}
 
-		log.Printf("Fillable: %d", len(fillable))
+		log.Printf("Fillable: %d, Neighbors: %d", len(fillable), len(neighbors))
 
 	}
 
