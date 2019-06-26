@@ -489,7 +489,7 @@ func fill(p Pixel) {
 		pLock.Unlock()
 		drawCanvas()
 
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * 20)
 
 	}
 
