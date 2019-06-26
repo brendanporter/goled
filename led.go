@@ -482,19 +482,17 @@ func fill(p Pixel) {
 
 		log.Printf("Fillable: %d, Neighbors: %d", len(fillable), len(neighbors))
 
+		pLock.Lock()
+		for _, px := range fillable {
+			pixels[px.X][px.Y] = color.RGBA{p.R, p.G, p.B, p.A}
+		}
+		pLock.Unlock()
+		drawCanvas()
+
+		time.Sleep(time.Millisecond * 100)
+
 	}
 
-	log.Printf("Painting %d pixels", len(fillable))
-
-	pLock.Lock()
-	for _, px := range fillable {
-		pixels[px.X][px.Y] = color.RGBA{p.R, p.G, p.B, p.A}
-	}
-	pLock.Unlock()
-
-	log.Printf("Drawing Canvas")
-
-	drawCanvas()
 }
 
 func getDisplay(w http.ResponseWriter, req *http.Request) {
