@@ -448,6 +448,7 @@ func fill(p Pixel) {
 		for _, neighborPx := range neighbors {
 			if !neighborPx.in(fillable) {
 				positives = append(positives, neighborPx)
+				fillable = append(fillable, neighborPx)
 			}
 		}
 
@@ -457,7 +458,6 @@ func fill(p Pixel) {
 
 		for _, posPX := range positives {
 			neighbors = append(neighbors, posPX.neighbors()...)
-			fillable = append(fillable, posPX)
 		}
 
 		log.Printf("Fillable: %d, Neighbors: %d", len(fillable), len(neighbors))
