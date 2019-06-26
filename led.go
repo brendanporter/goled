@@ -448,7 +448,7 @@ func fill(p Pixel) {
 	log.Printf("Filling pixel %v", p)
 
 	var neighbors []Pixel
-	var fillable []Pixel
+	fillable := make(map[string]Pixel)
 
 	origPix, _ := pixelFromLocation(p.X, p.Y)
 
@@ -465,9 +465,10 @@ func fill(p Pixel) {
 		var positives []Pixel
 
 		for _, neighborPx := range neighbors {
-			if !neighborPx.in(fillable) {
+			key := fmt.Sprintf("%02d%02d", neighborPx.X, neighborPx.Y)
+			if _, ok := fillable[key]; !ok {
 				positives = append(positives, neighborPx)
-				fillable = append(fillable, neighborPx)
+				fillable[key] = neighborPx
 			}
 		}
 
