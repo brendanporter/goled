@@ -242,7 +242,7 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 		log.Printf("Received flood fill for pixel %s", pxJSON)
 
 		var p Pixel
-		err := json.Unmarshal([]byte(pxJSON), &p)
+		err = json.Unmarshal([]byte(pxJSON), &p)
 		if err != nil {
 			log.Print(err)
 			return
@@ -496,7 +496,7 @@ func fill(p Pixel, speed int) {
 		drawCanvas()
 
 		if speed > 0 {
-			time.Sleep(time.Millisecond * speed)
+			time.Sleep(time.Duration(time.Millisecond * speed))
 		}
 
 	}
