@@ -86,7 +86,12 @@ func (service *Service) Manage() (string, error) {
 		command := os.Args[1]
 		switch command {
 		case "install":
-			return service.Install()
+			if len(os.Args) > 2 {
+				return service.Install(os.Args[2:])
+			} else {
+				return service.Install()
+			}
+
 		case "remove":
 			return service.Remove()
 		case "start":
@@ -143,6 +148,9 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println(status)
+	if strings.Contains("Usage") {
+		os.Exit(0)
+	}
 
 	loadImagesFromDisk()
 	loadAnimationsFromDisk()
