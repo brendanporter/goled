@@ -87,7 +87,7 @@ func (service *Service) Manage() (string, error) {
 		switch command {
 		case "install":
 			if len(os.Args) > 2 {
-				return service.Install(os.Args[2:])
+				return service.Install(os.Args[2:]...)
 			} else {
 				return service.Install()
 			}
