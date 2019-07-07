@@ -23,6 +23,8 @@ import (
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/takama/daemon"
 )
 
 // Matrix color pins to GPIO pins
@@ -56,9 +58,28 @@ func init() {
 
 // Web UI gets slow sometimes waiting for updates.
 
-func main() {
+// Service has embedded daemon
+type Service struct {
+	daemon.Daemon
+}
 
-	usage := "Usage: goled [install | remove | start | stop | status] -cols # -rows #"
+const (
+
+	// name of the service
+	name        = "goled"
+	description = "LED Matrix controller"
+
+	// port which daemon should be listen
+	port = ":80"
+)
+
+var dependencies []string = []string{}
+
+var server http.Server
+
+func (service *Service) Manage() (string, error) {
+
+	usage := fmt.Sprintf("Usage: %s [install | remove | start | stop | status] -cols # -rows #", name)
 
 	// if received any kind of command, do it
 	if len(os.Args) > 1 {
@@ -89,6 +110,39 @@ func main() {
 			os.Exit(0)
 		}
 	}()
+
+	server = http.Server{
+		Handler:      nil,
+		ReadTimeout:  time.Second * 30,
+		WriteTimeout: time.Second * 30,
+	}
+
+	go func() {
+		killSignal := <-interrupt
+		log.Print("Got signal", killSignal)
+		c.Close()
+		server.Close()
+		os.Exit(1)
+	}()
+
+	return usage, nil
+
+}
+
+func main() {
+
+	srv, err := daemon.New(name, description, dependencies...)
+	if err != nil {
+		log.Println("Error: ", err)
+		os.Exit(1)
+	}
+	service := &Service{srv}
+	status, err := service.Manage()
+	if err != nil {
+		log.Println(status, "\nError: ", err)
+		os.Exit(1)
+	}
+	fmt.Println(status)
 
 	loadImagesFromDisk()
 	loadAnimationsFromDisk()
@@ -154,23 +208,9 @@ func main() {
 	http.HandleFunc("/", baseHandler)
 	http.HandleFunc("/api", apiHandler)
 
-	server := http.Server{
-		Handler:      nil,
-		ReadTimeout:  time.Second * 30,
-		WriteTimeout: time.Second * 30,
-	}
-
-	go func() {
-		killSignal := <-interrupt
-		log.Print("Got signal", killSignal)
-		c.Close()
-		server.Close()
-		os.Exit(1)
-	}()
-
 	log.Print("Starting web server")
 
-	l, err := net.Listen("tcp4", "0.0.0.0:80")
+	l, err := net.Listen("tcp4", port)
 	if err != nil {
 		log.Print(err)
 	}
