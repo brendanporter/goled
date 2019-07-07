@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"net"
 	"os"
 	"os/signal"
@@ -59,10 +58,31 @@ func init() {
 
 func main() {
 
-	sigChan := make(chan os.Signal, 1)
-	signal.Notify(sigChan, os.Interrupt)
+	usage := "Usage: goled [install | remove | start | stop | status] -cols # -rows #"
+
+	// if received any kind of command, do it
+	if len(os.Args) > 1 {
+		command := os.Args[1]
+		switch command {
+		case "install":
+			return service.Install()
+		case "remove":
+			return service.Remove()
+		case "start":
+			return service.Start()
+		case "stop":
+			return service.Stop()
+		case "status":
+			return service.Status()
+		default:
+			return usage, nil
+		}
+	}
+
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, os.Interrupt, os.Kill, syscall.SIGTERM)
 	go func() {
-		for sig := range sigChan {
+		for sig := range interrupt {
 			// sig is a ^C, handle it
 
 			log.Printf("GOLED shutting down for SIGINT: %v", sig)
@@ -92,14 +112,6 @@ func main() {
 		rows = 16
 		log.Print("Values for cols or rows was too small")
 	}
-
-	chanSig := make(chan os.Signal)
-	signal.Notify(chanSig, os.Interrupt, syscall.SIGTERM)
-	go func() {
-		<-chanSig
-		c.Close()
-		os.Exit(1)
-	}()
 
 	config := &rgbmatrix.DefaultConfig
 	config.Rows = rows
@@ -137,7 +149,7 @@ func main() {
 		time.Sleep(time.Millisecond * (20 * 60))
 		go cylon(color.RGBA{0, 0, 255, 125})
 	*/
-	go square()
+	go startup()
 
 	http.HandleFunc("/", baseHandler)
 	http.HandleFunc("/api", apiHandler)
@@ -148,17 +160,34 @@ func main() {
 		WriteTimeout: time.Second * 30,
 	}
 
+	go func() {
+		killSignal := <-interrupt
+		log.Print("Got signal", killSignal)
+		c.Close()
+		server.Close()
+		os.Exit(1)
+	}()
+
 	log.Print("Starting web server")
 
 	l, err := net.Listen("tcp4", "0.0.0.0:80")
 	if err != nil {
-		log.Panic(err)
+		log.Print(err)
 	}
 
 	err = server.Serve(l)
 	if err != nil {
 		log.Print(err)
+		return
 	}
+}
+
+func startup() {
+	// Do something useful
+
+	c.Set(7, 14, color.RGBA{0, 0, 255, 255})
+	c.Set(7, 15, color.RGBA{0, 255, 0, 255})
+	c.Render()
 }
 
 type Pixel struct {
@@ -357,157 +386,6 @@ func apiHandler(w http.ResponseWriter, req *http.Request) {
 type PXResponse struct {
 	CanvasSerial int
 	Canvas       [][]color.RGBA
-}
-
-func (p Pixel) matches(otherP Pixel) bool {
-	if p.R != otherP.R {
-		return false
-	}
-	if p.G != otherP.G {
-		return false
-	}
-	if p.B != otherP.B {
-		return false
-	}
-
-	return true
-}
-
-func pixelFromLocation(x, y int) (Pixel, error) {
-	bounds := c.Bounds()
-	if x >= bounds.Max.X {
-		return Pixel{}, errors.New("Pixel out of bounds")
-	}
-
-	if y >= bounds.Max.Y {
-		return Pixel{}, errors.New("Pixel out of bounds")
-	}
-
-	if x < 0 || y < 0 {
-		return Pixel{}, errors.New("Pixel out of bounds")
-	}
-
-	return Pixel{
-		X: x,
-		Y: y,
-		R: pixels[x][y].R,
-		G: pixels[x][y].G,
-		B: pixels[x][y].B,
-		A: uint8(255),
-	}, nil
-}
-
-func (p Pixel) neighbors() []Pixel {
-
-	var neighbors []Pixel
-
-	if p.X > 0 {
-		pp, err := pixelFromLocation(p.X-1, p.Y)
-		if err == nil {
-			if pp.matches(p) {
-				neighbors = append(neighbors, pp)
-			}
-		}
-	}
-
-	if p.Y > 0 {
-		pp, err := pixelFromLocation(p.X, p.Y-1)
-		if err == nil {
-			if pp.matches(p) {
-				neighbors = append(neighbors, pp)
-			}
-		}
-	}
-
-	if p.X <= len(pixels)-1 {
-		pp, err := pixelFromLocation(p.X+1, p.Y)
-		if err == nil {
-			if pp.matches(p) {
-				neighbors = append(neighbors, pp)
-			}
-		}
-	}
-
-	if p.X <= len(pixels[len(pixels)-1])-1 {
-		pp, err := pixelFromLocation(p.X, p.Y+1)
-		if err == nil {
-			if pp.matches(p) {
-				neighbors = append(neighbors, pp)
-			}
-		}
-	}
-
-	return neighbors
-}
-
-func (p Pixel) in(pix []Pixel) bool {
-	for _, aPixel := range pix {
-		if aPixel.X == p.X && aPixel.Y == p.Y {
-			return true
-		}
-	}
-	return false
-}
-
-func fill(p Pixel, speed int) {
-
-	//log.Printf("Filling pixel %v", p)
-
-	var neighbors []Pixel
-	fillable := make(map[string]Pixel)
-
-	origPix, _ := pixelFromLocation(p.X, p.Y)
-
-	neighbors = origPix.neighbors()
-
-	//log.Printf("Original neighbors: %#v", neighbors)
-
-	for {
-
-		if len(neighbors) == 0 {
-			break
-		}
-
-		var positives []Pixel
-
-		for _, neighborPx := range neighbors {
-			key := fmt.Sprintf("%02d%02d", neighborPx.X, neighborPx.Y)
-			if _, ok := fillable[key]; !ok {
-				positives = append(positives, neighborPx)
-				fillable[key] = neighborPx
-			}
-		}
-
-		neighbors = []Pixel{}
-
-		//log.Printf("Positives: %d", len(positives))
-
-		for _, posPX := range positives {
-			neighbors = append(neighbors, posPX.neighbors()...)
-		}
-
-		//log.Printf("Fillable: %d, Neighbors: %d", len(fillable), len(neighbors))
-
-		if speed > 0 {
-			pLock.Lock()
-			for _, px := range fillable {
-				pixels[px.X][px.Y] = color.RGBA{p.R, p.G, p.B, p.A}
-			}
-			pLock.Unlock()
-			drawCanvas()
-
-			time.Sleep(time.Millisecond * time.Duration(speed))
-		}
-
-	}
-
-	pLock.Lock()
-	for _, px := range fillable {
-		pixels[px.X][px.Y] = color.RGBA{p.R, p.G, p.B, p.A}
-	}
-	pLock.Unlock()
-	drawCanvas()
-
 }
 
 func getDisplay(w http.ResponseWriter, req *http.Request) {
