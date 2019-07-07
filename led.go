@@ -148,7 +148,7 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println(status)
-	if strings.Contains("Usage") {
+	if strings.Contains(status, "Usage") {
 		os.Exit(0)
 	}
 
