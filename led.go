@@ -149,7 +149,7 @@ func main() {
 	}
 	fmt.Println(status)
 	switch os.Args[1] {
-	case "install", "start", "stop", "remove", "status" {
+	case "install", "start", "stop", "remove", "status":
 		os.Exit(0)
 	default:
 		log.Print("Starting goled")
