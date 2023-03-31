@@ -16,6 +16,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"os"
+	"io"
 )
 
 var animations map[string][][][]color.RGBA // [Many][Frames][X][Y]color
@@ -69,18 +71,21 @@ func loadAnimationsFromDisk() {
 }
 
 func saveImagesToDisk() {
-	absPath, err := filepath.Abs("images.json")
-	if err != nil {
-		elog.Print(err)
-	}
-
 	imagesJSON, err := json.Marshal(images)
 	if err != nil {
 		elog.Print(err)
 		return
 	}
 
-	err = ioutil.WriteFile(absPath, imagesJSON, 0755)
+	f, err := os.Create("images.json")
+	if err != nil {
+		elog.Print(err)
+	}
+	defer f.Close()
+	
+	b := bytes.NewBuffer(imagesJSON)
+
+	_, err = io.Copy(f, b)
 	if err != nil {
 		elog.Print(err)
 	}

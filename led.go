@@ -53,7 +53,7 @@ const me = 24 // This pin is part of the 1->32 multiplexing circuitry. Used for 
 var c *rgbmatrix.Canvas
 
 func init() {
-	elog = log.New(os.Stdout, "Error: ", log.LstdFlags|log.Lshortfile)
+	elog = log.New(os.Stdout,"", log.LstdFlags|log.Lshortfile)
 }
 
 // Web UI gets slow sometimes waiting for updates.
@@ -70,7 +70,7 @@ const (
 	description = "LED Matrix controller"
 
 	// port which daemon should be listen
-	port = ":80"
+	port = ":8000"
 )
 
 var dependencies []string = []string{}
@@ -136,7 +136,7 @@ func (service *Service) Manage() (string, error) {
 
 func main() {
 
-	srv, err := daemon.New(name, description, dependencies...)
+	srv, err := daemon.New(name, description, daemon.SystemDaemon, dependencies...)
 	if err != nil {
 		log.Println("Error: ", err)
 		os.Exit(1)
@@ -163,12 +163,17 @@ func main() {
 	var gpioSlowdown int
 	var addrType int
 	var multiplexing int
+	var chainLength int
+	var brightness int
 
 	flag.IntVar(&cols, "cols", 32, "LED Columns in matrix")
 	flag.IntVar(&rows, "rows", 32, "LED Rows in matrix")
-	flag.IntVar(&gpioSlowdown, "led-slowdown-gpio", 1, "LED GPIO Slowdown")
+	flag.IntVar(&gpioSlowdown, "led-gpio-slowdown", 2, "LED GPIO Slowdown")
 	flag.IntVar(&addrType, "led-row-addr-type", 0, "LED Address Type")
 	flag.IntVar(&multiplexing, "led-multiplexing", 0, "LED Multiplexing")
+	flag.IntVar(&chainLength, "chain-length", 1, "LED Chain Length")
+	flag.IntVar(&brightness, "brightness", 50, "LED Brightness")
+	
 
 	flag.Parse()
 
@@ -179,10 +184,14 @@ func main() {
 	}
 
 	config := &rgbmatrix.DefaultConfig
+	config.PWMBits = 1
+	config.Brightness = brightness
+	config.GPIOSlowdown = gpioSlowdown
 	config.Rows = rows
 	config.Cols = cols
 	config.HardwareMapping = "adafruit-hat-pwm"
-	config.DisableHardwarePulsing = false
+	config.DisableHardwarePulsing = true
+	config.ChainLength = chainLength
 	//config.ShowRefreshRate = true
 	m, err := rgbmatrix.NewRGBLedMatrix(config)
 	if err != nil {
@@ -191,6 +200,7 @@ func main() {
 
 	c = rgbmatrix.NewCanvas(m)
 	defer c.Close()
+	log.Printf("created canvas")
 
 	bounds := c.Bounds()
 	for x := bounds.Min.X; x < bounds.Max.X; x++ {
@@ -201,9 +211,11 @@ func main() {
 		pixels = append(pixels, ySlice)
 	}
 
+	log.Print("finished building bounds")
+
 	//draw.Draw(c, c.Bounds(), &image.Uniform{color.White}, image.ZP, draw.Src)
 
-	//c.Render()
+	c.Render()
 
 	//time.Sleep(time.Second * 5)
 	//c.Clear()
